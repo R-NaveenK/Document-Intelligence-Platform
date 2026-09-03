@@ -1,0 +1,37 @@
+# Validation Rules Configuration
+
+arithmetic:
+  rounding_tolerance: 0.01 # Financial calculation absolute tolerance
+  percentage_thresholds:
+    negligible: 1.0 # <= 1% is LOW
+    minor: 5.0      # <= 5% is MEDIUM
+    major: 20.0     # <= 20% is HIGH
+                    # > 20% is CRITICAL
+
+format:
+  patterns:
+    gst_number: "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"
+    email: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    phone_number: "^\\+?[0-9]{10,15}$"
+    invoice_number: "^INV-[A-Za-z0-9-]+$"
+    po_number: "^PO-[A-Za-z0-9-]+$"
+    pincode: "^[1-9][0-9]{5}$"
+
+date:
+  date_formats:
+    - "%Y-%m-%d"
+    - "%d/%m/%Y"
+    - "%m/%d/%Y"
+    - "%d-%m-%Y"
+
+duplicate:
+  exact_hash_enabled: true
+  similarity_thresholds:
+    warning_min: 0.80   # 80-94% -> WARNING
+    high_min: 0.95      # 95-99% -> HIGH
+    critical_min: 1.00  # 100% / exact -> CRITICAL
+  comparison_fields:
+    - invoice_number
+    - vendor_name
+    - total_amount
+    - po_number

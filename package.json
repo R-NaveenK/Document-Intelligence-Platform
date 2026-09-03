@@ -1,0 +1,36 @@
+{
+  "name": "intelligent-document-processing-platform",
+  "version": "1.0.0",
+  "description": "Stage 1 Monorepo Architecture for Intelligent Document Processing Platform",
+  "scripts": {
+    "test": "node tests/health.test.js",
+    "test:integration": "node tests/integration.test.js",
+    "test:stage2": "node tests/stage2.test.js",
+    "test:stage3": "node tests/stage3.test.js",
+    "test:stage4": "node tests/stage4.test.js",
+    "test:stage5": "node tests/stage5.test.js",
+    "test:stage6": "node tests/stage6.test.js",
+    "test:stage7": "node tests/stage7.test.js",
+    "test:stage8": "node tests/stage8.test.js",
+    "test:stage9": "node tests/stage9.test.js",
+    "test:multi-format": "node tests/multi-format-ingestion.test.js",
+    "test:comparison": "node tests/extraction-engines-comparison.test.js",
+    "db:migrate": "node database/migrate.js",
+    "start": "node backend/src/server.js",
+    "start:backend": "cd backend && npm start",
+    "start:classifier": "cd ai-services/classifier && python main.py",
+    "start:extraction-mock": "cd teammate-services/extraction-mock && npm start",
+    "start:extraction-engine-3": "cd extraction_engine_3 && python run.py",
+    "start:structuring-mock": "cd teammate-services/structuring-mock && npm start",
+    "start:validation-mock": "cd teammate-services/validation-mock && npm start"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "multer": "^2.3.0",
+    "pg": "^8.23.0",
+    "redis": "^6.2.1",
+    "uuid": "^14.0.2"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "document_id": "PO-2001",
+  "document_type": "purchase_order",
+  "po_number": "PO-2001",
+  "po_date": "2026-08-01",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "items": [
+    {
+      "description": "Desktop PC",
+      "quantity": 50,
+      "unit_price": 40000
+    }
+  ],
+  "total_amount": 2000000
+}

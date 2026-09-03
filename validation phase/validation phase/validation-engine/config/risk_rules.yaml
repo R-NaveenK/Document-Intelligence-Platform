@@ -1,0 +1,46 @@
+# Risk Scoring & Routing Rules Configuration
+
+max_risk_score: 100
+
+risk_points:
+  arithmetic:
+    pass: 0
+    low: 5
+    medium: 15
+    high: 25
+    critical: 35
+  format:
+    pass: 0
+    low: 3
+    medium: 7
+    high: 10
+    critical: 15
+  duplicate:
+    pass: 0
+    warning: 15
+    high: 25
+    critical: 35
+  date:
+    pass: 0
+    low: 5
+    medium: 10
+    high: 15
+    critical: 20
+
+risk_thresholds:
+  low:
+    min_score: 0
+    max_score: 30
+    level: "LOW"
+  medium:
+    min_score: 31
+    max_score: 60
+    level: "MEDIUM"
+  high:
+    min_score: 61
+    max_score: 100
+    level: "HIGH"
+
+routing:
+  require_all_pass: true
+  warning_requires_review: true

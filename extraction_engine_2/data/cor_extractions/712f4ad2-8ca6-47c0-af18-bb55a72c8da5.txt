@@ -1,0 +1,50 @@
+----------------------------------------
+PAGE 1
+----------------------------------------
+
+PRECISION FORGE MANUFACTURING PVT. LTD.
+SIDCO Industrial Estate, Coimbatore, Tamil Nadu - 641021
+GSTIN: 33AABCP7842M1Z8 | Phone: +91 422 555 4100 | Email: accounts@precisionforge.example
+COMMERCIAL TAX INVOICE
+Invoice Number
+MFG-INV-2026-9042
+Invoice Date
+2026-08-15
+Vendor Name
+Titan Industrial Components Ltd.
+Purchase Order
+PO-88412
+Supplier GSTIN
+33AAACT9912K1Z3
+Currency
+INR
+Line Items
+Description
+HSN
+Qty
+Unit Price (INR)
+Amount (INR)
+CNC Machined Gear Housing
+8483
+20
+8,500.00
+170,000.00
+Hardened Steel Shaft Assembly
+8483
+10
+11,000.00
+110,000.00
+Precision Bearing Set
+8482
+25
+2,400.00
+60,000.00
+Subtotal
+340,000.00
+Tax Amount (GST 18%)
+61,200.00
+TOTAL AMOUNT
+401,200.00
+Payment Terms: Net 30 Days
+Delivery Location: Precision Forge Plant 2, Coimbatore
+Synthetic test invoice generated for IDP validation. No real commercial transaction is represented.

@@ -1,0 +1,21 @@
+{
+  "document_id": "DOC-SAMPLE-INV-0897",
+  "raw_text": "TAX INVOICE\nTECHSOLUTIONS PVT. LTD.\n102 Cyber City, Tech Park, Bangalore\nGSTIN: 29AAACB1234C1Z6\nInvoice No: TSPL/INV/2026-27/0897\nInvoice Date: 02-09-2026\n\nBILLED TO:\nABC INDUSTRIES LTD.\n45 Industrial Estate, Mumbai\nCustomer GSTIN: 27AABCU9638R1Z2\n\nItems:\n1. Cloud Hosting Server 2 15000.00 30000.00\n2. Database License 1 50000.00 50000.00\n\nSubtotal: ₹80,000.00\nIGST 18%: ₹14,400.00\nTotal Invoice Amount: ₹4,89,075.00",
+  "pages": [
+    {
+      "page_number": 1,
+      "raw_text": "TAX INVOICE\n...",
+      "confidence": 0.98,
+      "character_count": 350,
+      "word_count": 55
+    }
+  ],
+  "extraction_confidence": 0.98,
+  "pages_processed": 1,
+  "failed_pages": [],
+  "processing_time_ms": 115.2,
+  "metadata": {
+    "filename": "digital_invoice_1.pdf",
+    "selected_engine": "paddleocr_engine_1"
+  }
+}

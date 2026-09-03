@@ -1,0 +1,17 @@
+INVOICE / FACTURE
+
+Vendeur: München Büromöbel GmbH & Co. KG
+Kaufingerstraße 12, München, Deutschland
+VAT / USt-IdNr: DE123456789
+
+Facturé à:
+Société Générale de l'Électronique
+14 Rue de la Paix, 75002 Paris, France
+Contact: René François
+
+Numéro de facture: FR-2026-88741
+Date: 03/09/2026
+
+Montant Total: €12,450.50
+TVA 20%: €2,490.10
+Total TTC / Net Amount: €14,940.60

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExtractionOutput",
+  "type": "object",
+  "required": ["jobId", "fileId", "pages"],
+  "properties": {
+    "jobId": { "type": "string" },
+    "fileId": { "type": "string" },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pageNumber", "text", "ocrConfidence"],
+        "properties": {
+          "pageNumber": { "type": "integer" },
+          "text": { "type": "string" },
+          "ocrConfidence": { "type": "number" },
+          "tables": { "type": "array" },
+          "boundingBoxes": { "type": "array" }
+        }
+      }
+    }
+  }
+}

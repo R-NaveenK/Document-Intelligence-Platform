@@ -1,0 +1,9 @@
+TechSolutions Pvt. Ltd.	TAX INVOICE
+Invoice No:	TSPL/INV/2026/001	Date:	02/09/2026
+Customer:	Acme Corp	GST:	29AABCT1234Q1Z5
+S.No	Description	Qty	Unit Price	Total
+1	Laptop 5440	5	58500	292500
+2	MX Master Mouse	10	9450	94500
+Subtotal:	387000
+Tax (18%):	69660
+Total Amount:	456660

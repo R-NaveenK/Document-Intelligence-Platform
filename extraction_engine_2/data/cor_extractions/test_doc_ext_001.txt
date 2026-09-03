@@ -1,0 +1,11 @@
+HOSPITAL PATIENT ADMISSION & BILLING INVOICE
+============================================
+Patient Name: Jane Doe
+Admission Date: 2026-08-20
+Discharge Date: 2026-08-25
+Physician: Dr. Robert Smith
+Invoice Number: INV-99214
+Room & Board (5 days): $2,500.00
+Medications & Lab Work: $850.00
+Total Amount Due: $3,350.00
+Status: Paid in Full

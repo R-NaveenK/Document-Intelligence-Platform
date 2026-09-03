@@ -1,0 +1,12 @@
+PRECISION FORGE MANUFACTURING PVT. LTD.
+PRODUCTION DISPATCH MANIFEST
+Dispatch Line Items
+Carrier: National Industrial Freight
+Synthetic IDP test document.
+Manifest Number	MFG-DSP-2026-3114	Dispatch Date	2026-09-04
+Tracking Number	TRK-MFG-8857794-IN	Recipient Name	West Coast Heavy Engineering Depot
+Sender Name	Precision Forge Manufacturing Pvt. Ltd.	Total Weight	963.5 kg
+Item Code	Description	Batch	Qty	Weight	QC Status
+FG-9120	Precision Flange Assembly	PFA-904A	35	315.0 kg	PASS
+FG-9121	Machined Coupling Set	MCS-904D	40	288.5 kg	PASS
+FG-9122	Steel Mounting Frames	SMF-904F	18	360.0 kg	PASS

@@ -1,0 +1,22 @@
+ENTERPRISE PURCHASE AGREEMENT & INVOICE
+
+Bill No: INV-2026-0098
+
+Bill To: ABC INDUSTRIES LTD
+
+GSTIN: 29AAACB1234C1Z6 | PAN: AAACB1234C
+
+Item Description  |  HSN Code  |  Qty  |  Rate (INR)
+Dell Latitude 5440 Laptop  |  8471  |  5  |  58500.00
+Logitech MX Mechanical Keyboard  |  847160  |  10  |  14500.00
+
+Grand Total: Rs. 48,500
+
+Approval Stamp:
+
+----------------------------------------
+EMBEDDED IMAGE 1
+----------------------------------------
+APPROVED FOR PAYMENT
+AUTHORIZATION CODE: AUTH-9988
+OFFICER R SHARMA

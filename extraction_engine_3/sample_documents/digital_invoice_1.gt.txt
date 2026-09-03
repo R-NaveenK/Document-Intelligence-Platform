@@ -1,0 +1,12 @@
+ABC TECHNOLOGIES
+Invoice No: INV-10245
+Date: 02/09/2026
+Customer: XYZ Ltd
+GST: 33ABCDE1234F1Z5
+
+Laptop 5 RS 40,000
+Mouse 5 RS 500
+
+Subtotal: RS 82,500
+Tax: RS 0
+Total: RS 82,500

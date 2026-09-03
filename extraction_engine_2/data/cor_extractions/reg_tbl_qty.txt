@@ -1,0 +1,7 @@
+HARDWARE PROCUREMENT SCHEDULE
+
+Product Name  |  Quantity  |  Unit Price  |  Total Amount
+Dell Latitude 5440 Laptop  |  5  |  58500.00  |  292500.00
+Logitech MX Mechanical Keyboard  |  10  |  14500.00  |  145000.00
+
+Grand Total: Rs. 48,500

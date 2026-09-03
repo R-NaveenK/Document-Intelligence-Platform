@@ -1,0 +1,65 @@
+{
+  "mean_cer": 0.2528,
+  "mean_wer": 0.25,
+  "mean_numeric_accuracy": 0.75,
+  "evaluations": [
+    {
+      "filename": "digital_invoice_1.pdf",
+      "ground_truth_file": "digital_invoice_1.gt.txt",
+      "cer": 0.0113,
+      "wer": 0.0,
+      "numeric_accuracy": 1.0,
+      "total_numeric_tokens": 15,
+      "correct_numeric_tokens": 15,
+      "missing_numeric_tokens": [],
+      "extra_numeric_tokens": [],
+      "extraction_confidence": 1.0
+    },
+    {
+      "filename": "multipage_invoice.pdf",
+      "ground_truth_file": "multipage_invoice.gt.txt",
+      "cer": 0.0,
+      "wer": 0.0,
+      "numeric_accuracy": 1.0,
+      "total_numeric_tokens": 6,
+      "correct_numeric_tokens": 6,
+      "missing_numeric_tokens": [],
+      "extra_numeric_tokens": [],
+      "extraction_confidence": 1.0
+    },
+    {
+      "filename": "numeric_financials.pdf",
+      "ground_truth_file": "numeric_financials.gt.txt",
+      "cer": 0.0,
+      "wer": 0.0,
+      "numeric_accuracy": 1.0,
+      "total_numeric_tokens": 11,
+      "correct_numeric_tokens": 11,
+      "missing_numeric_tokens": [],
+      "extra_numeric_tokens": [],
+      "extraction_confidence": 1.0
+    },
+    {
+      "filename": "receipt_sample.png",
+      "ground_truth_file": "receipt_sample.gt.txt",
+      "cer": 1.0,
+      "wer": 1.0,
+      "numeric_accuracy": 0.0,
+      "total_numeric_tokens": 9,
+      "correct_numeric_tokens": 0,
+      "missing_numeric_tokens": [
+        "88472",
+        "15",
+        "08",
+        "2026",
+        "1",
+        "2500",
+        "1",
+        "15000",
+        "17500"
+      ],
+      "extra_numeric_tokens": [],
+      "extraction_confidence": 1.0
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+{
+  "tests\\test_documents\\pdf\\text_invoice.pdf": {
+    "type": "PDF",
+    "required_text": [
+      "TAX INVOICE",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "29AAACB1234C1Z6",
+      "Dell Latitude 5440 Laptop",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "AAACB1234C",
+      "U72200KA2015PTC081234",
+      "HDFC0001234",
+      "50200012345678",
+      "58500.00"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\pdf\\scanned_invoice.pdf": {
+    "type": "PDF",
+    "required_text": [
+      "TAX INVOICE",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "29AAACB1234C1Z6",
+      "Dell Latitude 5440 Laptop"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "AAACB1234C",
+      "U72200KA2015PTC081234",
+      "HDFC0001234",
+      "50200012345678"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\pdf\\mixed_pdf.pdf": {
+    "type": "PDF",
+    "required_text": [
+      "PURCHASE AGREEMENT",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "29AAACB1234C1Z6"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "50200012345678"
+    ],
+    "expected_pages": 2
+  },
+  "tests\\test_documents\\pdf\\multi_page.pdf": {
+    "type": "PDF",
+    "required_text": [
+      "PAGE 1",
+      "PAGE 2",
+      "PAGE 3",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "50200012345678",
+      "HDFC0001234"
+    ],
+    "expected_pages": 3
+  },
+  "tests\\test_documents\\pdf\\complex_layout.pdf": {
+    "type": "PDF",
+    "required_text": [
+      "SECTION A",
+      "SECTION B",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "U72200KA2015PTC081234",
+      "AAACB1234C"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\pdf\\large_document.pdf": {
+    "type": "PDF",
+    "required_text": [
+      "PAGE 1",
+      "PAGE 5",
+      "PAGE 10",
+      "INV-2026-0098"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "50200012345678"
+    ],
+    "expected_pages": 10
+  },
+  "tests\\test_documents\\doc\\legacy_document.doc": {
+    "type": "DOC",
+    "required_text": [
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "50200012345678"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\docx\\business_document.docx": {
+    "type": "DOCX",
+    "required_text": [
+      "MASTER SERVICES AGREEMENT",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "AAACB1234C",
+      "50200012345678",
+      "HDFC0001234"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\docx\\table_document.docx": {
+    "type": "DOCX",
+    "required_text": [
+      "Dell Latitude 5440 Laptop",
+      "Logitech MX Mechanical Keyboard",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "5",
+      "58500.00",
+      "10",
+      "14500.00"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\docx\\image_document.docx": {
+    "type": "DOCX",
+    "required_text": [
+      "VERIFIED EXPENSE STATEMENT",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "EMBEDDED IMAGE 1",
+      "APPROVED FOR PAYMENT"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "AUTH-9988"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\txt\\normal.txt": {
+    "type": "TXT",
+    "required_text": [
+      "TAX INVOICE",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "Rs. 48,500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "AAACB1234C",
+      "50200012345678"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\txt\\unicode.txt": {
+    "type": "TXT",
+    "required_text": [
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "\u20b948,500.00",
+      "\u20ac550.00",
+      "$600.00",
+      "\u00a3480.00",
+      "\u00a588,000",
+      "Soci\u00e9t\u00e9 G\u00e9n\u00e9rale"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "48,500.00",
+      "550.00",
+      "600.00",
+      "480.00",
+      "88,000"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\txt\\large.txt": {
+    "type": "TXT",
+    "required_text": [
+      "INV-2026-0098",
+      "50200012345678",
+      "TRANSACTION ENTRY #0001",
+      "TRANSACTION ENTRY #2500"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "50200012345678"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\clean.png": {
+    "type": "PNG",
+    "required_text": [
+      "TAX INVOICE",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "29AAACB1234C1Z6"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "AAACB1234C",
+      "U72200KA2015PTC081234",
+      "50200012345678"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\clean.jpg": {
+    "type": "JPG",
+    "required_text": [
+      "TAX INVOICE",
+      "INV-2026-0098",
+      "ABC INDUSTRIES LTD",
+      "29AAACB1234C1Z6"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6",
+      "AAACB1234C",
+      "U72200KA2015PTC081234",
+      "50200012345678"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\noisy.png": {
+    "type": "PNG",
+    "required_text": [
+      "TAX INVOICE",
+      "ABC INDUSTRIES LTD"
+    ],
+    "required_numbers": [
+      "INV-2026-0098",
+      "29AAACB1234C1Z6"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\rotated_90.jpg": {
+    "type": "JPG",
+    "required_text": [
+      "TAX INVOICE",
+      "ABC INDUSTRIES LTD"
+    ],
+    "required_numbers": [
+      "INV-2026-0098"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\rotated_180.jpg": {
+    "type": "JPG",
+    "required_text": [
+      "TAX INVOICE",
+      "ABC INDUSTRIES LTD"
+    ],
+    "required_numbers": [
+      "INV-2026-0098"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\rotated_270.jpg": {
+    "type": "JPG",
+    "required_text": [
+      "TAX INVOICE",
+      "ABC INDUSTRIES LTD"
+    ],
+    "required_numbers": [
+      "INV-2026-0098"
+    ],
+    "expected_pages": 1
+  },
+  "tests\\test_documents\\images\\low_resolution.png": {
+    "type": "PNG",
+    "required_text": [
+      "INVOICE"
+    ],
+    "required_numbers": [],
+    "expected_pages": 1
+  }
+}

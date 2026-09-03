@@ -1,0 +1,11 @@
+TAXINVOICE
+Bill No: INV-2026-0098
+Date: 02-09-2026 [Phone: +91-9876543210
+BUI To; ABC INDUSTRIES LTD
+CIN:U72200KA2015PTC081234IFSC:HDFC000123
+TEMS& SERVICES
+1. Dell Latitude 5440 Laptop - Qty: 5 - Rate: 58500.00
+2. Logitech MX Mechanical Keyboard - Qty: 10 - Rate: 1
+Grand Total Rs 48,500
+Bank Account 50200012345678 at HDFC Bank
+Terms: Net30 days Contact accounts@techsolutions.

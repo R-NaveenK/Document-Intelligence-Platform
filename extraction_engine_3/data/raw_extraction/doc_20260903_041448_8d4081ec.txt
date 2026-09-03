@@ -1,0 +1,12 @@
+PRECISION FORGE MANUFACTURING PVT. LTD.
+PRODUCTION DISPATCH MANIFEST
+Dispatch Line Items
+Carrier: National Industrial Freight
+Synthetic IDP test document.
+Manifest Number	MFG-DSP-2026-3101	Dispatch Date	2026-09-03
+Tracking Number	TRK-MFG-8852011-IN	Recipient Name	Southern Automotive Assembly Plant
+Sender Name	Precision Forge Manufacturing Pvt. Ltd.	Total Weight	1825.0 kg
+Item Code	Description	Batch	Qty	Weight	QC Status
+FG-9101	Transmission Gear Housing	TGH-903A	60	720.0 kg	PASS
+FG-9102	Drive Shaft Assembly	DSA-903B	45	675.0 kg	PASS
+FG-9103	Bearing Carrier Set	BCS-903C	50	430.0 kg	PASS

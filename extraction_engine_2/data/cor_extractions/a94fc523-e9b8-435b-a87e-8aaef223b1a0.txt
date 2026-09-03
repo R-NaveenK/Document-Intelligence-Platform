@@ -1,0 +1,26 @@
+PRECISION FORGE MANUFACTURING PVT. LTD.
+
+PRODUCTION & DISPATCH MANIFEST
+
+Manifest Number  |  MFG-DSP-2026-3017  |  Dispatch Date  |  2026-09-01
+Tracking Number  |  TRK-MFG-8830192-US  |  Plant  |  Plant 2 - Coimbatore
+Sender Name  |  Precision Forge Manufacturing Pvt. Ltd.  |  Recipient Name  |  Metro Industrial Distribution Center
+Total Weight  |  1,450.5 kg  |  Carrier  |  Pacific Cargo & Freight Services
+
+Dispatch Line Items
+
+Item Code  |  Description  |  Batch  |  Qty  |  Unit  |  Weight (kg)  |  QC Status
+FG-8812  |  CNC Gear Housing  |  GH-2608-A  |  40  |  pcs  |  520.0  |  PASS
+FG-7741  |  Hardened Shaft Assembly  |  SA-2608-C  |  30  |  pcs  |  410.5  |  PASS
+FG-9033  |  Bearing Housing Set  |  BH-2608-D  |  50  |  sets  |  300.0  |  PASS
+RM-1182  |  Packaging Steel Frames  |  PSF-2608-B  |  12  |  frames  |  220.0  |  PASS
+
+Delivery Date: 2026-09-01
+
+Destination: Metro Industrial Distribution Center, Chennai
+
+Dispatch Supervisor: K. Suresh
+
+Special Instructions: Keep palletized assemblies dry. Verify seal numbers before unloading.
+
+Synthetic test manifest generated for IDP extraction, table parsing, search, and export verification.

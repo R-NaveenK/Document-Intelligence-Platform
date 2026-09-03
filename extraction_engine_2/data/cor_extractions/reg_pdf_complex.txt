@@ -1,0 +1,16 @@
+----------------------------------------
+PAGE 1
+----------------------------------------
+
+SECTION A: COMPANY INFO
+TechSolutions Pvt Ltd
+Prestige Tech Park, Bengaluru
+GSTIN: 29AAACB1234C1Z6
+CIN: U72200KA2015PTC081234
+Date: 02-09-2026
+SECTION B: CLIENT INFO
+Client: ABC INDUSTRIES LTD
+45 Industrial Layout, Whitefield, Bengaluru - 560066
+Bill No: INV-2026-0098
+PAN: AAACB1234C
+Grand Total: Rs. 48,500

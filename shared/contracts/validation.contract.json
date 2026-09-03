@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ValidationOutput",
+  "type": "object",
+  "required": ["logicalDocumentId", "status", "validationResults", "requiresReview"],
+  "properties": {
+    "jobId": { "type": "string" },
+    "logicalDocumentId": { "type": "string" },
+    "document_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["PASSED", "FAILED"] },
+    "validationResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "fieldKey", "passed"],
+        "properties": {
+          "type": { "type": "string" },
+          "validator": { "type": "string" },
+          "status": { "type": "string" },
+          "fieldKey": { "type": "string" },
+          "fieldKeys": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "passed": { "type": "boolean" },
+          "severity": { "type": "string" },
+          "riskPoints": { "type": "number" },
+          "message": { "type": ["string", "null"] },
+          "details": { "type": "object" }
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "score": { "type": "number" },
+        "level": { "type": "string" }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "properties": {
+        "decision": { "type": "string" },
+        "reason": { "type": "string" }
+      }
+    },
+    "requiresReview": { "type": "boolean" },
+    "reviewReasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

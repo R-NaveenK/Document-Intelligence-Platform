@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Intelligence Platform - Enterprise Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="app-layout">
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+      <div class="nav-brand">
+        <span class="brand-logo">IDP</span>
+        <div class="brand-title">
+          <h1>Document Intelligence Platform</h1>
+          <span class="stage-tag">Enterprise Edition &bull; End-to-End Multi-Engine</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <span class="tenant-badge" id="tenantBadge"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--accent-emerald);"></span> Org: Acme Corp</span>
+        <button class="btn btn-secondary" id="btnRefreshHealth"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--primary-accent);"></span> 7 Services Active</button>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="sub-nav">
+      <button class="nav-tab active" id="tabDashboard">Dashboard</button>
+      <button class="nav-tab" id="tabProfiles">Processing Profiles</button>
+      <button class="nav-tab" id="tabUpload">Upload & Ingest</button>
+      <button class="nav-tab" id="tabDocuments">Documents & Jobs</button>
+      <button class="nav-tab" id="tabReviews">Human Review <span class="badge badge-draft" id="openReviewCountBadge" style="font-size:0.7rem; margin-left:0.2rem;">0</span></button>
+      <button class="nav-tab" id="tabRecords">Records & Search</button>
+      <button class="nav-tab" id="tabChat">AI Chat Assistant</button>
+      <button class="nav-tab" id="tabExports">Export & Reports</button>
+      <button class="nav-tab disabled" id="tabProfileDetail" disabled style="display:none;">Profile Editor</button>
+      <button class="nav-tab disabled" id="tabDocTypeDetail" disabled style="display:none;">Doc Type & Fields</button>
+    </nav>
+
+    <!-- App Container -->
+    <main class="main-content">
+
+      <!-- SCREEN 0: PRODUCT DASHBOARD (Continuous Overview) -->
+      <section class="screen-view active" id="screenDashboard">
+        <div class="section-header">
+          <div>
+            <h2>Platform Overview & Operational Dashboard</h2>
+            <p class="section-desc">Unified intelligence hub tracking ingestion, multi-engine extraction, classification, validation, and structured business records.</p>
+          </div>
+          <button class="btn btn-primary" id="btnQuickUpload">+ Ingest New Document</button>
+        </div>
+
+        <!-- 5 Key Metric KPI Cards -->
+        <div class="grid grid-5 gap-3 mb-4">
+          <div class="card p-3">
+            <div class="stat-label">Total Documents</div>
+            <div class="stat-value" id="dashTotalDocs">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">In Processing</div>
+            <div class="stat-value" style="color: var(--accent-cyan);" id="dashProcessingDocs">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Approved Records</div>
+            <div class="stat-value" style="color: var(--accent-emerald);" id="dashApprovedDocs">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Needs Human Review</div>
+            <div class="stat-value" style="color: var(--accent-amber);" id="dashReviewDocs">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Failed / Flagged</div>
+            <div class="stat-value" style="color: var(--accent-rose);" id="dashFailedDocs">0</div>
+          </div>
+        </div>
+
+        <!-- Primary User Journey Quick Launchers -->
+        <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-primary);">12-Step Product Workflow</h3>
+        <div class="quick-start-grid mb-4">
+          <div class="quick-start-card" onclick="switchNavTab('tabProfiles')">
+            <span class="step-badge">Steps 1–4</span>
+            <h4>Schema & Profiles</h4>
+            <p>Define document types, custom fields, and publish versioned schemas.</p>
+          </div>
+          <div class="quick-start-card" onclick="switchNavTab('tabUpload')">
+            <span class="step-badge">Steps 5–6</span>
+            <h4>Multi-Format Ingest</h4>
+            <p>Upload PDF, image, DOCX, and XLSX files for multi-engine extraction.</p>
+          </div>
+          <div class="quick-start-card" onclick="switchNavTab('tabReviews')">
+            <span class="step-badge">Steps 7–8</span>
+            <h4>Human Review Queue</h4>
+            <p>Inspect low confidence extractions, correct fields, and revalidate.</p>
+          </div>
+          <div class="quick-start-card" onclick="switchNavTab('tabRecords')">
+            <span class="step-badge">Step 9</span>
+            <h4>Structured Records</h4>
+            <p>Search, filter, and inspect field provenance and source evidence.</p>
+          </div>
+          <div class="quick-start-card" onclick="switchNavTab('tabChat')">
+            <span class="step-badge">Step 10</span>
+            <h4>AI Chat Planner</h4>
+            <p>Query records in natural language with restricted query planning.</p>
+          </div>
+          <div class="quick-start-card" onclick="switchNavTab('tabExports')">
+            <span class="step-badge">Step 11</span>
+            <h4>Exports & Reports</h4>
+            <p>Export Excel, PDF, CSV, and Word reports with full field provenance.</p>
+          </div>
+        </div>
+
+        <!-- Recent Ingestion Stream -->
+        <div class="card p-4">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.1rem; margin: 0; color: var(--text-primary);">Recent Document Ingestion & Processing Activity</h3>
+            <button class="btn btn-secondary btn-sm" onclick="loadDashboardData()">↻ Refresh Stream</button>
+          </div>
+          <div class="table-container">
+            <table class="fields-table">
+              <thead>
+                <tr>
+                  <th>Original Filename</th>
+                  <th>Processing Profile</th>
+                  <th>Extraction Engine</th>
+                  <th>Confidence</th>
+                  <th>Current State</th>
+                  <th>Processed Date</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="dashActivityTableBody">
+                <!-- Dynamically populated activity rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 1: PROFILES LIST (Steps 1–4) -->
+      <section class="screen-view" id="screenProfiles">
+        <div class="section-header">
+          <div>
+            <h2>Processing Profiles & Schema Definitions</h2>
+            <p class="section-desc">Create and manage dynamic document processing profiles and versioned schemas for your organization.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary" onclick="deployStarterTemplate('MANUFACTURING')">Deploy Manufacturing</button>
+            <button class="btn btn-primary" id="btnNewProfile">+ Create Profile</button>
+          </div>
+        </div>
+
+        <!-- Permanent Starter Templates Banner -->
+        <div class="card p-3 mb-4" style="background: var(--bg-secondary); border: 1px solid var(--border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <strong style="color: var(--primary-accent); font-size: 0.95rem;">Enterprise Starter Templates:</strong>
+              <span style="color: var(--text-secondary); font-size: 0.85rem; margin-left: 0.5rem;">Pre-configured industry profiles with sub-schemas and custom fields.</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('MANUFACTURING')">Manufacturing</button>
+              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('HEALTHCARE')">Healthcare</button>
+              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('INVOICE')">Tax Invoices</button>
+              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('LOGISTICS')">Logistics</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-grid" id="profilesGrid">
+          <!-- Dynamically populated profile cards -->
+        </div>
+      </section>
+
+      <!-- SCREEN 2: PROFILE EDITOR -->
+      <section class="screen-view" id="screenProfileEditor">
+        <div class="breadcrumb">
+          <a href="#" id="linkBackProfiles">← Back to Profiles</a>
+        </div>
+
+        <div class="profile-header-card">
+          <div class="profile-title-bar">
+            <div>
+              <h2 id="viewProfileName">Processing Profile Name</h2>
+              <p class="profile-desc" id="viewProfileDesc">Description</p>
+            </div>
+            <div class="version-controls">
+              <div class="version-badge-container">
+                <span class="version-label">Current Schema:</span>
+                <span class="version-number" id="viewSchemaVersion">v1</span>
+                <span class="badge" id="viewSchemaStatus">DRAFT</span>
+              </div>
+              <button class="btn btn-success" id="btnPublishSchema">Publish Schema Version</button>
+            </div>
+          </div>
+          <div class="profile-actions-bar">
+            <button class="btn btn-secondary btn-sm" id="btnEditProfile">Edit Profile Info</button>
+            <button class="btn btn-secondary btn-sm" id="btnViewClassifierConfig">Preview Classifier Config</button>
+          </div>
+        </div>
+
+        <div class="section-header mt-4">
+          <div>
+            <h3>Document Types / Forms</h3>
+            <p class="section-desc">Define the document types contained within this processing profile.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btnAddDocType">+ Add Document Type</button>
+        </div>
+
+        <div class="card-grid" id="docTypesGrid">
+          <!-- Dynamically populated document type cards -->
+        </div>
+      </section>
+
+      <!-- SCREEN 3: DOCUMENT TYPE & CUSTOM FIELDS EDITOR -->
+      <section class="screen-view" id="screenDocTypeEditor">
+        <div class="breadcrumb">
+          <a href="#" id="linkBackProfileEditor">← Back to Profile Editor</a>
+        </div>
+
+        <div class="doctype-header-card">
+          <div class="doctype-title-bar">
+            <div>
+              <div class="doctype-title-row">
+                <h2 id="viewDocTypeName">Document Type Name</h2>
+                <span class="key-tag" id="viewDocTypeKey">key_name</span>
+              </div>
+              <p class="doctype-desc" id="viewDocTypeDesc">Description</p>
+              <div class="aliases-list" id="viewDocTypeAliases"></div>
+            </div>
+            <div class="doctype-actions-col">
+              <button class="btn btn-secondary btn-sm" id="btnEditDocType">Edit Info</button>
+              <button class="btn btn-secondary btn-sm" id="btnViewStructuringSchema">Preview Structuring Schema</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header mt-4">
+          <div>
+            <h3>Custom Field Definitions</h3>
+            <p class="section-desc">Define dynamic fields extracted and normalized for this document type.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btnAddField">+ Add Custom Field</button>
+        </div>
+
+        <div class="table-container">
+          <table class="fields-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">Order</th>
+                <th>Display Name & Key</th>
+                <th>Data Type</th>
+                <th>Flags</th>
+                <th>Aliases</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fieldsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: UPLOAD & INGESTION (Steps 5–6) -->
+      <section class="screen-view" id="screenUpload">
+        <div class="section-header">
+          <div>
+            <h2>Upload & Ingest Documents</h2>
+            <p class="section-desc">Select a published profile and upload PDF/image/Office documents for automated multi-engine extraction.</p>
+          </div>
+        </div>
+
+        <div class="upload-container-card">
+          <!-- Profile Selector -->
+          <div class="form-group mb-4">
+            <label for="selectPublishedProfile">Select Processing Profile (Published Schema) <span class="required">*</span></label>
+            <select id="selectPublishedProfile" class="form-control form-control-lg">
+              <option value="">-- Loading Published Profiles --</option>
+            </select>
+            <small class="form-help">Only profiles with a published schema version are selectable for reproducible ingestion.</small>
+          </div>
+
+          <!-- Drag and Drop Dropzone -->
+          <div class="dropzone" id="dropzone">
+            <div class="dropzone-icon">📄</div>
+            <div class="dropzone-title">Drag and drop document files here</div>
+            <div class="dropzone-subtitle">or click to browse from your computer</div>
+            <div class="dropzone-formats">Supported: PDF, PNG, JPG, JPEG, Word (.doc, .docx), Excel (.xls, .xlsx) &bull; Max 25MB/file &bull; Max 20 files/batch</div>
+            <input type="file" id="fileInput" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx" style="display: none;">
+          </div>
+
+          <!-- Selected Files List -->
+          <div class="selected-files-section mt-4" id="selectedFilesContainer" style="display: none;">
+            <h4>Selected Files for Upload</h4>
+            <div class="file-list" id="selectedFilesList">
+              <!-- Dynamically populated selected files -->
+            </div>
+
+            <div class="upload-actions mt-4">
+              <button class="btn btn-secondary" id="btnClearFiles">Clear Files</button>
+              <button class="btn btn-primary btn-lg" id="btnSubmitUpload">Upload & Process Documents →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 5: DOCUMENTS & JOBS SCREEN -->
+      <section class="screen-view" id="screenDocuments">
+        <div class="section-header">
+          <div>
+            <h2>Documents & Processing Pipeline</h2>
+            <p class="section-desc">Track real-time multi-engine extraction, classification, structuring, and validation pipeline stages.</p>
+          </div>
+          <button class="btn btn-secondary" id="btnRefreshDocs">↻ Refresh List</button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar mb-4">
+          <div class="filter-group">
+            <label for="filterProfile">Profile:</label>
+            <select id="filterProfile" class="form-control form-control-sm">
+              <option value="">All Profiles</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterStatus">Status:</label>
+            <select id="filterStatus" class="form-control form-control-sm">
+              <option value="">All Statuses</option>
+              <option value="UPLOADED">UPLOADED</option>
+              <option value="QUEUED">QUEUED</option>
+              <option value="EXTRACTING">EXTRACTING</option>
+              <option value="NEEDS_REVIEW">NEEDS_REVIEW</option>
+              <option value="APPROVED">APPROVED</option>
+              <option value="FAILED">FAILED</option>
+            </select>
+          </div>
+          <div class="filter-group search-group">
+            <input type="text" id="filterFilename" class="form-control form-control-sm" placeholder="Search filename...">
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="fields-table">
+            <thead>
+              <tr>
+                <th>Original Filename</th>
+                <th>Processing Profile</th>
+                <th>Extraction Engine</th>
+                <th>File Size</th>
+                <th>Status</th>
+                <th>Upload Date</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="documentsTableBody">
+              <!-- Dynamically populated document rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SCREEN 6: HUMAN REVIEW QUEUE (Steps 7–8) -->
+      <section class="screen-view" id="screenReviews">
+        <div class="section-header">
+          <div>
+            <h2>Human Review Queue</h2>
+            <p class="section-desc">Inspect, correct, and revalidate documents requiring human-in-the-loop review due to low confidence or validation failures.</p>
+          </div>
+        </div>
+
+        <!-- Summary KPI Cards -->
+        <div class="grid grid-4 mb-4">
+          <div class="card p-3">
+            <div class="stat-label">Open Reviews</div>
+            <div class="stat-value" id="kpiOpenReviews">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Classification Issues</div>
+            <div class="stat-value" style="color: var(--accent-cyan);" id="kpiClassReviews">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Field Issues</div>
+            <div class="stat-value" style="color: var(--accent-amber);" id="kpiFieldReviews">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Validation Failures</div>
+            <div class="stat-value" style="color: var(--accent-rose);" id="kpiValReviews">0</div>
+          </div>
+        </div>
+
+        <!-- Review Filter Bar -->
+        <div class="filter-bar mb-4">
+          <div class="filter-group">
+            <label for="filterReviewType">Category:</label>
+            <select id="filterReviewType" class="form-control form-control-sm">
+              <option value="">All Categories</option>
+              <option value="CLASSIFICATION">Classification</option>
+              <option value="FIELD">Field</option>
+              <option value="VALIDATION">Validation</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterReviewReason">Reason:</label>
+            <select id="filterReviewReason" class="form-control form-control-sm">
+              <option value="">All Reasons</option>
+              <option value="LOW_CLASSIFICATION_CONFIDENCE">LOW_CLASSIFICATION_CONFIDENCE</option>
+              <option value="UNKNOWN_DOCUMENT_TYPE">UNKNOWN_DOCUMENT_TYPE</option>
+              <option value="LOW_FIELD_CONFIDENCE">LOW_FIELD_CONFIDENCE</option>
+              <option value="VALIDATION_FAILED">VALIDATION_FAILED</option>
+              <option value="INSUFFICIENT_PAGE_CONTENT">INSUFFICIENT_PAGE_CONTENT</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterReviewStatus">Status:</label>
+            <select id="filterReviewStatus" class="form-control form-control-sm">
+              <option value="">All Statuses</option>
+              <option value="OPEN">OPEN</option>
+              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="RESOLVED">RESOLVED</option>
+              <option value="REJECTED">REJECTED</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="fields-table">
+            <thead>
+              <tr>
+                <th>Review Item</th>
+                <th>Type / Category</th>
+                <th>Review Reason</th>
+                <th>Confidence</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Created At</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="reviewTableBody">
+              <!-- Dynamically populated review queue -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SCREEN 7: STRUCTURED RECORDS & SEARCH (Step 9) -->
+      <section class="screen-view" id="screenRecords">
+        <div class="section-header">
+          <div>
+            <h2>Structured Business Records & Search Workspace</h2>
+            <p class="section-desc">Search, filter, and inspect completed business records extracted across dynamic document profiles.</p>
+          </div>
+        </div>
+
+        <!-- Search Controls Card -->
+        <div class="card p-4 mb-4" style="background: var(--bg-card); border: 1px solid var(--border);">
+          <div class="grid grid-4 gap-3 mb-3">
+            <div>
+              <label for="searchQuery">Full-Text Search Term:</label>
+              <input type="text" id="searchQuery" class="form-control" placeholder="Search filename, document type, OCR text...">
+            </div>
+            <div>
+              <label for="searchProfile">Profile Filter:</label>
+              <select id="searchProfile" class="form-control">
+                <option value="">All Profiles</option>
+              </select>
+            </div>
+            <div>
+              <label for="searchDocType">Document Type:</label>
+              <select id="searchDocType" class="form-control">
+                <option value="">All Document Types</option>
+              </select>
+            </div>
+            <div>
+              <label for="searchRecordStatus">Status:</label>
+              <select id="searchRecordStatus" class="form-control">
+                <option value="APPROVED">APPROVED (Default)</option>
+                <option value="DRAFT">DRAFT</option>
+                <option value="ALL">ALL STATUSES</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn btn-secondary btn-sm" id="btnAddDynamicFilter">+ Add Dynamic Field Filter</button>
+            <div>
+              <button class="btn btn-secondary btn-sm me-2" id="btnClearSearch">Clear Filters</button>
+              <button class="btn btn-primary btn-sm" id="btnExecuteSearch">Search Records</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Filter Rows Container -->
+          <div id="dynamicFilterRows" class="mt-3">
+            <!-- Dynamically appended filter rows -->
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="fields-table">
+            <thead>
+              <tr>
+                <th>Original Filename</th>
+                <th>Document Type</th>
+                <th>Schema Version</th>
+                <th>Extracted Field Summary</th>
+                <th>Status</th>
+                <th>Processed Date</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody">
+              <!-- Dynamically populated structured records -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SCREEN 8: AI CHAT ASSISTANT (Step 10) -->
+      <section class="screen-view" id="screenChat">
+        <div class="section-header">
+          <div>
+            <h2>AI Assistant & Structured Query Planner</h2>
+            <p class="section-desc">Ask natural language questions over processed business records using restricted query planning and strict grounding.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btnClearChatHistory">Clear Chat</button>
+        </div>
+
+        <div class="chat-container">
+          <!-- Chat Message Stream -->
+          <div class="chat-messages" id="chatMessagesStream">
+            <div class="chat-bubble assistant">
+              <span class="query-plan-tag">AI Query Planner Active</span>
+              <p style="margin: 0;">Hello! I can answer questions, summarize metrics, or aggregate data over your structured document records. Ask me anything like <em>"What is the total spend in August?"</em> or <em>"Count records by document type"</em>.</p>
+            </div>
+          </div>
+
+          <!-- Suggestion Chips -->
+          <div class="chat-suggestion-chips">
+            <span class="suggestion-chip" onclick="sendSuggestedChat('What is the total sum of all invoice amounts?')">💰 Total Spend Sum</span>
+            <span class="suggestion-chip" onclick="sendSuggestedChat('Count approved records by document type')">📊 Count by Document Type</span>
+            <span class="suggestion-chip" onclick="sendSuggestedChat('How many documents require human review?')">⚠️ Review Items Count</span>
+            <span class="suggestion-chip" onclick="sendSuggestedChat('List the latest 5 processed records')">🕒 Recent 5 Records</span>
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-bar">
+            <input type="text" id="chatInputText" class="form-control" placeholder="Ask a question about your business records..." onkeydown="if(event.key==='Enter') submitChatMessage()">
+            <button class="btn btn-primary" id="btnSendChat" onclick="submitChatMessage()">Ask Assistant →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 9: EXPORT & BUSINESS REPORTING (Step 11) -->
+      <section class="screen-view" id="screenExports">
+        <div class="section-header">
+          <div>
+            <h2>Export & Business Reporting</h2>
+            <p class="section-desc">Generate multi-format exports (CSV, XLSX, JSON, PDF, DOCX) and view PostgreSQL analytics for approved records.</p>
+          </div>
+        </div>
+
+        <!-- Export Sub-Tabs -->
+        <div class="sub-nav mb-4" style="border-bottom: 1px solid var(--border-color);">
+          <button class="nav-tab active" id="tabExportBuilder" onclick="switchExportSubTab('viewExportBuilder')">Export Builder</button>
+          <button class="nav-tab" id="tabReportingDashboard" onclick="switchExportSubTab('viewReportingDashboard')">Reporting Dashboard</button>
+          <button class="nav-tab" id="tabExportHistory" onclick="switchExportSubTab('viewExportHistory')">Export History</button>
+        </div>
+
+        <!-- VIEW 1: EXPORT BUILDER -->
+        <div id="viewExportBuilder">
+          <!-- Live Scope & Record Counter Header -->
+          <div class="card p-3 mb-4" style="background: var(--bg-secondary); border: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.06em;">Enterprise Multi-Format Exporter</div>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-top: 0.2rem;" id="exportScopeSummary">All Profiles & Document Types Selected</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span class="badge badge-published" style="font-size: 0.88rem; padding: 0.45rem 0.85rem;" id="exportMatchingCountBadge">⚡ Matching: Ready for Export</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-2 gap-4">
+            <!-- Left Card: Scope & Format -->
+            <div class="card p-4">
+              <h4 class="mb-3" style="color: var(--primary-accent); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>1.</span> Scope & Format Selection
+              </h4>
+              
+              <div class="form-group mb-3">
+                <label for="exportProfile" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Filter by Profile:</label>
+                <select id="exportProfile" class="form-control" onchange="updateExportScopePreview()">
+                  <option value="">All Published Profiles</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-4">
+                <label for="exportDocType" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Filter by Document Type:</label>
+                <select id="exportDocType" class="form-control" onchange="updateExportScopePreview()">
+                  <option value="">All Document Types</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; display: block;">Select Target Export Format:</label>
+                <div class="grid grid-5 gap-2" style="grid-template-columns: repeat(5, 1fr);">
+                  <button type="button" class="btn btn-secondary export-format-btn active" id="btnFormatCSV" onclick="setExportFormat('CSV')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                    CSV
+                  </button>
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatExcel" onclick="setExportFormat('Excel')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                    Excel
+                  </button>
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatJSON" onclick="setExportFormat('JSON')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                    JSON
+                  </button>
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatPDF" onclick="setExportFormat('PDF')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                    PDF
+                  </button>
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatWord" onclick="setExportFormat('Word')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                    Word
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Card: Options & Generation CTA -->
+            <div class="card p-4" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 class="mb-3" style="color: var(--primary-accent); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                  <span>2.</span> Data Options & Fields
+                </h4>
+                
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+                  <label style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
+                    <input type="checkbox" id="chkExportMeta" checked style="margin-top: 0.2rem; transform: scale(1.15);">
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Standard Metadata</div>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports Record ID, Original Filename, Document Type, Status, and Ingestion Date.</div>
+                    </div>
+                  </label>
+
+                  <label style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
+                    <input type="checkbox" id="chkExportConfidence" style="margin-top: 0.2rem; transform: scale(1.15);">
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Extraction Confidence</div>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports per-field OCR and machine extraction confidence percentages.</div>
+                    </div>
+                  </label>
+
+                  <label style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
+                    <input type="checkbox" id="chkExportValidation" style="margin-top: 0.2rem; transform: scale(1.15);">
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Validation History</div>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports human correction notes, revalidation status, and rule audit logs.</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <button class="btn btn-primary w-100" id="btnGenerateExport" onclick="triggerDocumentExport()" style="font-size: 1rem; padding: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                  <span>⬇</span> <span id="lblGenerateExportBtn">Generate & Download CSV File</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 2: REPORTING DASHBOARD -->
+        <div id="viewReportingDashboard" style="display: none;">
+          <div class="grid grid-3 gap-3 mb-4">
+            <div class="card p-3">
+              <div class="stat-label">Total Approved Records</div>
+              <div class="stat-value" id="repTotalRecords">0</div>
+            </div>
+            <div class="card p-3">
+              <div class="stat-label">Human Review Rate</div>
+              <div class="stat-value" id="repReviewRate" style="color: var(--primary-accent);">0%</div>
+            </div>
+            <div class="card p-3">
+              <div class="stat-label">Validation Pass Rate</div>
+              <div class="stat-value" id="repValidationPassRate" style="color: var(--accent-emerald);">98%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 3: EXPORT HISTORY -->
+        <div id="viewExportHistory" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h4 style="margin: 0; color: var(--text-primary); font-size: 1.05rem;">Generated Export Files</h4>
+            <button class="btn btn-secondary btn-sm" onclick="clearAllExportHistory()" style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.3);">🗑 Clear All History</button>
+          </div>
+          <div class="table-container">
+            <table class="fields-table">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th>Format</th>
+                  <th>Record Count</th>
+                  <th>Status</th>
+                  <th>Created Date</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="exportHistoryTableBody">
+                <!-- Dynamically populated export history -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==========================================
+       MODALS SECTION
+       ========================================== -->
+
+  <!-- MODAL 1: CREATE / EDIT PROFILE -->
+  <div class="modal-overlay" id="modalProfile">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalProfileTitle">Create Processing Profile</h3>
+        <button class="modal-close" id="btnCloseModalProfile">&times;</button>
+      </div>
+      <form id="formProfile">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="profileName">Profile Name <span class="required">*</span></label>
+            <input type="text" id="profileName" class="form-control" placeholder="e.g. Accounts Payable Invoices" required>
+          </div>
+          <div class="form-group">
+            <label for="profileDesc">Description</label>
+            <textarea id="profileDesc" class="form-control" rows="3" placeholder="Purpose and workflow description"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelProfile">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: ADD / EDIT DOCUMENT TYPE -->
+  <div class="modal-overlay" id="modalDocType">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalDocTypeTitle">Add Document Type</h3>
+        <button class="modal-close" id="btnCloseModalDocType">&times;</button>
+      </div>
+      <form id="formDocType">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="docTypeName">Document Type Name <span class="required">*</span></label>
+            <input type="text" id="docTypeName" class="form-control" placeholder="e.g. Vendor Standard Invoice" required>
+          </div>
+          <div class="form-group">
+            <label for="docTypeKey">Type Key (snake_case) <span class="required">*</span></label>
+            <input type="text" id="docTypeKey" class="form-control" placeholder="vendor_standard_invoice" required>
+          </div>
+          <div class="form-group">
+            <label for="docTypeDesc">Description</label>
+            <textarea id="docTypeDesc" class="form-control" rows="2" placeholder="Brief explanation of this document format"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="docTypeAliases">Alternative Names / Aliases (Comma separated)</label>
+            <input type="text" id="docTypeAliases" class="form-control" placeholder="Intake Form, Admission Slip">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelDocType">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Document Type</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: ADD / EDIT CUSTOM FIELD -->
+  <div class="modal-overlay" id="modalField">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalFieldTitle">Add Custom Field</h3>
+        <button class="modal-close" id="btnCloseModalField">&times;</button>
+      </div>
+      <form id="formField">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="fieldName">Field Display Name <span class="required">*</span></label>
+            <input type="text" id="fieldName" class="form-control" placeholder="e.g. Patient Full Name" required>
+          </div>
+          <div class="form-group">
+            <label for="fieldKey">Field Key (snake_case) <span class="required">*</span></label>
+            <input type="text" id="fieldKey" class="form-control" placeholder="patient_full_name" required>
+          </div>
+          <div class="form-group">
+            <label for="fieldType">Data Type <span class="required">*</span></label>
+            <select id="fieldType" class="form-control" required>
+              <option value="string">String (Text)</option>
+              <option value="integer">Integer (Whole Number)</option>
+              <option value="decimal">Decimal (Currency / Precision Number)</option>
+              <option value="date">Date (YYYY-MM-DD)</option>
+              <option value="datetime">Datetime (ISO Timestamp)</option>
+              <option value="boolean">Boolean (True / False)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group checkbox-group">
+              <label><input type="checkbox" id="fieldRequired"> Required Field</label>
+            </div>
+            <div class="form-group checkbox-group">
+              <label><input type="checkbox" id="fieldMultiple"> Allow Multiple Values</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fieldDesc">Description / Help Text</label>
+            <input type="text" id="fieldDesc" class="form-control" placeholder="Instructions for field extraction">
+          </div>
+          <div class="form-group">
+            <label for="fieldAliases">Aliases / Alternative Labels (Comma separated)</label>
+            <input type="text" id="fieldAliases" class="form-control" placeholder="Client Name, Buyer Name">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelField">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Field</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: DOCUMENT DETAIL & TIMELINE -->
+  <div class="modal-overlay" id="modalDocDetail">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h3>Document Ingestion & Pipeline Timeline</h3>
+        <button class="modal-close" id="btnCloseDocDetail">&times;</button>
+      </div>
+      <div class="modal-body" id="docDetailContent">
+        <!-- Dynamically populated document detail -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnCloseDocDetailBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5: JSON CONFIG PREVIEW DRAWER -->
+  <div class="modal-overlay" id="modalConfigPreview">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h3 id="previewTitle">Config Preview</h3>
+        <button class="modal-close" id="btnClosePreview">&times;</button>
+      </div>
+      <div class="modal-body">
+        <pre class="json-code" id="jsonPreviewContent"></pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnClosePreviewBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 6: INTERACTIVE REVIEW WORKSPACE -->
+  <div class="modal-overlay" id="modalReviewWorkspace">
+    <div class="modal-card modal-large" style="max-width: 1100px; width: 95%;">
+      <div class="modal-header">
+        <h3 id="workspaceTitle">Review Workspace</h3>
+        <button class="modal-close" id="btnCloseWorkspace" onclick="closeModal('modalReviewWorkspace')">&times;</button>
+      </div>
+      <div class="modal-body" id="workspaceContent">
+        <!-- Dynamically populated workspace -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modalReviewWorkspace')">Close Workspace</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 7: FIELD PROVENANCE & TRACEABILITY MODAL -->
+  <div class="modal-overlay" id="modalRecordDetail">
+    <div class="modal-card modal-large" style="max-width: 1100px; width: 95%;">
+      <div class="modal-header">
+        <div>
+          <h3 id="recDetailTitle">Record Detail & Provenance Traceability</h3>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem; color: #94a3b8;" id="recDetailSubtitle">Full field lineage, source evidence snippets, and machine vs human audit values.</p>
+        </div>
+        <button class="modal-close" onclick="closeModal('modalRecordDetail')">&times;</button>
+      </div>
+      <div class="modal-body" id="recDetailBody">
+        <!-- Dynamically populated record details -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modalRecordDetail')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 8: MULTI-ENGINE EXTRACTION COMPARISON MODAL -->
+  <div id="modalEngineComparison" class="modal-overlay">
+    <div class="modal-card modal-large" style="max-width: 1080px; width: 95%;">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div>
+          <h3>
+            <span>⚡</span> Multi-Engine Extraction & Comparison Scorecard
+          </h3>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #94a3b8;" id="compModalSubtitle">Evaluating Engine 1 (Native), Engine 2 (OCR API), and Engine 3 (Python Engine)</p>
+        </div>
+        <button type="button" class="modal-close" onclick="closeEngineComparisonModal()">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body" id="compModalBody">
+        <div class="text-center p-4 text-muted">Loading extraction engine comparison...</div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeEngineComparisonModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTERPRISE TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

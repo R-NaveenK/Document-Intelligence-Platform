@@ -1,0 +1,20 @@
+{
+  "document_id": "INV-2001",
+  "document_type": "invoice",
+  "invoice_number": "INV-2001",
+  "invoice_date": "2026-08-10",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "gst_number": "33ABCDE1234F1Z5",
+  "po_number": "PO-2001",
+  "items": [
+    {
+      "description": "Desktop PC",
+      "quantity": 50,
+      "unit_price": 40000,
+      "tax_rate": 18
+    }
+  ],
+  "subtotal": 2000000,
+  "tax_amount": 360000,
+  "total_amount": 2360000
+}

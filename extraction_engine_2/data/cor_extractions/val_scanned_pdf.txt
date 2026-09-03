@@ -1,0 +1,11 @@
+----------------------------------------
+PAGE 1
+----------------------------------------
+
+TAXINVOICE
+TECHSOLUTIONS PVT LTD
+GSTIN: 29AABCT1234Q1Z5
+nvoice No TSPL/INV/2026-27/0897
+Date: 02-09-2026
+Sill To: ABC INDUSTRIES LTD
+rand Total: Rs 456,660

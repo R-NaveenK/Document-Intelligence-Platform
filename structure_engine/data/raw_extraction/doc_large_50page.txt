@@ -1,0 +1,801 @@
+=== PAGE 1 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-001
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 1
+
+Page Item Table 1:
+1 Industrial Component Spec 01 84713010 1 Nos 1000.00 1000.00
+
+Audit Log Entry 1: System record verified by Inspector 1.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 2 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-002
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 2
+
+Page Item Table 2:
+2 Industrial Component Spec 02 84713010 2 Nos 2000.00 4000.00
+
+Audit Log Entry 2: System record verified by Inspector 2.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 3 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-003
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 3
+
+Page Item Table 3:
+3 Industrial Component Spec 03 84713010 3 Nos 3000.00 9000.00
+
+Audit Log Entry 3: System record verified by Inspector 3.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 4 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-004
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 4
+
+Page Item Table 4:
+4 Industrial Component Spec 04 84713010 4 Nos 4000.00 16000.00
+
+Audit Log Entry 4: System record verified by Inspector 4.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 5 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-005
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 5
+
+Page Item Table 5:
+5 Industrial Component Spec 05 84713010 5 Nos 5000.00 25000.00
+
+Audit Log Entry 5: System record verified by Inspector 5.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 6 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-006
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 6
+
+Page Item Table 6:
+6 Industrial Component Spec 06 84713010 6 Nos 6000.00 36000.00
+
+Audit Log Entry 6: System record verified by Inspector 6.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 7 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-007
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 7
+
+Page Item Table 7:
+7 Industrial Component Spec 07 84713010 7 Nos 7000.00 49000.00
+
+Audit Log Entry 7: System record verified by Inspector 7.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 8 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-008
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 8
+
+Page Item Table 8:
+8 Industrial Component Spec 08 84713010 8 Nos 8000.00 64000.00
+
+Audit Log Entry 8: System record verified by Inspector 8.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 9 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-009
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 9
+
+Page Item Table 9:
+9 Industrial Component Spec 09 84713010 9 Nos 9000.00 81000.00
+
+Audit Log Entry 9: System record verified by Inspector 9.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 10 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-010
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 10
+
+Page Item Table 10:
+10 Industrial Component Spec 10 84713010 10 Nos 10000.00 100000.00
+
+Audit Log Entry 10: System record verified by Inspector 10.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 11 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-011
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 11
+
+Page Item Table 11:
+11 Industrial Component Spec 11 84713010 11 Nos 11000.00 121000.00
+
+Audit Log Entry 11: System record verified by Inspector 11.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 12 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-012
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 12
+
+Page Item Table 12:
+12 Industrial Component Spec 12 84713010 12 Nos 12000.00 144000.00
+
+Audit Log Entry 12: System record verified by Inspector 12.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 13 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-013
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 13
+
+Page Item Table 13:
+13 Industrial Component Spec 13 84713010 13 Nos 13000.00 169000.00
+
+Audit Log Entry 13: System record verified by Inspector 13.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 14 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-014
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 14
+
+Page Item Table 14:
+14 Industrial Component Spec 14 84713010 14 Nos 14000.00 196000.00
+
+Audit Log Entry 14: System record verified by Inspector 14.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 15 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-015
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 15
+
+Page Item Table 15:
+15 Industrial Component Spec 15 84713010 15 Nos 15000.00 225000.00
+
+Audit Log Entry 15: System record verified by Inspector 15.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 16 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-016
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 16
+
+Page Item Table 16:
+16 Industrial Component Spec 16 84713010 16 Nos 16000.00 256000.00
+
+Audit Log Entry 16: System record verified by Inspector 16.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 17 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-017
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 17
+
+Page Item Table 17:
+17 Industrial Component Spec 17 84713010 17 Nos 17000.00 289000.00
+
+Audit Log Entry 17: System record verified by Inspector 17.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 18 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-018
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 18
+
+Page Item Table 18:
+18 Industrial Component Spec 18 84713010 18 Nos 18000.00 324000.00
+
+Audit Log Entry 18: System record verified by Inspector 18.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 19 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-019
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 19
+
+Page Item Table 19:
+19 Industrial Component Spec 19 84713010 19 Nos 19000.00 361000.00
+
+Audit Log Entry 19: System record verified by Inspector 19.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 20 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-020
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 20
+
+Page Item Table 20:
+20 Industrial Component Spec 20 84713010 20 Nos 20000.00 400000.00
+
+Audit Log Entry 20: System record verified by Inspector 20.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 21 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-021
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 21
+
+Page Item Table 21:
+21 Industrial Component Spec 21 84713010 21 Nos 21000.00 441000.00
+
+Audit Log Entry 21: System record verified by Inspector 21.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 22 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-022
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 22
+
+Page Item Table 22:
+22 Industrial Component Spec 22 84713010 22 Nos 22000.00 484000.00
+
+Audit Log Entry 22: System record verified by Inspector 22.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 23 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-023
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 23
+
+Page Item Table 23:
+23 Industrial Component Spec 23 84713010 23 Nos 23000.00 529000.00
+
+Audit Log Entry 23: System record verified by Inspector 23.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 24 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-024
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 24
+
+Page Item Table 24:
+24 Industrial Component Spec 24 84713010 24 Nos 24000.00 576000.00
+
+Audit Log Entry 24: System record verified by Inspector 24.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 25 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-025
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 25
+
+Page Item Table 25:
+25 Industrial Component Spec 25 84713010 25 Nos 25000.00 625000.00
+
+Audit Log Entry 25: System record verified by Inspector 25.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 26 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-026
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 26
+
+Page Item Table 26:
+26 Industrial Component Spec 26 84713010 26 Nos 26000.00 676000.00
+
+Audit Log Entry 26: System record verified by Inspector 26.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 27 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-027
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 27
+
+Page Item Table 27:
+27 Industrial Component Spec 27 84713010 27 Nos 27000.00 729000.00
+
+Audit Log Entry 27: System record verified by Inspector 27.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 28 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-028
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 28
+
+Page Item Table 28:
+28 Industrial Component Spec 28 84713010 28 Nos 28000.00 784000.00
+
+Audit Log Entry 28: System record verified by Inspector 28.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 29 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-029
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 29
+
+Page Item Table 29:
+29 Industrial Component Spec 29 84713010 29 Nos 29000.00 841000.00
+
+Audit Log Entry 29: System record verified by Inspector 29.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 30 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-030
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 30
+
+Page Item Table 30:
+30 Industrial Component Spec 30 84713010 30 Nos 30000.00 900000.00
+
+Audit Log Entry 30: System record verified by Inspector 30.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 31 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-031
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 31
+
+Page Item Table 31:
+31 Industrial Component Spec 31 84713010 31 Nos 31000.00 961000.00
+
+Audit Log Entry 31: System record verified by Inspector 31.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 32 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-032
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 32
+
+Page Item Table 32:
+32 Industrial Component Spec 32 84713010 32 Nos 32000.00 1024000.00
+
+Audit Log Entry 32: System record verified by Inspector 32.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 33 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-033
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 33
+
+Page Item Table 33:
+33 Industrial Component Spec 33 84713010 33 Nos 33000.00 1089000.00
+
+Audit Log Entry 33: System record verified by Inspector 33.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 34 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-034
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 34
+
+Page Item Table 34:
+34 Industrial Component Spec 34 84713010 34 Nos 34000.00 1156000.00
+
+Audit Log Entry 34: System record verified by Inspector 34.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 35 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-035
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 35
+
+Page Item Table 35:
+35 Industrial Component Spec 35 84713010 35 Nos 35000.00 1225000.00
+
+Audit Log Entry 35: System record verified by Inspector 35.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 36 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-036
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 36
+
+Page Item Table 36:
+36 Industrial Component Spec 36 84713010 36 Nos 36000.00 1296000.00
+
+Audit Log Entry 36: System record verified by Inspector 36.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 37 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-037
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 37
+
+Page Item Table 37:
+37 Industrial Component Spec 37 84713010 37 Nos 37000.00 1369000.00
+
+Audit Log Entry 37: System record verified by Inspector 37.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 38 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-038
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 38
+
+Page Item Table 38:
+38 Industrial Component Spec 38 84713010 38 Nos 38000.00 1444000.00
+
+Audit Log Entry 38: System record verified by Inspector 38.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 39 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-039
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 39
+
+Page Item Table 39:
+39 Industrial Component Spec 39 84713010 39 Nos 39000.00 1521000.00
+
+Audit Log Entry 39: System record verified by Inspector 39.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 40 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-040
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 40
+
+Page Item Table 40:
+40 Industrial Component Spec 40 84713010 40 Nos 40000.00 1600000.00
+
+Audit Log Entry 40: System record verified by Inspector 40.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 41 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-041
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 41
+
+Page Item Table 41:
+41 Industrial Component Spec 41 84713010 41 Nos 41000.00 1681000.00
+
+Audit Log Entry 41: System record verified by Inspector 41.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 42 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-042
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 42
+
+Page Item Table 42:
+42 Industrial Component Spec 42 84713010 42 Nos 42000.00 1764000.00
+
+Audit Log Entry 42: System record verified by Inspector 42.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 43 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-043
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 43
+
+Page Item Table 43:
+43 Industrial Component Spec 43 84713010 43 Nos 43000.00 1849000.00
+
+Audit Log Entry 43: System record verified by Inspector 43.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 44 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-044
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 44
+
+Page Item Table 44:
+44 Industrial Component Spec 44 84713010 44 Nos 44000.00 1936000.00
+
+Audit Log Entry 44: System record verified by Inspector 44.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 45 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-045
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 45
+
+Page Item Table 45:
+45 Industrial Component Spec 45 84713010 45 Nos 45000.00 2025000.00
+
+Audit Log Entry 45: System record verified by Inspector 45.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 46 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-046
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 46
+
+Page Item Table 46:
+46 Industrial Component Spec 46 84713010 46 Nos 46000.00 2116000.00
+
+Audit Log Entry 46: System record verified by Inspector 46.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 47 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-047
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 47
+
+Page Item Table 47:
+47 Industrial Component Spec 47 84713010 47 Nos 47000.00 2209000.00
+
+Audit Log Entry 47: System record verified by Inspector 47.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 48 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-048
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 48
+
+Page Item Table 48:
+48 Industrial Component Spec 48 84713010 48 Nos 48000.00 2304000.00
+
+Audit Log Entry 48: System record verified by Inspector 48.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 49 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-049
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 49
+
+Page Item Table 49:
+49 Industrial Component Spec 49 84713010 49 Nos 49000.00 2401000.00
+
+Audit Log Entry 49: System record verified by Inspector 49.
+Status: Operational.
+[PAGE_BREAK]
+=== PAGE 50 of 50 ===
+CONTRACT & TAX INVOICE DOCUMENT - BATCH EXECUTION 2026
+Vendor: MegaIndustrial Global Supplies Ltd
+Vendor Code: MIGS-IND-90218
+Page Reference: DOC-PAGE-050
+Invoice No: MIGS/2026/89431
+Invoice Date: 03-09-2026
+Bill To: ZENITH INFOTECH ENTERPRISES LTD
+Delivery Location: Warehouse Zone 50
+
+Page Item Table 50:
+50 Industrial Component Spec 50 84713010 50 Nos 50000.00 2500000.00
+
+Audit Log Entry 50: System record verified by Inspector 50.
+Status: Operational.
+Grand Total Amount: Rs. 15,75,000.00
+Final settlement value: Rs. 15,75,000.00

@@ -1,0 +1,26 @@
+----------------------------------------
+PAGE 1
+----------------------------------------
+
+TAX INVOICE
+Bill No:
+INV-2026-0098
+Bill To:
+ABC INDUSTRIES LTD
+45 Industrial Layout, Whitefield, Bengaluru - 560066
+GSTIN: 29AAACB1234C1Z6
+PAN: AAACB1234C
+CIN: U72200KA2015PTC081234
+IFSC: HDFC0001234
+Account: 50200012345678
+Date:
+02-09-2026
+Items
+Dell Latitude 5440 Laptop
+5
+58500.00
+Logitech MX Mechanical Keyboard
+10
+14500.00
+Grand Total:
+Rs. 48,500

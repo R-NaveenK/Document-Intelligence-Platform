@@ -1,0 +1,15 @@
+{
+  "document_id": "PO-1001",
+  "document_type": "purchase_order",
+  "po_number": "PO-1001",
+  "po_date": "2026-08-25",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "items": [
+    {
+      "description": "Laptop",
+      "quantity": 10,
+      "unit_price": 50000
+    }
+  ],
+  "total_amount": 500000
+}

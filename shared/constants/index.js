@@ -1,0 +1,10 @@
+const { PROCESSING_STATUS, VALIDATION_STATUS } = require('./statuses');
+const { REVIEW_TYPES, REVIEW_STATUS, REVIEW_REASONS } = require('./reviewConstants');
+
+module.exports = {
+  PROCESSING_STATUS,
+  VALIDATION_STATUS,
+  REVIEW_TYPES,
+  REVIEW_STATUS,
+  REVIEW_REASONS
+};

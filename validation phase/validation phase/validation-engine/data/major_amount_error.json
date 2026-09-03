@@ -1,0 +1,13 @@
+{
+  "document_id": "INV-1003",
+  "document_type": "invoice",
+  "invoice_number": "INV-1003",
+  "invoice_date": "2026-09-02",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "gst_number": "33ABCDE1234F1Z5",
+  "quantity": 10,
+  "unit_price": 10000,
+  "subtotal": 100000,
+  "tax": 0,
+  "total_amount": 150000
+}

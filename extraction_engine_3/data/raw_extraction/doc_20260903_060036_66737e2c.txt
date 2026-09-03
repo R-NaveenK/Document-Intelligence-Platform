@@ -1,0 +1,57 @@
+SUNRISE SPECIALITY HOSPITAL
+48 Avinashi Road, Coimbatore, Tamil Nadu - 641018
+Phone: +91 422 555 2277    |    GSTIN: 33FGHIJ5678K1Z2
+PATIENT INVOICE
+Invoice Number
+HSP-INV-2026-1052
+Invoice Date
+2026-09-01
+Patient Name
+Arun Kumar
+Patient ID
+PAT-1042
+Admission Number
+ADM-2026-0844
+Department
+Orthopaedics
+Doctor Name
+Dr. Meera Nair
+Payment Status
+PAID
+Billing Details
+Description
+Qty
+Unit Price (INR)
+Amount (INR)
+Specialist Consultation
+1
+1,200.00
+1,200.00
+X-Ray & Imaging
+1
+2,800.00
+2,800.00
+Room Charges
+2
+3,500.00
+7,000.00
+Medicines
+1
+4,200.00
+4,200.00
+Physiotherapy
+2
+1,500.00
+3,000.00
+Subtotal
+18,200.00
+GST (5%)
+910.00
+Discount
+-410.00
+TOTAL AMOUNT
+18,700.00
+Payment Method: Credit Card
+Transaction Reference: TXN26090155281
+Billing Officer: Kavitha R.
+Synthetic sample document created only for IDP testing. No real patient or transaction is represented.

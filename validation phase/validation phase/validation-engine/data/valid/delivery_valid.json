@@ -1,0 +1,13 @@
+{
+  "document_id": "DEL-1001",
+  "document_type": "delivery_receipt",
+  "delivery_date": "2026-08-30",
+  "po_number": "PO-1001",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "items": [
+    {
+      "description": "Laptop",
+      "quantity_delivered": 10
+    }
+  ]
+}

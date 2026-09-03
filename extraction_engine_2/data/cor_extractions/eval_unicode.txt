@@ -1,0 +1,10 @@
+INTERNATIONAL CURRENCY & MULTILINGUAL SETTLEMENT
+
+Bill No: INV-2026-0098
+Customer: ABC INDUSTRIES LTD
+INR Total: ₹48,500.00
+EUR Amount: €550.00
+USD Amount: $600.00
+GBP Amount: £480.00
+JPY Amount: ¥88,000
+Multilingual Notes: Société Générale | Merci beaucoup | Vielen Dank | धन्यवाद | شكرا

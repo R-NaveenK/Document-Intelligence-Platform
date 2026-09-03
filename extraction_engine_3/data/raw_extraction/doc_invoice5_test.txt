@@ -1,0 +1,35 @@
+TAX INVOICE
+TECHSOLUTIONS PVT. LTD.	Invoice No	:	TSPL/INV/2026-27/0897
+123, 4th Floor, Prestige Tech Park	Invoice Date	:	02-09-2026
+Marathahalli Outer Ring Road	Due Date	:	17-09-2026
+Bengaluru - 560103, Karnataka, India	PO Number	:	PO/2026-27/0456
+Phone: +91 80 4123 4567	Place of Supply	:	Karnataka (29)
+Email: info@techsolutions.com	Reverse Charge	:	No
+GSTIN: 29AABCT1234Q1Z5
+CIN: U72200KA2018PTC123456
+Website: www.techsolutions.com
+BILL TO:	SHIP TO:
+ABC INDUSTRIES LTD.	ABC INDUSTRIES LTD.
+45, Industrial Area, Whitefield	Warehouse No. 7, KIADB Industrial Area
+Bengaluru - 560066, Karnataka, India	Hoskote, Bengaluru - 562114, Karnataka, India
+GSTIN: 29AAACB1234C1Z6	State: Karnataka (29)
+State: Karnataka (29)
+S.No.	Description of Goods	HSN/SAC	Qty	Unit	Unit Price (₹)	Amount (₹)
+1	Dell Latitude 5440 Laptop	84713010	5	Nos	58500	292500
+2	Logitech MX Master 3S Mouse	84716060	10	Nos	9450	94500
+3	Samsung 24-inch FHD Monitor	85285200	5	Nos	13500	67500
+4	Zebronics Keyboard & Mouse Combo	84716040	10	Nos	1250	12500
+5	HP 65W Type-C Laptop Charger	85044090	5	Nos	2650	13250
+Amount in Words:	Subtotal	480250
+Four Lakh Eighty Nine Thousand Seventy Five Rupees Only	CGST @ 9%	43222.5
+SGST @ 9%	43222.5
+IGST @ 18%	-
+BANK DETAILS:	Total Invoice Amount	489075
+Bank Name	HDFC Bank Ltd.	TERMS & CONDITIONS:
+A/C Name	TechSolutions Pvt. Ltd.	1. Payment to be made within 15 days from the invoice date.
+A/C Number	50200012345678	2. Interest @ 18% p.a. will be charged on delayed payments.
+IFSC Code	HDFC0001234	3. Goods once sold will not be taken back.
+Branch	Marathahalli, Bengaluru	4. All disputes are subject to Bengaluru jurisdiction only.
+For TechSolutions Pvt. Ltd.
+Authorized Signatory
+Thank you for your business!

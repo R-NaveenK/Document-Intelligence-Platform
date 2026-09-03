@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClassifierOutput",
+  "type": "object",
+  "required": ["jobId", "fileId", "pageGroups"],
+  "properties": {
+    "jobId": { "type": "string" },
+    "fileId": { "type": "string" },
+    "pageClassifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pageNumber", "confidence", "classificationMethod", "boundary", "requiresReview"],
+        "properties": {
+          "pageNumber": { "type": "integer" },
+          "documentTypeId": { "type": ["string", "null"] },
+          "documentType": { "type": ["string", "null"] },
+          "confidence": { "type": "number" },
+          "classificationMethod": { "type": "string" },
+          "boundary": { "type": "string" },
+          "requiresReview": { "type": "boolean" },
+          "reviewReason": { "type": ["string", "null"] },
+          "scores": { "type": "object" }
+        }
+      }
+    },
+    "pageGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["logicalDocumentId", "pages", "classificationConfidence", "requiresReview"],
+        "properties": {
+          "logicalDocumentId": { "type": "string" },
+          "documentTypeId": { "type": ["string", "null"] },
+          "documentType": { "type": ["string", "null"] },
+          "pages": {
+            "type": "array",
+            "items": { "type": "integer" }
+          },
+          "classificationConfidence": { "type": "number" },
+          "requiresReview": { "type": "boolean" },
+          "reviewReason": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

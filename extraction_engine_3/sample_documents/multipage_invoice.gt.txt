@@ -1,0 +1,9 @@
+PAGE 1: ABC TECHNOLOGIES
+Invoice No: INV-99001
+Customer: Global Corp
+
+[PAGE_BREAK]
+
+PAGE 2: ITEMIZED BILLING
+Server Rack x 2: RS 1,20,000
+TOTAL DUE: RS 1,20,000

@@ -1,0 +1,33 @@
+COMMERCIAL TAX INVOICE
+
+Seller: APEX INDUSTRIAL TECH LTD.
+42 Industrial Ring Road, Whitefield
+Bengaluru 560066 Karnataka India
+GSTIN: 29AAACA1234A1Z1
+CIN: U72200KA2018PTC987654
+
+Bill No.: NDS/SEP/26/0734
+Invoice Date: 03-09-2026
+PO Number: PO-2026-9812
+Payment Due Date: 18-09-2026
+
+Billed Party:
+GREENFIELD AUTOMATION LTD.
+88 Silicon Boulevard, Electronic City
+Bengaluru 560100 Karnataka India
+Customer GSTIN: 29AAACG5678B1Z9
+
+ITEMS DELIVERED
+
+Dell ThinkPad
+Qty delivered: 3
+Unit charge: Rs. 72,000
+
+Logitech Webcam
+Qty delivered: 5
+Unit charge: Rs. 15,500
+
+Subtotal: Rs. 2,93,500
+IGST 18%: Rs. 52,830
+Other Charges: Rs. 66,611
+Final settlement value: Rs. 4,12,941

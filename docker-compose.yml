@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: idp-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: idp_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d idp_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: idp-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: idp-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=idp_db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres_dev_password
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CLASSIFIER_SERVICE_URL=http://classifier:8000
+      - EXTRACTION_SERVICE_URL=http://extraction-mock:5001
+      - STRUCTURING_SERVICE_URL=http://structuring-mock:5002
+      - VALIDATION_SERVICE_URL=http://validation:5003
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      classifier:
+        condition: service_started
+      extraction-mock:
+        condition: service_started
+      structuring-mock:
+        condition: service_started
+      validation:
+        condition: service_started
+
+  classifier:
+    build:
+      context: ./ai-services/classifier
+    container_name: idp-classifier
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+
+  extraction-mock:
+    build:
+      context: ./teammate-services/extraction-mock
+    container_name: idp-extraction-mock
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+
+  structuring-mock:
+    build:
+      context: ./teammate-services/structuring-mock
+    container_name: idp-structuring-mock
+    restart: always
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+
+  validation:
+    build:
+      context: ./validation phase/validation phase/validation-engine
+      dockerfile: Dockerfile
+    container_name: idp-validation
+    restart: always
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+
+volumes:
+  postgres_data:

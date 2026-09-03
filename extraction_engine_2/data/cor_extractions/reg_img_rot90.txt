@@ -1,0 +1,13 @@
+TAXINVOICE
+Bill Na INV-2026-0098
+Date: 02-09-2026 | Phone: +91-9876543210
+Bill To ABC INDUSTRIES LTD
+45 Industrial Layout Whitefield, Bengaluru - 560066
+GSTIN: 29AAACB1234C1Z6 | PAN: AAACB1234C
+CIN: U72200KA2015PTC081234 | IFSC: HDFC0001234
+ITEMS & SERVICES
+1. Dell Latitude 5440 Laptop- Qty: 5 - Rate: 58500.00
+2. Logitech MX Mechanical Keyboard - Qty: 10 - Rate: 14500.00
+Grand Total: Rs 48,500
+Bank Account 50200012345678 at HDFC Bank
+Terms: Net30 days Contact accounts@techsolutions.com

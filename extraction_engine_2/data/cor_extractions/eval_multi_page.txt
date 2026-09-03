@@ -1,0 +1,27 @@
+----------------------------------------
+PAGE 1
+----------------------------------------
+
+PAGE 1: VENDOR & BUYER DETAILS
+Bill No: INV-2026-0098
+Bill To: ABC INDUSTRIES LTD
+GSTIN: 29AAACB1234C1Z6
+PAN: AAACB1234C
+
+----------------------------------------
+PAGE 2
+----------------------------------------
+
+PAGE 2: BILLABLE HARDWARE & SERVICES
+Item 1: Dell Latitude 5440 Laptop Qty: 5 Rate: 58500.00
+Item 2: Logitech MX Mechanical Keyboard Qty: 10 Rate: 14500.00
+
+----------------------------------------
+PAGE 3
+----------------------------------------
+
+PAGE 3: PAYMENT & SETTLEMENT
+Grand Total: Rs. 48,500
+Bank: HDFC Bank
+Account: 50200012345678
+IFSC: HDFC0001234

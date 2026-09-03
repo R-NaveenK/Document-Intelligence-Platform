@@ -1,0 +1,10 @@
+INTERNATIONAL CURRENCY & MULTILINGUAL INVOICE
+
+Bill No: INV-2026-0098
+Bill To: ABC INDUSTRIES LTD
+India Branch: ₹48,500.00 (INR)
+European Branch: €550.00 (EUR)
+US Division: $600.00 (USD)
+UK Office: £480.00 (GBP)
+Japan Partner: ¥88,000 (JPY)
+Multilingual Notes: Merci beaucoup | Vielen Dank | धन्यवाद | شكرا

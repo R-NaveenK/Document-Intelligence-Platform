@@ -1,0 +1,36 @@
+"""Compatibility shim for cor_engine.exceptions -> cor_engine.core.exceptions."""
+from cor_engine.core.exceptions import (
+    CorEngineError,
+    CorruptedDocumentError,
+    DocConversionError,
+    DocProcessingError,
+    DocxProcessingError,
+    EmptyExtractionError,
+    InvalidFileError,
+    MissingFileError,
+    OcrError,
+    OcrProcessingError,
+    OutputWriteError,
+    PdfProcessingError,
+    ProcessingTimeoutError,
+    SecurityError,
+    UnsupportedFileTypeError,
+)
+
+__all__ = [
+    "CorEngineError",
+    "UnsupportedFileTypeError",
+    "MissingFileError",
+    "InvalidFileError",
+    "PdfProcessingError",
+    "DocProcessingError",
+    "DocxProcessingError",
+    "OcrError",
+    "OutputWriteError",
+    "EmptyExtractionError",
+    "ProcessingTimeoutError",
+    "SecurityError",
+    "DocConversionError",
+    "CorruptedDocumentError",
+    "OcrProcessingError",
+]

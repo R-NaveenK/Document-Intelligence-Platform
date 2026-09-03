@@ -1,0 +1,15 @@
+TAX INVOICE
+
+Vendor: TECHSOLUTIONS PVT LTD
+GSTIN: 29AABCT1234Q1Z5
+Invoice No: TSPL/INV/2026-27/0897
+Date: 02-09-2026
+
+Bill To: ABC INDUSTRIES LTD
+
+Item 1: Dell Latitude 5420 Laptop
+Quantity: 5
+Price: 58500
+Total: 292500
+
+Grand Total: Rs. 456,660

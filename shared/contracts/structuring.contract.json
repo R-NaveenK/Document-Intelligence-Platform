@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StructuringContract",
+  "definitions": {
+    "StructuringInput": {
+      "type": "object",
+      "required": ["logicalDocumentId", "documentTypeId", "schemaVersion", "pages", "requiredFields"],
+      "properties": {
+        "logicalDocumentId": { "type": "string" },
+        "documentTypeId": { "type": "string" },
+        "schemaVersion": { "type": "integer" },
+        "pages": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "requiredFields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["fieldKey", "dataType"],
+            "properties": {
+              "fieldKey": { "type": "string" },
+              "dataType": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "StructuringOutput": {
+      "type": "object",
+      "required": ["logicalDocumentId", "fields"],
+      "properties": {
+        "logicalDocumentId": { "type": "string" },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["fieldKey", "value", "confidence"],
+            "properties": {
+              "fieldKey": { "type": "string" },
+              "value": { "type": "string" },
+              "normalizedValue": { "type": "string" },
+              "confidence": { "type": "number" },
+              "pageNumber": { "type": "integer" },
+              "boundingBox": { "type": "array" },
+              "sourceText": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

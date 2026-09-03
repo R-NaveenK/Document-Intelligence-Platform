@@ -1,0 +1,9 @@
+TECH SUPPLIES STORE
+Receipt # 88472
+Date: 15/08/2026
+-----------------------------
+Keyboard  1 x RS 2500
+Monitor   1 x RS 15000
+-----------------------------
+Total Paid: RS 17500
+Thank you for shopping!

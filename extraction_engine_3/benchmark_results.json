@@ -1,0 +1,61 @@
+{
+  "engine_id": "engine_1",
+  "engine_version": "1.0.0",
+  "timestamp": "2026-09-02 18:39:12",
+  "total_documents": 4,
+  "successful_documents": 3,
+  "total_time_ms": 3818,
+  "average_time_ms_per_doc": 954.5,
+  "results": [
+    {
+      "engine_id": "engine_1",
+      "filename": "corrupted_doc.pdf",
+      "status": "error",
+      "processing_time_ms": 1,
+      "character_count": 0,
+      "pages_processed": 0,
+      "extraction_confidence": 0.0,
+      "raw_text": "",
+      "warnings": [],
+      "errors": [
+        "Corrupted or invalid PDF file: Failed to open file 'sample_documents\\\\corrupted_doc.pdf' as type pdf."
+      ]
+    },
+    {
+      "engine_id": "engine_1",
+      "filename": "digital_invoice_1.pdf",
+      "status": "success",
+      "processing_time_ms": 126,
+      "character_count": 175,
+      "pages_processed": 1,
+      "extraction_confidence": 1.0,
+      "raw_text": "ABC TECHNOLOGIES\nInvoice No: INV-10245\nDate: 02/09/2026\nCustomer: XYZ Ltd\nGST: 33ABCDE1234F1Z5\nLaptop 5 RS 40,000\nMouse 5 RS 500\nSubtotal: RS 82,500\nTax: RS 0\nTotal: RS 82,500",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "engine_id": "engine_1",
+      "filename": "multipage_invoice.pdf",
+      "status": "success",
+      "processing_time_ms": 208,
+      "character_count": 160,
+      "pages_processed": 2,
+      "extraction_confidence": 1.0,
+      "raw_text": "PAGE 1: ABC TECHNOLOGIES\nInvoice No: INV-99001\nCustomer: Global Corp\n\n[PAGE_BREAK]\n\nPAGE 2: ITEMIZED BILLING\nServer Rack x 2: RS 1,20,000\nTOTAL DUE: RS 1,20,000",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "engine_id": "engine_1",
+      "filename": "receipt_sample.png",
+      "status": "success",
+      "processing_time_ms": 3483,
+      "character_count": 0,
+      "pages_processed": 1,
+      "extraction_confidence": 1.0,
+      "raw_text": "",
+      "warnings": [],
+      "errors": []
+    }
+  ]
+}

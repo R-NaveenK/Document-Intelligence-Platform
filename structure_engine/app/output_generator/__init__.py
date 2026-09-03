@@ -1,0 +1,3 @@
+"""
+Structured Output Generator package.
+"""

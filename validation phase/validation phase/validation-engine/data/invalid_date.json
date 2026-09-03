@@ -1,0 +1,13 @@
+{
+  "document_id": "INV-1005",
+  "document_type": "invoice",
+  "invoice_number": "INV-1005",
+  "invoice_date": "31-02-2026",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "gst_number": "33ABCDE1234F1Z5",
+  "quantity": 10,
+  "unit_price": 5000,
+  "subtotal": 50000,
+  "tax": 9000,
+  "total_amount": 59000
+}

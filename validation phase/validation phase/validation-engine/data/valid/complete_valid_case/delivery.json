@@ -1,0 +1,13 @@
+{
+  "document_id": "DEL-2001",
+  "document_type": "delivery_receipt",
+  "delivery_date": "2026-08-05",
+  "po_number": "PO-2001",
+  "vendor_name": "ABC Suppliers Pvt Ltd",
+  "items": [
+    {
+      "description": "Desktop PC",
+      "quantity_delivered": 50
+    }
+  ]
+}
