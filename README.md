@@ -1,9 +1,12 @@
 # Enterprise Intelligent Document Processing & Intelligence Platform (IDP)
 
-[![Platform Status](https://img.shields.io/badge/Platform-Active%20%26%20Operational-10b981?style=for-the-badge)](http://localhost:5000)
-[![Microservices](https://img.shields.io/badge/Microservices-7%20Active-38bdf8?style=for-the-badge)](http://localhost:5000/api/v1/health)
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Render%20Cloud-00c7b7?style=for-the-badge&logo=render&logoColor=white)](https://document-intelligence-platform-1h4k.onrender.com/)
+[![Platform Status](https://img.shields.io/badge/Platform-Active%20%26%20Operational-10b981?style=for-the-badge)](https://document-intelligence-platform-1h4k.onrender.com/)
+[![Microservices](https://img.shields.io/badge/Microservices-7%20Active-38bdf8?style=for-the-badge)](https://document-intelligence-platform-1h4k.onrender.com/api/v1/health)
 [![Architecture](https://img.shields.io/badge/Architecture-Multi--Engine%20Consensus-6366f1?style=for-the-badge)](#multi-engine-extraction--consensus-engine)
 [![Multi-Tenant](https://img.shields.io/badge/Security-Multi--Tenant%20Isolated-ec4899?style=for-the-badge)](#security--multi-tenant-isolation)
+
+> 🌐 **Live Cloud Deployment:** [https://document-intelligence-platform-1h4k.onrender.com/](https://document-intelligence-platform-1h4k.onrender.com/)
 
 A production-grade, enterprise-ready **Intelligent Document Processing (IDP)** platform. The system ingests multi-format documents (PDF, Word DOCX, Spreadsheets XLSX/CSV, Images PNG/JPG, and Plain Text), runs parallel extraction across three independent engines, evaluates deterministic consensus scoring, classifies logical sub-document boundaries, structures typed fields according to dynamic user-defined schemas, enforces multi-tier mathematical and business logic validations, routes anomalies to an interactive Human-in-the-Loop Review Workspace, and empowers users with natural language AI query planning and multi-format exports.
 
