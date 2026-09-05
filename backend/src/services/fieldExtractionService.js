@@ -51,7 +51,7 @@ class FieldExtractionService {
       }
     }
 
-    return Array.from(aliases);
+    return Array.from(aliases).sort((a, b) => b.length - a.length);
   }
 
   /**
@@ -115,17 +115,21 @@ class FieldExtractionService {
     const aliases = this.generateAliases(fieldDef);
 
     // Stop words / boundary lookaheads that terminate value extraction
-    const boundaryLookahead = `(?=(?:\\r?\\n|[A-Z][a-z]+ [A-Z][a-z]+:|Date:|Invoice:|Total:|Amount:|DOB:|Phone:|Status:|Payment:|PO:|MRN:|Qty:|Tax:|Subtotal:|#|\\s{4,}|$))`;
+    const boundaryLookahead = `(?=(?:\\r?\\n|\\s{4,}|$))`;
 
     // -------------------------------------------------------------
     // Step 1 & 2: Exact & Normalized Alias + Same-Line Value (Key: Value)
     // -------------------------------------------------------------
     for (const alias of aliases) {
       const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const sameLineRegex = new RegExp(`(?:^|\\b)${escaped}\\s*[:=–-]\\s*([A-Za-z0-9\\$€£₹.,_\\- /#&]+?)${boundaryLookahead}`, 'i');
+      const sameLineRegex = new RegExp(`(?:^|\\b)${escaped}(?:\\s*\\([^)]+\\))?\\s*[:=–-]\\s*([A-Za-z0-9\\$€£₹.,_\\- /#&]+?)${boundaryLookahead}`, 'im');
       const match = text.match(sameLineRegex);
       if (match && match[1] && match[1].trim()) {
-        const candidate = match[1].trim().replace(/[;,]$/, '');
+        let candidate = match[1].trim().replace(/[;,]$/, '');
+        if (dataType === 'decimal' || dataType === 'number' || dataType === 'integer' || dataType === 'currency' || dataType === 'float') {
+          const numMatch = candidate.match(/[+-]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?/);
+          if (numMatch) candidate = numMatch[0].replace(/,/g, '');
+        }
         if (candidate.length > 0 && !candidate.toLowerCase().includes(alias.toLowerCase())) {
           return {
             value: candidate,
@@ -142,10 +146,14 @@ class FieldExtractionService {
     // -------------------------------------------------------------
     for (const alias of aliases) {
       const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const nextLineRegex = new RegExp(`(?:^|\\b)${escaped}\\s*[:=–-]?\\s*\\r?\\n\\s*([A-Za-z0-9\\$€£₹.,_\\- /#&]+?)${boundaryLookahead}`, 'i');
+      const nextLineRegex = new RegExp(`(?:^|\\b)${escaped}(?:\\s*\\([^)]+\\))?\\s*[:=–-]?\\s*\\r?\\n\\s*([A-Za-z0-9\\$€£₹.,_\\- /#&]+?)${boundaryLookahead}`, 'i');
       const match = text.match(nextLineRegex);
       if (match && match[1] && match[1].trim()) {
-        const candidate = match[1].trim().replace(/[;,]$/, '');
+        let candidate = match[1].trim().replace(/[;,]$/, '');
+        if (dataType === 'decimal' || dataType === 'number' || dataType === 'integer' || dataType === 'currency' || dataType === 'float') {
+          const numMatch = candidate.match(/[+-]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?/);
+          if (numMatch) candidate = numMatch[0].replace(/,/g, '');
+        }
         if (candidate.length > 0 && !candidate.toLowerCase().includes(alias.toLowerCase())) {
           return {
             value: candidate,
@@ -261,6 +269,12 @@ class FieldExtractionService {
       ? realEngines
       : engineExtractions.filter(e => e.rawText && e.rawText.trim().length > 0);
 
+    // If no explicit field definitions provided, run Zero-Shot Dynamic Discovery
+    if (fieldDefinitions.length === 0 && usableEngines.length > 0) {
+      const allText = usableEngines.map(e => e.rawText).join('\n');
+      return this.autoDiscoverFields(allText, usableEngines);
+    }
+
     const structuredFields = [];
 
     for (const fieldDef of fieldDefinitions) {
@@ -349,6 +363,79 @@ class FieldExtractionService {
     }
 
     return structuredFields;
+  }
+
+  /**
+   * Zero-Shot Dynamic Schema Discovery: automatically extracts all key-value pairs, dates, amounts, and identifiers
+   */
+  static autoDiscoverFields(text, engines = []) {
+    if (!text || typeof text !== 'string' || !text.trim()) return [];
+
+    const discovered = [];
+    const seenKeys = new Set();
+    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+    // 1. Discover explicit Key: Value pairs
+    for (const line of lines) {
+      const kvMatch = line.match(/^([A-Za-z0-9\s#_\-\.]{2,35})\s*[:=–-]\s*(.{1,120})$/);
+      if (kvMatch) {
+        const rawKey = kvMatch[1].trim();
+        const val = kvMatch[2].trim().replace(/[;,]$/, '');
+        const slugKey = rawKey.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+
+        if (slugKey.length >= 2 && val.length > 0 && !seenKeys.has(slugKey)) {
+          seenKeys.add(slugKey);
+
+          // Infer data type
+          let dataType = 'string';
+          if (/^(\$|€|£|₹|\¥)?\s?\d+([.,]\d{2})?$/.test(val)) dataType = 'number';
+          else if (/^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$/.test(val) || /^\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}$/.test(val)) dataType = 'date';
+          else if (/^(true|false|yes|no)$/i.test(val)) dataType = 'boolean';
+
+          discovered.push({
+            fieldDefinitionId: null,
+            fieldKey: slugKey,
+            displayName: rawKey.replace(/\b\w/g, c => c.toUpperCase()),
+            dataType,
+            required: false,
+            machineValue: val,
+            humanValue: null,
+            effectiveValue: val,
+            confidence: 0.90,
+            source: engines.length > 0 ? (engines[0].engineName || 'CONSENSUS') : 'DYNAMIC_DISCOVERY',
+            supportingEngines: engines.map(e => e.engineName || e.engineId),
+            candidateValues: {},
+            pageNumber: 1,
+            sourceText: line
+          });
+        }
+      }
+    }
+
+    // 2. Discover freestanding totals/amounts if not already captured
+    if (!seenKeys.has('total_amount') && !seenKeys.has('total')) {
+      const moneyMatch = text.match(/(?:Total|Grand Total|Amount Due|Balance|Final)\s*[:=–-]?\s*(\$|€|£|₹|\¥)?\s*(\d+[.,]\d{2})/i);
+      if (moneyMatch) {
+        discovered.push({
+          fieldDefinitionId: null,
+          fieldKey: 'total_amount',
+          displayName: 'Total Amount',
+          dataType: 'number',
+          required: false,
+          machineValue: moneyMatch[2],
+          humanValue: null,
+          effectiveValue: moneyMatch[2],
+          confidence: 0.92,
+          source: 'DYNAMIC_DISCOVERY',
+          supportingEngines: engines.map(e => e.engineName || e.engineId),
+          candidateValues: {},
+          pageNumber: 1,
+          sourceText: moneyMatch[0]
+        });
+      }
+    }
+
+    return discovered;
   }
 }
 

@@ -117,6 +117,23 @@ router.post('/reviews/:reviewItemId/field-correction', async (req, res) => {
   }
 });
 
+// Quick fix (1-click arithmetic / format resolution)
+router.post('/reviews/:reviewItemId/quick-fix', async (req, res) => {
+  try {
+    const result = await ReviewService.applyQuickFix(
+      req.tenant.organizationId,
+      req.params.reviewItemId,
+      req.body
+    );
+    res.json({ success: true, data: result });
+  } catch (err) {
+    res.status(err.status || 400).json({
+      success: false,
+      error: { code: err.code || 'QUICK_FIX_ERROR', message: err.message }
+    });
+  }
+});
+
 // Revalidate review
 router.post('/reviews/:reviewItemId/revalidate', async (req, res) => {
   try {
@@ -134,7 +151,41 @@ router.post('/reviews/:reviewItemId/revalidate', async (req, res) => {
   }
 });
 
-// Resolve review
+// Override validation (confirm source value or keep duplicate)
+router.post('/reviews/:reviewItemId/override', async (req, res) => {
+  try {
+    const item = await ReviewService.overrideValidation(
+      req.tenant.organizationId,
+      req.params.reviewItemId,
+      req.body
+    );
+    res.json({ success: true, data: item });
+  } catch (err) {
+    res.status(err.status || 400).json({
+      success: false,
+      error: { code: err.code || 'OVERRIDE_FAILED', message: err.message }
+    });
+  }
+});
+
+// Save review draft
+router.post('/reviews/:reviewItemId/draft', async (req, res) => {
+  try {
+    const item = await ReviewService.saveDraft(
+      req.tenant.organizationId,
+      req.params.reviewItemId,
+      req.body
+    );
+    res.json({ success: true, data: item });
+  } catch (err) {
+    res.status(err.status || 400).json({
+      success: false,
+      error: { code: err.code || 'DRAFT_FAILED', message: err.message }
+    });
+  }
+});
+
+// Resolve / Approve review
 router.post('/reviews/:reviewItemId/resolve', async (req, res) => {
   try {
     const item = await ReviewService.resolveReview(
@@ -169,3 +220,4 @@ router.post('/reviews/:reviewItemId/reject', async (req, res) => {
 });
 
 module.exports = router;
+

@@ -7,7 +7,9 @@
   <title>Document Intelligence Platform - Enterprise Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 </head>
 
@@ -23,21 +25,32 @@
         </div>
       </div>
       <div class="nav-actions">
-        <span class="tenant-badge" id="tenantBadge"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--accent-emerald);"></span> Org: Acme Corp</span>
-        <button class="btn btn-secondary" id="btnRefreshHealth"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--primary-accent);"></span> 7 Services Active</button>
+        <span class="tenant-badge" id="tenantBadge"><span
+            style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--accent-emerald);"></span>
+          Org: Acme Corp</span>
+        <button class="btn btn-secondary" id="btnRefreshHealth"><span
+            style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--primary-accent);"></span>
+          7 Services Active</button>
+        <button class="btn btn-secondary" id="btnClearAllPlatform" onclick="confirmClearAllData()"
+            title="Clear all documents, processing jobs, structured records, and review items"
+            style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.35); font-weight: 600;">
+          <span style="margin-right: 4px;">🧹</span> Clear All Data
+        </button>
       </div>
     </header>
 
     <!-- Main Navigation Bar -->
     <nav class="sub-nav">
       <button class="nav-tab active" id="tabDashboard">Dashboard</button>
-      <button class="nav-tab" id="tabProfiles">Processing Profiles</button>
+      <button class="nav-tab" id="tabProfiles">Profiles & Form Schemas</button>
       <button class="nav-tab" id="tabUpload">Upload & Ingest</button>
       <button class="nav-tab" id="tabDocuments">Documents & Jobs</button>
-      <button class="nav-tab" id="tabReviews">Human Review <span class="badge badge-draft" id="openReviewCountBadge" style="font-size:0.7rem; margin-left:0.2rem;">0</span></button>
-      <button class="nav-tab" id="tabRecords">Records & Search</button>
-      <button class="nav-tab" id="tabChat">AI Chat Assistant</button>
-      <button class="nav-tab" id="tabExports">Export & Reports</button>
+      <button class="nav-tab" id="tabReviews">Human Review <span class="badge badge-draft" id="openReviewCountBadge"
+          style="font-size:0.7rem; margin-left:0.2rem;">0</span></button>
+      <button class="nav-tab" id="tabRecords">📊 Structured Data & Records</button>
+      <button class="nav-tab" id="tabChat">AI Chat Planner</button>
+      <button class="nav-tab" id="tabExports">Exports & Reports</button>
+      <button class="nav-tab disabled" id="tabFormsHub" style="display:none;">Forms Hub</button>
       <button class="nav-tab disabled" id="tabProfileDetail" disabled style="display:none;">Profile Editor</button>
       <button class="nav-tab disabled" id="tabDocTypeDetail" disabled style="display:none;">Doc Type & Fields</button>
     </nav>
@@ -50,9 +63,16 @@
         <div class="section-header">
           <div>
             <h2>Platform Overview & Operational Dashboard</h2>
-            <p class="section-desc">Unified intelligence hub tracking ingestion, multi-engine extraction, classification, validation, and structured business records.</p>
+            <p class="section-desc">Unified intelligence hub tracking ingestion, multi-engine extraction,
+              classification, validation, and structured business records.</p>
           </div>
-          <button class="btn btn-primary" id="btnQuickUpload">+ Ingest New Document</button>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="confirmClearAllData()"
+              style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.35);" title="Clear all ingested documents & records">
+              🧹 Clear All Data
+            </button>
+            <button class="btn btn-primary" id="btnQuickUpload">+ Ingest New Document</button>
+          </div>
         </div>
 
         <!-- 5 Key Metric KPI Cards -->
@@ -117,7 +137,8 @@
         <!-- Recent Ingestion Stream -->
         <div class="card p-4">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h3 style="font-size: 1.1rem; margin: 0; color: var(--text-primary);">Recent Document Ingestion & Processing Activity</h3>
+            <h3 style="font-size: 1.1rem; margin: 0; color: var(--text-primary);">Recent Document Ingestion & Processing
+              Activity</h3>
             <button class="btn btn-secondary btn-sm" onclick="loadDashboardData()">↻ Refresh Stream</button>
           </div>
           <div class="table-container">
@@ -141,77 +162,472 @@
         </div>
       </section>
 
-      <!-- SCREEN 1: PROFILES LIST (Steps 1–4) -->
+      <!-- SCREEN: PROFILES & FORM SCHEMAS HUB (Centralized Intelligence Hub) -->
       <section class="screen-view" id="screenProfiles">
         <div class="section-header">
           <div>
-            <h2>Processing Profiles & Schema Definitions</h2>
-            <p class="section-desc">Create and manage dynamic document processing profiles and versioned schemas for your organization.</p>
+            <h2>Processing Profiles & Form Schemas Intelligence Hub</h2>
+            <p class="section-desc">Manage enterprise processing profiles, versioned document schemas, dynamically
+              configured fields, and dedicated form intelligence workspaces.</p>
           </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="btn btn-secondary" onclick="deployStarterTemplate('MANUFACTURING')">Deploy Manufacturing</button>
-            <button class="btn btn-primary" id="btnNewProfile">+ Create Profile</button>
-          </div>
-        </div>
-
-        <!-- Permanent Starter Templates Banner -->
-        <div class="card p-3 mb-4" style="background: var(--bg-secondary); border: 1px solid var(--border);">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
-            <div>
-              <strong style="color: var(--primary-accent); font-size: 0.95rem;">Enterprise Starter Templates:</strong>
-              <span style="color: var(--text-secondary); font-size: 0.85rem; margin-left: 0.5rem;">Pre-configured industry profiles with sub-schemas and custom fields.</span>
-            </div>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('MANUFACTURING')">Manufacturing</button>
-              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('HEALTHCARE')">Healthcare</button>
-              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('INVOICE')">Tax Invoices</button>
-              <button class="btn btn-secondary btn-sm" onclick="deployStarterTemplate('LOGISTICS')">Logistics</button>
-            </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="deployStarterTemplate('MANUFACTURING')">⚡ Deploy Starter
+              Template</button>
+            <button class="btn btn-primary" id="btnNewProfile">+ Create Processing Profile</button>
           </div>
         </div>
 
-        <div class="card-grid" id="profilesGrid">
-          <!-- Dynamically populated profile cards -->
+        <!-- Hub View Switcher & Search Bar -->
+        <div class="card p-3 mb-4" style="background: var(--bg-card); border: 1px solid var(--border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div class="sub-nav" style="border-bottom: none; margin: 0; padding: 0;">
+              <button class="nav-tab active" id="tabHubProfiles" onclick="switchHubView('profiles')">🏢 Processing
+                Profiles</button>
+              <button class="nav-tab" id="tabHubForms" onclick="switchHubView('forms')">📋 All Form Schemas
+                Grid</button>
+              <button class="nav-tab" id="tabHubStarters" onclick="switchHubView('starters')">⚡ Industry Starter
+                Packs</button>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex: 1; max-width: 380px; min-width: 220px;">
+              <input type="text" id="hubSearchInput" class="form-control"
+                placeholder="Search profiles, form schemas, or fields..." oninput="filterHubContent()">
+            </div>
+          </div>
+        </div>
+
+        <!-- View 1: Processing Profiles Grid -->
+        <div id="hubProfilesView">
+          <div class="card-grid" id="profilesGrid">
+            <!-- Dynamically populated profile cards with nested forms and live counters -->
+          </div>
+        </div>
+
+        <!-- View 2: All Form Schemas Grid -->
+        <div id="hubFormsView" style="display: none;">
+          <div class="card-grid" id="formsHubGrid"
+            style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));">
+            <!-- Dynamically populated form schema cards -->
+          </div>
+        </div>
+
+        <!-- View 3: Industry Starter Templates -->
+        <div id="hubStartersView" style="display: none;">
+          <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+            <div class="card p-4" style="background: var(--bg-card); border-left: 4px solid var(--primary-accent);">
+              <div
+                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                <h3 style="margin: 0; font-size: 1.15rem;">Manufacturing Operations</h3>
+                <span class="badge badge-published">3 Forms</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Commercial Supplier
+                Invoices, Material Receipts & Quality Slips, and Production Dispatch Manifests.</p>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+                &bull; <code>supplier_invoice</code> (7 fields)<br>
+                &bull; <code>material_receipt</code> (6 fields)<br>
+                &bull; <code>dispatch_manifest</code> (6 fields)
+              </div>
+              <button class="btn btn-primary btn-sm w-100" onclick="deployStarterTemplate('MANUFACTURING')">Deploy /
+                Reset Manufacturing</button>
+            </div>
+
+            <div class="card p-4" style="background: var(--bg-card); border-left: 4px solid var(--accent-emerald);">
+              <div
+                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                <h3 style="margin: 0; font-size: 1.15rem;">Healthcare Billing</h3>
+                <span class="badge badge-published">3 Forms</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Patient Hospital
+                Invoices, Patient Admission Forms, and Health Insurance Claim documents.</p>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+                &bull; <code>patient_invoice</code> (6 fields)<br>
+                &bull; <code>admission_form</code> (5 fields)<br>
+                &bull; <code>insurance_claim</code> (6 fields)
+              </div>
+              <button class="btn btn-secondary btn-sm w-100" onclick="deployStarterTemplate('HEALTHCARE')">Deploy
+                Healthcare</button>
+            </div>
+
+            <div class="card p-4" style="background: var(--bg-card); border-left: 4px solid var(--accent-amber);">
+              <div
+                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                <h3 style="margin: 0; font-size: 1.15rem;">Logistics & Freight</h3>
+                <span class="badge badge-published">2 Forms</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Bill of Lading, Freight
+                Manifests, Customs declarations, and delivery slips.</p>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+                &bull; <code>bill_of_lading</code> (6 fields)<br>
+                &bull; <code>freight_invoice</code> (5 fields)
+              </div>
+              <button class="btn btn-secondary btn-sm w-100" onclick="deployStarterTemplate('LOGISTICS')">Deploy
+                Logistics</button>
+            </div>
+
+            <div class="card p-4" style="background: var(--bg-card); border-left: 4px solid var(--accent-blue);">
+              <div
+                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                <h3 style="margin: 0; font-size: 1.15rem;">Standard Tax Invoices</h3>
+                <span class="badge badge-published">1 Form</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Cross-industry standard
+                vendor invoices with line items, tax breakdown, and arithmetic validation.</p>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+                &bull; <code>tax_invoice</code> (8 fields)
+              </div>
+              <button class="btn btn-secondary btn-sm w-100" onclick="deployStarterTemplate('INVOICE')">Deploy Tax
+                Invoices</button>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- SCREEN 2: PROFILE EDITOR -->
-      <section class="screen-view" id="screenProfileEditor">
-        <div class="breadcrumb">
-          <a href="#" id="linkBackProfiles">← Back to Profiles</a>
+      <!-- SCREEN: DEDICATED SEPARATED FORM SCHEMA WORKSPACE (Sections 39, 40, 41) -->
+      <section class="screen-view" id="screenFormWorkspace">
+        <div class="breadcrumb mb-3" style="display: flex; align-items: center; gap: 0.5rem;">
+          <a href="#" onclick="switchNavTab('tabProfiles'); return false;"
+            style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">← Back to Profiles & Forms
+            Hub</a>
+          <span style="color: var(--text-secondary);">/</span>
+          <span id="fwBreadcrumbFormName" style="color: var(--text-primary); font-weight: 500;">Form Workspace</span>
         </div>
 
-        <div class="profile-header-card">
-          <div class="profile-title-bar">
+        <!-- Form Workspace Hero Header -->
+        <div class="card p-4 mb-4" style="background: var(--bg-card); border-left: 4px solid var(--primary-accent);">
+          <div
+            style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
             <div>
-              <h2 id="viewProfileName">Processing Profile Name</h2>
-              <p class="profile-desc" id="viewProfileDesc">Description</p>
-            </div>
-            <div class="version-controls">
-              <div class="version-badge-container">
-                <span class="version-label">Current Schema:</span>
-                <span class="version-number" id="viewSchemaVersion">v1</span>
-                <span class="badge" id="viewSchemaStatus">DRAFT</span>
+              <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <h2 id="fwFormTitle" style="margin: 0; font-size: 1.5rem;">Form Schema Workspace</h2>
+                <span class="badge" id="fwProfileBadge"
+                  style="background: var(--bg-secondary); border: 1px solid var(--border); color: var(--primary-accent);">Profile</span>
+                <span class="badge badge-published" id="fwFormBadge">PUBLISHED v1</span>
               </div>
-              <button class="btn btn-success" id="btnPublishSchema">Publish Schema Version</button>
+              <p class="section-desc" id="fwFormDesc" style="margin-top: 0.35rem; margin-bottom: 0.5rem;">Dedicated
+                document intelligence workspace for this specific business form.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="exportCurrentForm('CSV')">📥 Export CSV</button>
+              <button class="btn btn-primary btn-sm" onclick="exportCurrentForm('Excel')">📥 Export Excel
+                (.xlsx)</button>
+              <button class="btn btn-secondary btn-sm" onclick="exportCurrentForm('PDF')">📥 Export PDF</button>
+              <button class="btn btn-secondary btn-sm" onclick="switchNavTab('tabUpload')">+ Ingest Document</button>
             </div>
           </div>
-          <div class="profile-actions-bar">
-            <button class="btn btn-secondary btn-sm" id="btnEditProfile">Edit Profile Info</button>
-            <button class="btn btn-secondary btn-sm" id="btnViewClassifierConfig">Preview Classifier Config</button>
+
+          <!-- Form Fields Definition Pill Bar -->
+          <div
+            style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <div
+                style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;">
+                Configured Dynamic Schema Fields:</div>
+              <div id="fwFieldsPillContainer" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                <!-- Field pills dynamically rendered -->
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="switchFwTab('fwViewFields')">⚙ Configure Schema Fields
+              ✎</button>
           </div>
         </div>
 
-        <div class="section-header mt-4">
-          <div>
-            <h3>Document Types / Forms</h3>
-            <p class="section-desc">Define the document types contained within this processing profile.</p>
+        <!-- 4 KPI Metrics for Form -->
+        <div class="grid grid-4 gap-3 mb-4">
+          <div class="card p-3">
+            <div class="stat-label">Total Ingested</div>
+            <div class="stat-value" id="fwTotalDocs">0</div>
           </div>
-          <button class="btn btn-primary btn-sm" id="btnAddDocType">+ Add Document Type</button>
+          <div class="card p-3">
+            <div class="stat-label">Approved Records</div>
+            <div class="stat-value" style="color: var(--accent-emerald);" id="fwApprovedDocs">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Needs Human Review</div>
+            <div class="stat-value" style="color: var(--accent-amber);" id="fwReviewDocs">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Extraction Coverage</div>
+            <div class="stat-value" style="color: var(--primary-accent);" id="fwCoveragePct">100%</div>
+          </div>
         </div>
 
-        <div class="card-grid" id="docTypesGrid">
-          <!-- Dynamically populated document type cards -->
+        <!-- In-Form Search & Filter Bar -->
+        <div class="card p-3 mb-4" style="background: var(--bg-secondary); border: 1px solid var(--border);">
+          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="fwSearchInput" class="form-control" style="flex: 1; min-width: 220px;"
+              placeholder="Search within this form's records, fields, and text..." oninput="filterFormWorkspaceData()">
+            <select id="fwStatusFilter" class="form-control" style="width: 180px;" onchange="filterFormWorkspaceData()">
+              <option value="ALL">All Statuses</option>
+              <option value="APPROVED">Approved Only</option>
+              <option value="NEEDS_REVIEW">Needs Review Only</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4 Master Workspace Tabs (Sections 39, 40, 41) -->
+        <div class="sub-nav mb-4" style="border-bottom: 1px solid var(--border);">
+          <button class="nav-tab active" id="tabFwRecords" onclick="switchFwTab('fwViewRecords')">📋 Structured Records
+            Grid</button>
+          <button class="nav-tab" id="tabFwFields" onclick="switchFwTab('fwViewFields')">⚙ Schema Fields Editor</button>
+          <button class="nav-tab" id="tabFwDocs" onclick="switchFwTab('fwViewDocs')">⚡ Ingested Documents &
+            Processing</button>
+          <button class="nav-tab" id="tabFwReviews" onclick="switchFwTab('fwViewReviews')">🛡 Review Exceptions <span
+              class="badge badge-draft" id="fwReviewsBadge"
+              style="font-size: 0.7rem; margin-left: 0.25rem;">0</span></button>
+        </div>
+
+        <!-- TAB 1: STRUCTURED RECORDS DATA GRID (Section 40) -->
+        <div id="fwViewRecords">
+          <div class="table-container" style="overflow-x: auto;">
+            <table class="data-table" id="fwStructuredGridTable">
+              <thead id="fwGridHeader">
+                <!-- Dynamically populated columns from schema fields -->
+              </thead>
+              <tbody id="fwGridBody">
+                <!-- Dynamically populated records -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 2: SCHEMA FIELDS DEFINITIONS (Section 41) -->
+        <div id="fwViewFields" style="display: none;">
+          <div class="card p-4">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div>
+                <h3 style="margin: 0; font-size: 1.15rem;">Configured Schema Fields</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.25rem 0 0 0;">Dynamic fields
+                  extracted, normalized, and validated for this document form.</p>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-sm" onclick="previewFormSchemaJson()">Preview JSON Schema</button>
+                <button class="btn btn-primary btn-sm" onclick="openAddFieldModalForCurrentForm()">+ Add Custom
+                  Field</button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="fields-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;">#</th>
+                    <th>Field Key</th>
+                    <th>Display Label</th>
+                    <th>Data Type</th>
+                    <th>Required</th>
+                    <th>Aliases & Extraction Clues</th>
+                    <th>Description</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="fwFieldsTableBody">
+                  <!-- Dynamically populated schema field rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: INGESTED DOCUMENTS STREAM -->
+        <div id="fwViewDocs" style="display: none;">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Document / File</th>
+                  <th>Classification</th>
+                  <th>Quality / Consensus</th>
+                  <th>Validation Summary</th>
+                  <th>Status</th>
+                  <th>Ingested At</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="fwDocsTableBody">
+                <!-- Ingested document rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 4: REVIEW EXCEPTIONS QUEUE -->
+        <div id="fwViewReviews" style="display: none;">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Document</th>
+                  <th>Review Category</th>
+                  <th>Failure Reason</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Created Date</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="fwReviewsTableBody">
+                <!-- Filtered review exceptions for this form -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: PROFILE WORKSPACE & SCHEMAS HUB -->
+      <section class="screen-view" id="screenProfileEditor">
+        <div class="breadcrumb mb-3" style="display: flex; align-items: center; gap: 0.5rem;">
+          <a href="#" id="linkBackProfiles" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">← Back to Profiles & Forms Hub</a>
+          <span style="color: var(--text-secondary);">/</span>
+          <span id="profileBreadcrumbName" style="color: var(--text-primary); font-weight: 500;">Profile Workspace</span>
+        </div>
+
+        <!-- Profile Hero Header -->
+        <div class="card p-4 mb-4" style="background: var(--bg-card); border-left: 4px solid var(--primary-accent);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <h2 id="viewProfileName" style="margin: 0; font-size: 1.5rem;">Processing Profile</h2>
+                <div class="version-badge-container">
+                  <span class="version-number" id="viewSchemaVersion">v1</span>
+                  <span class="badge" id="viewSchemaStatus">DRAFT</span>
+                </div>
+              </div>
+              <p class="section-desc" id="viewProfileDesc" style="margin-top: 0.35rem; margin-bottom: 0.5rem;">Profile description</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="exportProfileRecords('CSV')">📥 Export CSV</button>
+              <button class="btn btn-primary btn-sm" onclick="exportProfileRecords('Excel')">📥 Export Excel (.xlsx)</button>
+              <button class="btn btn-secondary btn-sm" id="btnEditProfile">Edit Info</button>
+              <button class="btn btn-success btn-sm" id="btnPublishSchema">Publish Version</button>
+              <button class="btn btn-primary btn-sm" id="btnAddDocType">+ Add Form Schema</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Profile KPI Cards -->
+        <div class="grid grid-4 gap-3 mb-4">
+          <div class="card p-3">
+            <div class="stat-label">Form Schemas</div>
+            <div class="stat-value" id="pwKpiSchemas">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Total Structured Records</div>
+            <div class="stat-value" style="color: var(--primary-accent);" id="pwKpiRecords">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Approved Records</div>
+            <div class="stat-value" style="color: var(--accent-emerald);" id="pwKpiApproved">0</div>
+          </div>
+          <div class="card p-3">
+            <div class="stat-label">Needs Human Review</div>
+            <div class="stat-value" style="color: var(--accent-amber);" id="pwKpiReviews">0</div>
+          </div>
+        </div>
+
+        <!-- Master Sub-Tabs inside Profile Workspace -->
+        <div class="sub-nav mb-4" style="border-bottom: 1px solid var(--border);">
+          <button class="nav-tab active" id="tabPwSchemas" onclick="switchPwTab('pwViewSchemas')">📋 Form Schemas & Document Types</button>
+          <button class="nav-tab" id="tabPwData" onclick="switchPwTab('pwViewData')">📊 Profile Structured Data (All Forms)</button>
+          <button class="nav-tab" id="tabPwDocs" onclick="switchPwTab('pwViewDocs')">⚡ Ingested Documents Stream</button>
+          <button class="nav-tab" id="tabPwReviews" onclick="switchPwTab('pwViewReviews')">⚠️ Review Exceptions Queue</button>
+        </div>
+
+        <!-- TAB 1: FORM SCHEMAS / DOCUMENT TYPES LIST -->
+        <div id="pwViewSchemas">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.15rem;">Configured Form Schemas</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0 0;">
+                Each form/document type defines its own dynamic fields, validation rules, and structured data records.
+              </p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openAddDocTypeModalForCurrentProfile()">+ Add New Form Schema</button>
+          </div>
+
+          <div class="card-grid" id="docTypesGrid">
+            <!-- Dynamically populated document type cards with "View Structured Data" buttons -->
+          </div>
+        </div>
+
+        <!-- TAB 2: PROFILE STRUCTURED DATA (ALL FORMS GRID) -->
+        <div id="pwViewData" style="display: none;">
+          <!-- Filter Controls -->
+          <div class="card p-3 mb-4" style="background: var(--bg-secondary); border: 1px solid var(--border);">
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="pwDataSearchInput" class="form-control" style="flex: 1; min-width: 220px;"
+                placeholder="Search extracted fields, invoice #, vendor, values..." oninput="filterPwDataGrid()">
+              <select id="pwDataFormFilter" class="form-control" style="width: 220px;" onchange="filterPwDataGrid()">
+                <option value="">All Form Schemas</option>
+              </select>
+              <select id="pwDataStatusFilter" class="form-control" style="width: 180px;" onchange="filterPwDataGrid()">
+                <option value="ALL">All Statuses</option>
+                <option value="APPROVED">Approved Only</option>
+                <option value="NEEDS_REVIEW">Needs Review Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container" style="overflow-x: auto;">
+            <table class="fields-table">
+              <thead>
+                <tr>
+                  <th>Original Document</th>
+                  <th>Form Schema</th>
+                  <th>Structured Fields Extracted</th>
+                  <th>Confidence</th>
+                  <th>Status</th>
+                  <th>Extracted Date</th>
+                  <th style="text-align: right;">Lineage & Actions</th>
+                </tr>
+              </thead>
+              <tbody id="pwDataTableBody">
+                <!-- Dynamically populated structured records across all forms in this profile -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: INGESTED DOCUMENTS STREAM -->
+        <div id="pwViewDocs" style="display: none;">
+          <div class="table-container">
+            <table class="fields-table">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th>Classified Form Type</th>
+                  <th>Multi-Engine Score</th>
+                  <th>4-Tier Validations</th>
+                  <th>Status</th>
+                  <th>Ingested At</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="pwDocsTableBody">
+                <!-- Dynamically populated document stream for profile -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 4: REVIEW EXCEPTIONS QUEUE -->
+        <div id="pwViewReviews" style="display: none;">
+          <div class="table-container">
+            <table class="fields-table">
+              <thead>
+                <tr>
+                  <th>Document</th>
+                  <th>Target Form Schema</th>
+                  <th>Priority</th>
+                  <th>Exception Reason</th>
+                  <th>Created Date</th>
+                  <th style="text-align: right;">Review Action</th>
+                </tr>
+              </thead>
+              <tbody id="pwReviewsTableBody">
+                <!-- Dynamically populated reviews for profile -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -269,18 +685,21 @@
         <div class="section-header">
           <div>
             <h2>Upload & Ingest Documents</h2>
-            <p class="section-desc">Select a published profile and upload PDF/image/Office documents for automated multi-engine extraction.</p>
+            <p class="section-desc">Select a published profile and upload PDF/image/Office documents for automated
+              multi-engine extraction.</p>
           </div>
         </div>
 
         <div class="upload-container-card">
           <!-- Profile Selector -->
           <div class="form-group mb-4">
-            <label for="selectPublishedProfile">Select Processing Profile (Published Schema) <span class="required">*</span></label>
+            <label for="selectPublishedProfile">Select Processing Profile (Published Schema) <span
+                class="required">*</span></label>
             <select id="selectPublishedProfile" class="form-control form-control-lg">
               <option value="">-- Loading Published Profiles --</option>
             </select>
-            <small class="form-help">Only profiles with a published schema version are selectable for reproducible ingestion.</small>
+            <small class="form-help">Only profiles with a published schema version are selectable for reproducible
+              ingestion.</small>
           </div>
 
           <!-- Drag and Drop Dropzone -->
@@ -288,8 +707,10 @@
             <div class="dropzone-icon">📄</div>
             <div class="dropzone-title">Drag and drop document files here</div>
             <div class="dropzone-subtitle">or click to browse from your computer</div>
-            <div class="dropzone-formats">Supported: PDF, PNG, JPG, JPEG, Word (.doc, .docx), Excel (.xls, .xlsx) &bull; Max 25MB/file &bull; Max 20 files/batch</div>
-            <input type="file" id="fileInput" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx" style="display: none;">
+            <div class="dropzone-formats">Supported: PDF, PNG, JPG, JPEG, Word (.doc, .docx), Excel (.xls, .xlsx) &bull;
+              Max 25MB/file &bull; Max 20 files/batch</div>
+            <input type="file" id="fileInput" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.xls,.xlsx"
+              style="display: none;">
           </div>
 
           <!-- Selected Files List -->
@@ -312,13 +733,14 @@
         <div class="section-header">
           <div>
             <h2>Documents & Processing Pipeline</h2>
-            <p class="section-desc">Track real-time multi-engine extraction, classification, structuring, and validation pipeline stages.</p>
+            <p class="section-desc">Track real-time multi-engine extraction, classification, structuring, and validation
+              pipeline stages.</p>
           </div>
           <button class="btn btn-secondary" id="btnRefreshDocs">↻ Refresh List</button>
         </div>
 
         <!-- Filter Bar -->
-        <div class="filter-bar mb-4">
+        <div class="filter-bar mb-4" style="display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap;">
           <div class="filter-group">
             <label for="filterProfile">Profile:</label>
             <select id="filterProfile" class="form-control form-control-sm">
@@ -337,9 +759,14 @@
               <option value="FAILED">FAILED</option>
             </select>
           </div>
-          <div class="filter-group search-group">
-            <input type="text" id="filterFilename" class="form-control form-control-sm" placeholder="Search filename...">
+          <div class="filter-group search-group" style="flex: 1; min-width: 200px;">
+            <label for="filterFilename">Search File:</label>
+            <input type="text" id="filterFilename" class="form-control form-control-sm"
+              placeholder="Search filename...">
           </div>
+          <button class="btn btn-secondary btn-sm" onclick="clearDocumentFilters()" style="height: 36px;">
+            Clear Filters
+          </button>
         </div>
 
         <div class="table-container">
@@ -363,18 +790,23 @@
       </section>
 
       <!-- SCREEN 6: HUMAN REVIEW QUEUE (Steps 7–8) -->
+      <!-- SCREEN 6: HUMAN REVIEW QUEUE (Enterprise Exception Workspace) -->
       <section class="screen-view" id="screenReviews">
         <div class="section-header">
           <div>
-            <h2>Human Review Queue</h2>
-            <p class="section-desc">Inspect, correct, and revalidate documents requiring human-in-the-loop review due to low confidence or validation failures.</p>
+            <h2>Human Review Exception Center</h2>
+            <p class="section-desc">Controlled exception-handling workspace to resolve uncertain classifications, field
+              discrepancies, duplicate warnings, and arithmetic anomalies before final business approval.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="loadReviewQueue()">🔄 Refresh Queue</button>
           </div>
         </div>
 
         <!-- Summary KPI Cards -->
-        <div class="grid grid-4 mb-4">
+        <div class="grid grid-5 mb-4" style="grid-template-columns: repeat(5, 1fr);">
           <div class="card p-3">
-            <div class="stat-label">Open Reviews</div>
+            <div class="stat-label">Pending Reviews</div>
             <div class="stat-value" id="kpiOpenReviews">0</div>
           </div>
           <div class="card p-3">
@@ -389,13 +821,23 @@
             <div class="stat-label">Validation Failures</div>
             <div class="stat-value" style="color: var(--accent-rose);" id="kpiValReviews">0</div>
           </div>
+          <div class="card p-3">
+            <div class="stat-label">High Priority 🔥</div>
+            <div class="stat-value" style="color: #f43f5e;" id="kpiHighPriorityReviews">0</div>
+          </div>
         </div>
 
         <!-- Review Filter Bar -->
-        <div class="filter-bar mb-4">
+        <div class="filter-bar mb-4" style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
+          <div class="filter-group" style="flex: 2; min-width: 220px;">
+            <label for="filterReviewSearch">Search Review Queue:</label>
+            <input type="text" id="filterReviewSearch" class="form-control form-control-sm"
+              placeholder="Search by filename, document ID, invoice #, vendor, receipt #..."
+              oninput="filterReviewQueueLocally()">
+          </div>
           <div class="filter-group">
             <label for="filterReviewType">Category:</label>
-            <select id="filterReviewType" class="form-control form-control-sm">
+            <select id="filterReviewType" class="form-control form-control-sm" onchange="loadReviewQueue()">
               <option value="">All Categories</option>
               <option value="CLASSIFICATION">Classification</option>
               <option value="FIELD">Field</option>
@@ -403,24 +845,34 @@
             </select>
           </div>
           <div class="filter-group">
-            <label for="filterReviewReason">Reason:</label>
-            <select id="filterReviewReason" class="form-control form-control-sm">
-              <option value="">All Reasons</option>
-              <option value="LOW_CLASSIFICATION_CONFIDENCE">LOW_CLASSIFICATION_CONFIDENCE</option>
-              <option value="UNKNOWN_DOCUMENT_TYPE">UNKNOWN_DOCUMENT_TYPE</option>
-              <option value="LOW_FIELD_CONFIDENCE">LOW_FIELD_CONFIDENCE</option>
-              <option value="VALIDATION_FAILED">VALIDATION_FAILED</option>
-              <option value="INSUFFICIENT_PAGE_CONTENT">INSUFFICIENT_PAGE_CONTENT</option>
+            <label for="filterReviewPriority">Priority:</label>
+            <select id="filterReviewPriority" class="form-control form-control-sm" onchange="loadReviewQueue()">
+              <option value="">All Priorities</option>
+              <option value="HIGH">High Priority</option>
+              <option value="MEDIUM">Medium Priority</option>
+              <option value="LOW">Low Priority</option>
             </select>
           </div>
           <div class="filter-group">
             <label for="filterReviewStatus">Status:</label>
-            <select id="filterReviewStatus" class="form-control form-control-sm">
+            <select id="filterReviewStatus" class="form-control form-control-sm" onchange="loadReviewQueue()">
               <option value="">All Statuses</option>
-              <option value="OPEN">OPEN</option>
-              <option value="IN_PROGRESS">IN_PROGRESS</option>
+              <option value="OPEN" selected>OPEN / IN_PROGRESS</option>
               <option value="RESOLVED">RESOLVED</option>
               <option value="REJECTED">REJECTED</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterReviewProfile">Profile:</label>
+            <select id="filterReviewProfile" class="form-control form-control-sm" onchange="loadReviewQueue()">
+              <option value="">All Profiles</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterReviewSort">Sort:</label>
+            <select id="filterReviewSort" class="form-control form-control-sm" onchange="loadReviewQueue()">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
             </select>
           </div>
         </div>
@@ -429,13 +881,14 @@
           <table class="fields-table">
             <thead>
               <tr>
-                <th>Review Item</th>
-                <th>Type / Category</th>
-                <th>Review Reason</th>
-                <th>Confidence</th>
+                <th>Document</th>
+                <th>Document Type</th>
+                <th>Review Category & Reason</th>
+                <th style="text-align: center;">Issues</th>
+                <th>Priority</th>
                 <th>Status</th>
-                <th>Assigned To</th>
-                <th>Created At</th>
+                <th>Assigned Reviewer</th>
+                <th>Uploaded</th>
                 <th style="text-align: right;">Action</th>
               </tr>
             </thead>
@@ -451,7 +904,19 @@
         <div class="section-header">
           <div>
             <h2>Structured Business Records & Search Workspace</h2>
-            <p class="section-desc">Search, filter, and inspect completed business records extracted across dynamic document profiles.</p>
+            <p class="section-desc">Search, filter, and inspect completed business records organized across dynamic
+              company forms and profiles.</p>
+          </div>
+        </div>
+
+        <!-- Form-Wise Document Type Tabs Bar -->
+        <div class="card p-3 mb-4" style="background: var(--bg-card); border: 1px solid var(--border);">
+          <div
+            style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+            Company Form Schemas & Records Workspaces:
+          </div>
+          <div id="recordsFormTabsContainer" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <!-- Populated dynamically with [All Forms], [Supplier Invoices (248)], [Material Receipts (136)], etc. -->
           </div>
         </div>
 
@@ -460,35 +925,38 @@
           <div class="grid grid-4 gap-3 mb-3">
             <div>
               <label for="searchQuery">Full-Text Search Term:</label>
-              <input type="text" id="searchQuery" class="form-control" placeholder="Search filename, document type, OCR text...">
+              <input type="text" id="searchQuery" class="form-control"
+                placeholder="Search filename, document type, OCR text...">
             </div>
             <div>
               <label for="searchProfile">Profile Filter:</label>
-              <select id="searchProfile" class="form-control">
+              <select id="searchProfile" class="form-control" onchange="onSearchProfileChange()">
                 <option value="">All Profiles</option>
               </select>
             </div>
             <div>
-              <label for="searchDocType">Document Type:</label>
-              <select id="searchDocType" class="form-control">
+              <label for="searchDocType">Document Type / Form:</label>
+              <select id="searchDocType" class="form-control" onchange="executeSearchQuery()">
                 <option value="">All Document Types</option>
               </select>
             </div>
             <div>
               <label for="searchRecordStatus">Status:</label>
-              <select id="searchRecordStatus" class="form-control">
+              <select id="searchRecordStatus" class="form-control" onchange="executeSearchQuery()">
                 <option value="APPROVED">APPROVED (Default)</option>
+                <option value="NEEDS_REVIEW">NEEDS_REVIEW</option>
                 <option value="DRAFT">DRAFT</option>
                 <option value="ALL">ALL STATUSES</option>
               </select>
             </div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
             <button class="btn btn-secondary btn-sm" id="btnAddDynamicFilter">+ Add Dynamic Field Filter</button>
-            <div>
-              <button class="btn btn-secondary btn-sm me-2" id="btnClearSearch">Clear Filters</button>
-              <button class="btn btn-primary btn-sm" id="btnExecuteSearch">Search Records</button>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" id="btnClearSearch">Clear Filters</button>
+              <button class="btn btn-primary btn-sm" id="btnExecuteSearch">Search Records 🔍</button>
             </div>
           </div>
 
@@ -498,9 +966,10 @@
           </div>
         </div>
 
-        <div class="table-container">
+        <!-- Records Table with Dynamic Schema Headers -->
+        <div class="table-container" style="overflow-x: auto;">
           <table class="fields-table">
-            <thead>
+            <thead id="recordsTableHeader">
               <tr>
                 <th>Original Filename</th>
                 <th>Document Type</th>
@@ -523,7 +992,8 @@
         <div class="section-header">
           <div>
             <h2>AI Assistant & Structured Query Planner</h2>
-            <p class="section-desc">Ask natural language questions over processed business records using restricted query planning and strict grounding.</p>
+            <p class="section-desc">Ask natural language questions over processed business records using restricted
+              query planning and strict grounding.</p>
           </div>
           <button class="btn btn-secondary btn-sm" id="btnClearChatHistory">Clear Chat</button>
         </div>
@@ -533,21 +1003,29 @@
           <div class="chat-messages" id="chatMessagesStream">
             <div class="chat-bubble assistant">
               <span class="query-plan-tag">AI Query Planner Active</span>
-              <p style="margin: 0;">Hello! I can answer questions, summarize metrics, or aggregate data over your structured document records. Ask me anything like <em>"What is the total spend in August?"</em> or <em>"Count records by document type"</em>.</p>
+              <p style="margin: 0;">Hello! I can answer questions, summarize metrics, or aggregate data over your
+                structured document records. Ask me anything like <em>"What is the total spend in August?"</em> or
+                <em>"Count records by document type"</em>.</p>
             </div>
           </div>
 
           <!-- Suggestion Chips -->
           <div class="chat-suggestion-chips">
-            <span class="suggestion-chip" onclick="sendSuggestedChat('What is the total sum of all invoice amounts?')">💰 Total Spend Sum</span>
-            <span class="suggestion-chip" onclick="sendSuggestedChat('Count approved records by document type')">📊 Count by Document Type</span>
-            <span class="suggestion-chip" onclick="sendSuggestedChat('How many documents require human review?')">⚠️ Review Items Count</span>
-            <span class="suggestion-chip" onclick="sendSuggestedChat('List the latest 5 processed records')">🕒 Recent 5 Records</span>
+            <span class="suggestion-chip"
+              onclick="sendSuggestedChat('What is the total sum of all invoice amounts?')">💰 Total Spend Sum</span>
+            <span class="suggestion-chip" onclick="sendSuggestedChat('Count approved records by document type')">📊
+              Count by Document Type</span>
+            <span class="suggestion-chip" onclick="sendSuggestedChat('How many documents require human review?')">⚠️
+              Review Items Count</span>
+            <span class="suggestion-chip" onclick="sendSuggestedChat('List the latest 5 processed records')">🕒 Recent 5
+              Records</span>
           </div>
 
           <!-- Chat Input Bar -->
           <div class="chat-input-bar">
-            <input type="text" id="chatInputText" class="form-control" placeholder="Ask a question about your business records..." onkeydown="if(event.key==='Enter') submitChatMessage()">
+            <input type="text" id="chatInputText" class="form-control"
+              placeholder="Ask a question about your business records..."
+              onkeydown="if(event.key==='Enter') submitChatMessage()">
             <button class="btn btn-primary" id="btnSendChat" onclick="submitChatMessage()">Ask Assistant →</button>
           </div>
         </div>
@@ -558,28 +1036,37 @@
         <div class="section-header">
           <div>
             <h2>Export & Business Reporting</h2>
-            <p class="section-desc">Generate multi-format exports (CSV, XLSX, JSON, PDF, DOCX) and view PostgreSQL analytics for approved records.</p>
+            <p class="section-desc">Generate multi-format exports (CSV, XLSX, JSON, PDF, DOCX) and view PostgreSQL
+              analytics for approved records.</p>
           </div>
         </div>
 
         <!-- Export Sub-Tabs -->
         <div class="sub-nav mb-4" style="border-bottom: 1px solid var(--border-color);">
-          <button class="nav-tab active" id="tabExportBuilder" onclick="switchExportSubTab('viewExportBuilder')">Export Builder</button>
-          <button class="nav-tab" id="tabReportingDashboard" onclick="switchExportSubTab('viewReportingDashboard')">Reporting Dashboard</button>
-          <button class="nav-tab" id="tabExportHistory" onclick="switchExportSubTab('viewExportHistory')">Export History</button>
+          <button class="nav-tab active" id="tabExportBuilder" onclick="switchExportSubTab('viewExportBuilder')">Export
+            Builder</button>
+          <button class="nav-tab" id="tabReportingDashboard"
+            onclick="switchExportSubTab('viewReportingDashboard')">Reporting Dashboard</button>
+          <button class="nav-tab" id="tabExportHistory" onclick="switchExportSubTab('viewExportHistory')">Export
+            History</button>
         </div>
 
         <!-- VIEW 1: EXPORT BUILDER -->
         <div id="viewExportBuilder">
           <!-- Live Scope & Record Counter Header -->
           <div class="card p-3 mb-4" style="background: var(--bg-secondary); border: 1px solid var(--border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
               <div>
-                <div style="font-size: 0.75rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.06em;">Enterprise Multi-Format Exporter</div>
-                <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-top: 0.2rem;" id="exportScopeSummary">All Profiles & Document Types Selected</div>
+                <div
+                  style="font-size: 0.75rem; font-weight: 700; color: var(--primary-accent); text-transform: uppercase; letter-spacing: 0.06em;">
+                  Enterprise Multi-Format Exporter</div>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-top: 0.2rem;"
+                  id="exportScopeSummary">All Profiles & Document Types Selected</div>
               </div>
               <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <span class="badge badge-published" style="font-size: 0.88rem; padding: 0.45rem 0.85rem;" id="exportMatchingCountBadge">⚡ Matching: Ready for Export</span>
+                <span class="badge badge-published" style="font-size: 0.88rem; padding: 0.45rem 0.85rem;"
+                  id="exportMatchingCountBadge">⚡ Matching: Ready for Export</span>
               </div>
             </div>
           </div>
@@ -587,40 +1074,56 @@
           <div class="grid grid-2 gap-4">
             <!-- Left Card: Scope & Format -->
             <div class="card p-4">
-              <h4 class="mb-3" style="color: var(--primary-accent); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+              <h4 class="mb-3"
+                style="color: var(--primary-accent); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
                 <span>1.</span> Scope & Format Selection
               </h4>
-              
+
               <div class="form-group mb-3">
-                <label for="exportProfile" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Filter by Profile:</label>
+                <label for="exportProfile"
+                  style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Filter by Profile:</label>
                 <select id="exportProfile" class="form-control" onchange="updateExportScopePreview()">
                   <option value="">All Published Profiles</option>
                 </select>
               </div>
 
               <div class="form-group mb-4">
-                <label for="exportDocType" style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Filter by Document Type:</label>
+                <label for="exportDocType"
+                  style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Filter by Document
+                  Type:</label>
                 <select id="exportDocType" class="form-control" onchange="updateExportScopePreview()">
                   <option value="">All Document Types</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; display: block;">Select Target Export Format:</label>
+                <label
+                  style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; display: block;">Select
+                  Target Export Format:</label>
                 <div class="grid grid-5 gap-2" style="grid-template-columns: repeat(5, 1fr);">
-                  <button type="button" class="btn btn-secondary export-format-btn active" id="btnFormatCSV" onclick="setExportFormat('CSV')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                  <button type="button" class="btn btn-secondary export-format-btn active" id="btnFormatCSV"
+                    onclick="setExportFormat('CSV')"
+                    style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
                     CSV
                   </button>
-                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatExcel" onclick="setExportFormat('Excel')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatExcel"
+                    onclick="setExportFormat('Excel')"
+                    style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
                     Excel
                   </button>
-                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatJSON" onclick="setExportFormat('JSON')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatJSON"
+                    onclick="setExportFormat('JSON')"
+                    style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
                     JSON
                   </button>
-                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatPDF" onclick="setExportFormat('PDF')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatPDF"
+                    onclick="setExportFormat('PDF')"
+                    style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
                     PDF
                   </button>
-                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatWord" onclick="setExportFormat('Word')" style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
+                  <button type="button" class="btn btn-secondary export-format-btn" id="btnFormatWord"
+                    onclick="setExportFormat('Word')"
+                    style="padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;">
                     Word
                   </button>
                 </div>
@@ -630,39 +1133,51 @@
             <!-- Right Card: Options & Generation CTA -->
             <div class="card p-4" style="display: flex; flex-direction: column; justify-content: space-between;">
               <div>
-                <h4 class="mb-3" style="color: var(--primary-accent); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                <h4 class="mb-3"
+                  style="color: var(--primary-accent); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
                   <span>2.</span> Data Options & Fields
                 </h4>
-                
+
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
-                  <label style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
-                    <input type="checkbox" id="chkExportMeta" checked style="margin-top: 0.2rem; transform: scale(1.15);">
+                  <label
+                    style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
+                    <input type="checkbox" id="chkExportMeta" checked
+                      style="margin-top: 0.2rem; transform: scale(1.15);">
                     <div>
-                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Standard Metadata</div>
-                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports Record ID, Original Filename, Document Type, Status, and Ingestion Date.</div>
+                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Standard
+                        Metadata</div>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports Record ID, Original
+                        Filename, Document Type, Status, and Ingestion Date.</div>
                     </div>
                   </label>
 
-                  <label style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
+                  <label
+                    style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
                     <input type="checkbox" id="chkExportConfidence" style="margin-top: 0.2rem; transform: scale(1.15);">
                     <div>
-                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Extraction Confidence</div>
-                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports per-field OCR and machine extraction confidence percentages.</div>
+                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Extraction
+                        Confidence</div>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports per-field OCR and machine
+                        extraction confidence percentages.</div>
                     </div>
                   </label>
 
-                  <label style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
+                  <label
+                    style="display: flex; align-items: flex-start; gap: 0.75rem; background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; border: 1px solid var(--border);">
                     <input type="checkbox" id="chkExportValidation" style="margin-top: 0.2rem; transform: scale(1.15);">
                     <div>
-                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Validation History</div>
-                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports human correction notes, revalidation status, and rule audit logs.</div>
+                      <div style="font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">Include Validation
+                        History</div>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Exports human correction notes,
+                        revalidation status, and rule audit logs.</div>
                     </div>
                   </label>
                 </div>
               </div>
 
               <div>
-                <button class="btn btn-primary w-100" id="btnGenerateExport" onclick="triggerDocumentExport()" style="font-size: 1rem; padding: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <button class="btn btn-primary w-100" id="btnGenerateExport" onclick="triggerDocumentExport()"
+                  style="font-size: 1rem; padding: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                   <span>⬇</span> <span id="lblGenerateExportBtn">Generate & Download CSV File</span>
                 </button>
               </div>
@@ -692,7 +1207,8 @@
         <div id="viewExportHistory" style="display: none;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h4 style="margin: 0; color: var(--text-primary); font-size: 1.05rem;">Generated Export Files</h4>
-            <button class="btn btn-secondary btn-sm" onclick="clearAllExportHistory()" style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.3);">🗑 Clear All History</button>
+            <button class="btn btn-secondary btn-sm" onclick="clearAllExportHistory()"
+              style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.3);">🗑 Clear All History</button>
           </div>
           <div class="table-container">
             <table class="fields-table">
@@ -731,11 +1247,13 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="profileName">Profile Name <span class="required">*</span></label>
-            <input type="text" id="profileName" class="form-control" placeholder="e.g. Accounts Payable Invoices" required>
+            <input type="text" id="profileName" class="form-control" placeholder="e.g. Accounts Payable Invoices"
+              required>
           </div>
           <div class="form-group">
             <label for="profileDesc">Description</label>
-            <textarea id="profileDesc" class="form-control" rows="3" placeholder="Purpose and workflow description"></textarea>
+            <textarea id="profileDesc" class="form-control" rows="3"
+              placeholder="Purpose and workflow description"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -750,31 +1268,34 @@
   <div class="modal-overlay" id="modalDocType">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 id="modalDocTypeTitle">Add Document Type</h3>
+        <h3 id="modalDocTypeTitle">Add Form / Document Type Schema</h3>
         <button class="modal-close" id="btnCloseModalDocType">&times;</button>
       </div>
       <form id="formDocType">
         <div class="modal-body">
           <div class="form-group">
-            <label for="docTypeName">Document Type Name <span class="required">*</span></label>
-            <input type="text" id="docTypeName" class="form-control" placeholder="e.g. Vendor Standard Invoice" required>
+            <label for="docTypeName">Form / Document Type Name <span class="required">*</span></label>
+            <input type="text" id="docTypeName" class="form-control" placeholder="e.g. Supplier Commercial Invoice"
+              required>
           </div>
           <div class="form-group">
-            <label for="docTypeKey">Type Key (snake_case) <span class="required">*</span></label>
-            <input type="text" id="docTypeKey" class="form-control" placeholder="vendor_standard_invoice" required>
+            <label for="docTypeKey">Form Schema Key (snake_case) <span class="required">*</span></label>
+            <input type="text" id="docTypeKey" class="form-control" placeholder="supplier_commercial_invoice" required>
           </div>
           <div class="form-group">
             <label for="docTypeDesc">Description</label>
-            <textarea id="docTypeDesc" class="form-control" rows="2" placeholder="Brief explanation of this document format"></textarea>
+            <textarea id="docTypeDesc" class="form-control" rows="2"
+              placeholder="Brief explanation of this business form and its purpose"></textarea>
           </div>
           <div class="form-group">
-            <label for="docTypeAliases">Alternative Names / Aliases (Comma separated)</label>
-            <input type="text" id="docTypeAliases" class="form-control" placeholder="Intake Form, Admission Slip">
+            <label for="docTypeAliases">Alternative Names / Form Aliases (Comma separated)</label>
+            <input type="text" id="docTypeAliases" class="form-control"
+              placeholder="Tax Invoice, Bill of Supply, Commercial Bill">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="btnCancelDocType">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Document Type</button>
+          <button type="submit" class="btn btn-primary">Save Form Schema</button>
         </div>
       </form>
     </div>
@@ -865,21 +1386,91 @@
     </div>
   </div>
 
-  <!-- MODAL 6: INTERACTIVE REVIEW WORKSPACE -->
+  <!-- MODAL 6: ENTERPRISE HUMAN REVIEW WORKSPACE (Full 2-Panel Split) -->
   <div class="modal-overlay" id="modalReviewWorkspace">
-    <div class="modal-card modal-large" style="max-width: 1100px; width: 95%;">
-      <div class="modal-header">
-        <h3 id="workspaceTitle">Review Workspace</h3>
+    <div class="modal-card modal-large"
+      style="max-width: 1450px; width: 98%; height: 92vh; display: flex; flex-direction: column;">
+      <div class="modal-header"
+        style="padding: 0.85rem 1.5rem; background: var(--bg-card); border-bottom: 1px solid var(--border);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <h3 id="workspaceTitle" style="margin: 0; font-size: 1.15rem;">Human Review Exception Workspace</h3>
+          <span id="workspaceBadgeGroup" style="display: flex; gap: 0.4rem;"></span>
+        </div>
         <button class="modal-close" id="btnCloseWorkspace" onclick="closeModal('modalReviewWorkspace')">&times;</button>
       </div>
-      <div class="modal-body" id="workspaceContent">
-        <!-- Dynamically populated workspace -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeModal('modalReviewWorkspace')">Close Workspace</button>
+      <div class="modal-body" id="workspaceContent"
+        style="padding: 0; flex: 1; overflow: hidden; background: var(--bg-main);">
+        <!-- Dynamically populated 2-panel workspace -->
       </div>
     </div>
   </div>
+
+  <!-- MODAL: REJECT DOCUMENT WITH MANDATORY REASON -->
+  <div class="modal-overlay" id="modalReviewReject">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 style="color: var(--accent-rose);">Reject Document from Pipeline</h3>
+        <button class="modal-close" onclick="closeModal('modalReviewReject')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Rejecting this document will mark it as <code>REJECTED</code>. The original document and complete audit trail
+          will be preserved for compliance.
+        </p>
+        <div class="form-group mb-3">
+          <label for="rejectReasonSelect">Rejection Category <span style="color: var(--accent-rose);">*</span></label>
+          <select id="rejectReasonSelect" class="form-control">
+            <option value="Unsupported document type">Unsupported document type</option>
+            <option value="Unreadable source / poor quality">Unreadable source / poor quality</option>
+            <option value="Duplicate submission">Duplicate submission</option>
+            <option value="Incorrect business document">Incorrect business document</option>
+            <option value="Insufficient information">Insufficient information</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label for="rejectReasonNotes">Detailed Rejection Notes</label>
+          <textarea id="rejectReasonNotes" class="form-control" rows="3"
+            placeholder="Provide context for why this document was rejected (e.g. illegible line items or wrong vendor)..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modalReviewReject')">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="executeReviewReject()">Confirm Rejection</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: OVERRIDE VALIDATION WITH AUDIT NOTE -->
+  <div class="modal-overlay" id="modalReviewOverride">
+    <div class="modal-card" style="max-width: 540px;">
+      <div class="modal-header">
+        <h3 style="color: var(--accent-amber);">Finance Validation Override</h3>
+        <button class="modal-close" onclick="closeModal('modalReviewOverride')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="p-2 mb-3"
+          style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px;">
+          <small style="color: var(--accent-amber); font-weight: 600;" id="overridePromptLabel">Overriding Arithmetic /
+            Business Validation</small>
+          <p style="font-size: 0.8rem; margin: 0.25rem 0 0 0; color: var(--text-secondary);">
+            Enterprise policy requires an explicit audit reason to confirm non-standard figures or duplicate entries.
+          </p>
+        </div>
+        <div class="form-group mb-3">
+          <label for="overrideReasonNote">Mandatory Review Note / Justification <span
+              style="color: var(--accent-rose);">*</span></label>
+          <textarea id="overrideReasonNote" class="form-control" rows="3"
+            placeholder="e.g. Source document verified with finance team. Discrepancy is an approved supplier rounding fee."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modalReviewOverride')">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="executeReviewOverride()">Confirm & Log Override</button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- MODAL 7: FIELD PROVENANCE & TRACEABILITY MODAL -->
   <div class="modal-overlay" id="modalRecordDetail">
@@ -887,7 +1478,8 @@
       <div class="modal-header">
         <div>
           <h3 id="recDetailTitle">Record Detail & Provenance Traceability</h3>
-          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem; color: #94a3b8;" id="recDetailSubtitle">Full field lineage, source evidence snippets, and machine vs human audit values.</p>
+          <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem; color: #94a3b8;" id="recDetailSubtitle">Full field
+            lineage, source evidence snippets, and machine vs human audit values.</p>
         </div>
         <button class="modal-close" onclick="closeModal('modalRecordDetail')">&times;</button>
       </div>
@@ -909,7 +1501,8 @@
           <h3>
             <span>⚡</span> Multi-Engine Extraction & Comparison Scorecard
           </h3>
-          <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #94a3b8;" id="compModalSubtitle">Evaluating Engine 1 (Native), Engine 2 (OCR API), and Engine 3 (Python Engine)</p>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #94a3b8;" id="compModalSubtitle">Evaluating Engine
+            1 (Native), Engine 2 (OCR API), and Engine 3 (Python Engine)</p>
         </div>
         <button type="button" class="modal-close" onclick="closeEngineComparisonModal()">&times;</button>
       </div>

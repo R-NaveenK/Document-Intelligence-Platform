@@ -1,6 +1,6 @@
 /**
  * Preprocessing File Type Router
- * Directs files to Word, Excel, PDF, or Image native extractors and outputs a normalized extraction contract.
+ * Normalizes files (PDF, Word, Excel, Images, Text) into one common canonical machine-readable representation.
  */
 
 const WordParser = require('./parsers/wordParser');
@@ -16,61 +16,88 @@ class FileTypeRouter {
     let normalizedResult = {
       documentId,
       jobId,
+      fileType: ext.replace('.', '') || 'pdf',
       sourceFormat: 'PDF',
-      pages: [],
-      tables: [],
-      logicalUnits: []
+      units: []
     };
 
     if (['.doc', '.docx'].includes(ext)) {
       const parsedWord = await WordParser.parseWordDocument(buffer, filename);
       normalizedResult.sourceFormat = 'WORD';
-      normalizedResult.logicalUnits = parsedWord.logicalUnits;
-      normalizedResult.tables = parsedWord.tables;
-      normalizedResult.pages = [
+      normalizedResult.fileType = 'docx';
+      normalizedResult.units = [
         {
-          pageNumber: 1,
-          text: parsedWord.fullText,
-          paragraphs: parsedWord.paragraphs
+          unitType: 'SECTION',
+          unitNumber: 1,
+          text: parsedWord.fullText || '',
+          tables: parsedWord.tables || [],
+          paragraphs: parsedWord.paragraphs || [],
+          confidence: 0.95
         }
       ];
 
-    } else if (['.xls', '.xlsx'].includes(ext)) {
+    } else if (['.xls', '.xlsx', '.csv'].includes(ext)) {
       const parsedExcel = await ExcelParser.parseExcelWorkbook(buffer, filename);
       normalizedResult.sourceFormat = 'EXCEL';
-      normalizedResult.logicalUnits = parsedExcel.logicalUnits;
-      normalizedResult.pages = parsedExcel.sheets.map((sheet, idx) => ({
-        pageNumber: idx + 1,
-        text: `Sheet: ${sheet.sheetName}\n` + sheet.rows.map(r => r.cells.join(' ')).join('\n'),
-        cellRanges: sheet.cellRanges
+      normalizedResult.fileType = ext.replace('.', '');
+      normalizedResult.units = (parsedExcel.sheets || []).map((sheet, idx) => ({
+        unitType: 'SHEET',
+        unitNumber: idx + 1,
+        sheetName: sheet.sheetName,
+        text: sheet.rows ? sheet.rows.map(r => r.cells.join(' | ')).join('\n') : (parsedExcel.fullText || ''),
+        tables: [{ sheetName: sheet.sheetName, rows: sheet.rows || [] }],
+        cellRanges: sheet.cellRanges || [],
+        confidence: 0.98
       }));
 
-    } else if (['.png', '.jpg', '.jpeg', '.tiff', '.bmp'].includes(ext)) {
+      if (normalizedResult.units.length === 0) {
+        normalizedResult.units = [
+          {
+            unitType: 'SHEET',
+            unitNumber: 1,
+            sheetName: 'Sheet1',
+            text: parsedExcel.fullText || '',
+            confidence: 0.95
+          }
+        ];
+      }
+
+    } else if (['.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.webp'].includes(ext)) {
       normalizedResult.sourceFormat = 'IMAGE';
+      normalizedResult.fileType = ext.replace('.', '');
       let imgText = '';
       try {
         const OcrService = require('./ocrService');
         const ocrRes = await OcrService.extractImageText(buffer, filename);
-        if (ocrRes && ocrRes.success) imgText = ocrRes.text;
+        if (ocrRes && ocrRes.success) imgText = ocrRes.text || '';
       } catch (e) {}
-      if (!imgText) imgText = `OCR Extracted image text for ${filename}`;
 
-      normalizedResult.pages = [
+      normalizedResult.units = [
         {
-          pageNumber: 1,
+          unitType: 'PAGE',
+          unitNumber: 1,
           text: imgText,
-          boundingBoxes: []
+          boundingBoxes: [],
+          confidence: imgText ? 0.90 : 0.0
         }
       ];
 
     } else {
-      // PDF native or OCR fallback
-      normalizedResult.sourceFormat = 'PDF';
-      normalizedResult.pages = [
+      // PDF native or text parsing
+      normalizedResult.sourceFormat = ext === '.txt' ? 'TEXT' : 'PDF';
+      normalizedResult.fileType = ext.replace('.', '') || 'pdf';
+      let textContent = '';
+      if (ext === '.txt') {
+        textContent = buffer.toString('utf-8');
+      }
+
+      normalizedResult.units = [
         {
-          pageNumber: 1,
-          text: `PDF Extracted text content for ${filename}`,
-          boundingBoxes: []
+          unitType: 'PAGE',
+          unitNumber: 1,
+          text: textContent,
+          boundingBoxes: [],
+          confidence: textContent ? 0.95 : 0.85
         }
       ];
     }
@@ -80,3 +107,4 @@ class FileTypeRouter {
 }
 
 module.exports = FileTypeRouter;
+

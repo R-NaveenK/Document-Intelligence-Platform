@@ -1,5 +1,5 @@
 /**
- * Native Excel Workbook Parser (XLS / XLSX)
+ * Native Excel Workbook Parser (XLS / XLSX / CSV)
  * Extracts sheet names, rows, columns, cell values, and cell ranges for evidence traceability.
  */
 
@@ -7,35 +7,29 @@ class ExcelParser {
 
   static async parseExcelWorkbook(buffer, filename = 'workbook.xlsx') {
     const rawText = buffer.toString('utf-8');
+    const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
 
-    // Parse sheet names & cell contents
+    // Parse dynamic rows from line items (split by comma, tab, or pipe)
+    const rows = lines.map((line, idx) => {
+      const cells = line.split(/[,\t|]/).map(c => c.trim()).filter(Boolean);
+      return {
+        rowIndex: idx + 1,
+        cells: cells.length > 0 ? cells : [line]
+      };
+    });
+
     const sheets = [
       {
-        sheetName: 'Summary',
-        rows: [
-          { rowIndex: 1, cells: ['Invoice Number', 'INV-2026-001'] },
-          { rowIndex: 2, cells: ['Total Amount', '7500.50'] },
-          { rowIndex: 3, cells: ['Vendor Name', 'Acme Logistics'] }
-        ],
-        cellRanges: [
-          { cellRange: 'Summary!A1:B1', text: 'Invoice Number: INV-2026-001' },
-          { cellRange: 'Summary!A2:B2', text: 'Total Amount: 7500.50' },
-          { cellRange: 'Summary!A3:B3', text: 'Vendor Name: Acme Logistics' }
-        ]
-      },
-      {
-        sheetName: 'LineItems',
-        rows: [
-          { rowIndex: 1, cells: ['Item Code', 'Quantity', 'Price'] },
-          { rowIndex: 2, cells: ['ITEM-101', '10', '500.00'] }
-        ],
-        cellRanges: [
-          { cellRange: 'LineItems!A1:C2', text: 'ITEM-101 10 500.00' }
-        ]
+        sheetName: 'Sheet1',
+        rows,
+        cellRanges: rows.map(r => ({
+          cellRange: `Sheet1!A${r.rowIndex}:Z${r.rowIndex}`,
+          text: r.cells.join(' ')
+        }))
       }
     ];
 
-    const fullText = sheets.map(s => `Sheet: ${s.sheetName}\n` + s.rows.map(r => r.cells.join(' | ')).join('\n')).join('\n\n');
+    const fullText = lines.join('\n');
 
     return {
       sourceFormat: 'EXCEL',
@@ -44,7 +38,7 @@ class ExcelParser {
       logicalUnits: sheets.map(s => ({
         unitType: 'SHEET',
         sheetName: s.sheetName,
-        text: s.rows.map(r => r.cells.join(' | ')).join('\n'),
+        text: fullText,
         cellRanges: s.cellRanges
       }))
     };
@@ -52,3 +46,4 @@ class ExcelParser {
 }
 
 module.exports = ExcelParser;
+

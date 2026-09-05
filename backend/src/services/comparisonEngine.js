@@ -116,11 +116,55 @@ class ComparisonEngine {
       ? realSuccessfulEngines
       : evaluatedEngines.filter(e => e.wordCount > 0);
 
-    // Empty extraction detection
+    // Empty extraction detection & Non-document / Wallpaper handling
     if (usableEnginesForSelection.length === 0) {
-      const err = new Error('All usable extraction engines returned empty or invalid text');
-      err.code = 'EXTRACTION_FAILED';
-      throw err;
+      const fallbackReport = {
+        comparisonId: `cmp_${Date.now()}_${documentId.slice(0, 8)}`,
+        documentId,
+        jobId,
+        filename,
+        winningEngineId: 'NONE',
+        winningEngineName: 'None (No Text Detected)',
+        winningScore: 0,
+        isUnreadableOrEmpty: true,
+        consensusStatus: 'EMPTY_OR_UNREADABLE',
+        crossEngineAgreementPct: 0,
+        disagreementDetected: true,
+        disagreementRationale: 'No readable text or business document structure detected across any engine. File appears to be an unreadable image, wallpaper, or non-text document.',
+        selectionRationale: 'Extraction yielded 0 readable words. Document flagged for Human Review as unreadable/non-document.',
+        winner: {
+          engineId: 'NONE',
+          engineName: 'None (No Text Detected)',
+          totalScore: 0,
+          confidence: 0,
+          wordCount: 0,
+          characterCount: 0,
+          rawText: '',
+          metrics: { characterClarity: 0, completeness: 0, entityCount: 0, entityRichness: 0, confidenceScore: 0 },
+          originalExtraction: { engineId: 'NONE', engineName: 'None', rawText: '', confidence: 0, pages: [] }
+        },
+        engineScores: extractions.map(e => ({
+          engineId: e.engineId || 'ENGINE',
+          engineName: e.engineName || 'Engine',
+          score: 0,
+          confidence: 0,
+          wordCount: 0,
+          characterCount: 0,
+          entityCount: 0,
+          qualityBreakdown: { characterClarity: 0, completeness: 0, entityRichness: 0, confidenceScore: 0 },
+          sampleSnippet: 'No text extracted'
+        })),
+        selectedExtraction: { engineId: 'NONE', engineName: 'None', rawText: '', confidence: 0, pages: [] },
+        allExtractions: extractions
+      };
+
+      return {
+        isUnreadableOrEmpty: true,
+        winner: fallbackReport.winner,
+        winningExtraction: fallbackReport.winner.originalExtraction,
+        allExtractions: extractions,
+        comparisonReport: fallbackReport
+      };
     }
 
     // Calculate Cross-Engine Token Agreement & Disagreement
@@ -233,11 +277,13 @@ class ComparisonEngine {
       let rawText = '';
       let pages = [];
 
-      const isPlainText = filename.endsWith('.txt') || filename.endsWith('.csv') || filename.endsWith('.json') || mimeType.includes('text') || mimeType.includes('json') || mimeType.includes('csv');
+      const isImage = filename.match(/\.(png|jpg|jpeg|tiff|tif|webp|bmp|gif)$/i) || (mimeType && mimeType.includes('image'));
+      const isPlainText = filename.endsWith('.txt') || filename.endsWith('.csv') || filename.endsWith('.json') || (mimeType && (mimeType.includes('text') || mimeType.includes('json') || mimeType.includes('csv')));
 
+      // 1. Plain Text files
       if (buffer && buffer.length > 0 && isPlainText) {
         const bufText = buffer.toString('utf-8').trim();
-        if (bufText.length > 10) {
+        if (bufText.length > 0) {
           rawText = bufText;
           pages = [{
             pageNumber: 1,
@@ -250,65 +296,87 @@ class ComparisonEngine {
         }
       }
 
-      if (!rawText) {
-        const result = await makeHttpPost(`${extractionUrl}/api/v1/extract`, {
-          jobId,
-          fileId: documentId,
-          storageKey
-        });
-
-        rawText = (result.pages || []).map(p => p.text || p.raw_text || '').join('\n\n');
-        pages = (result.pages || []).map((p, idx) => ({
-          pageNumber: p.pageNumber || idx + 1,
-          text: p.text || p.raw_text || '',
-          confidence: p.confidence || 0.88,
-          ocrConfidence: p.confidence || 0.88,
-          wordCount: (p.text || '').split(/\s+/).filter(Boolean).length,
-          characterCount: (p.text || '').length
-        }));
+      // 2. Real Image OCR
+      if (!rawText && isImage && buffer && buffer.length > 0) {
+        const OcrService = require('./ocrService');
+        const ocrRes = await OcrService.extractImageText(buffer, filename, mimeType);
+        if (ocrRes && ocrRes.text && ocrRes.text.trim().length > 0) {
+          rawText = ocrRes.text.trim();
+          pages = [{
+            pageNumber: 1,
+            text: rawText,
+            confidence: ocrRes.confidence || 0.90,
+            ocrConfidence: ocrRes.confidence || 0.90,
+            wordCount: rawText.split(/\s+/).filter(Boolean).length,
+            characterCount: rawText.length
+          }];
+        }
       }
+
+      // 3. Fallback to microservice 5001
+      if (!rawText) {
+        try {
+          const result = await makeHttpPost(`${extractionUrl}/api/v1/extract`, {
+            jobId,
+            fileId: documentId,
+            storageKey
+          });
+
+          if (result && result.pages) {
+            rawText = (result.pages || []).map(p => p.text || p.raw_text || '').join('\n\n').trim();
+            pages = (result.pages || []).map((p, idx) => ({
+              pageNumber: p.pageNumber || idx + 1,
+              text: p.text || p.raw_text || '',
+              confidence: p.confidence || 0.88,
+              ocrConfidence: p.confidence || 0.88,
+              wordCount: (p.text || '').split(/\s+/).filter(Boolean).length,
+              characterCount: (p.text || '').length
+            }));
+          }
+        } catch (subErr) {
+          // Microservice offline
+        }
+      }
+
+      const words = rawText.split(/\s+/).filter(Boolean);
+      const isSuccess = words.length > 0;
 
       return {
         engineId: 'ENGINE_1_NATIVE',
         engineName: 'Native Multi-Format Parser',
         version: '1.0.0',
-        status: 'SUCCESS',
+        status: isSuccess ? 'SUCCESS' : 'FAILED',
         engineMode: mode,
         jobId,
         fileId: documentId,
         documentId,
         filename,
         rawText,
-        pages,
-        totalPages: pages.length || 1,
-        confidence: 0.95,
-        wordCount: rawText.split(/\s+/).filter(Boolean).length,
+        pages: isSuccess ? pages : [],
+        totalPages: pages.length || 0,
+        confidence: isSuccess ? 0.92 : 0,
+        wordCount: words.length,
         characterCount: rawText.length,
         processingTimeMs: Date.now() - startTime,
-        provider: 'NATIVE_TEAMMATE_ENGINE'
+        provider: isImage ? 'TESSERACT_OCR' : 'NATIVE_TEAMMATE_ENGINE'
       };
     } catch (err) {
-      // Fallback text from buffer if printable
-      let text = '';
-      if (buffer && buffer.length > 0) {
-        text = buffer.toString('utf-8').replace(/%PDF-[0-9.]+/g, '').replace(/[^\x20-\x7E\n]/g, ' ').slice(0, 2000).trim();
-      }
       return {
         engineId: 'ENGINE_1_NATIVE',
         engineName: 'Native Multi-Format Parser',
         version: '1.0.0',
-        status: text ? 'SUCCESS' : 'FAILED',
+        status: 'FAILED',
         engineMode: mode,
         jobId,
         fileId: documentId,
         documentId,
         filename,
-        rawText: text,
-        pages: text ? [{ pageNumber: 1, text, confidence: 0.85, ocrConfidence: 0.85, wordCount: text.split(/\s+/).filter(Boolean).length, characterCount: text.length }] : [],
-        totalPages: text ? 1 : 0,
-        confidence: text ? 0.85 : 0,
-        wordCount: text ? text.split(/\s+/).filter(Boolean).length : 0,
-        characterCount: text.length,
+        rawText: '',
+        pages: [],
+        totalPages: 0,
+        confidence: 0,
+        wordCount: 0,
+        characterCount: 0,
         processingTimeMs: Date.now() - startTime,
         provider: 'NATIVE_FALLBACK',
         error: err.message

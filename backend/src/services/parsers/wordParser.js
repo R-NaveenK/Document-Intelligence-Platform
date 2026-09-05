@@ -17,19 +17,18 @@ class WordParser {
     }));
 
     // Extracted text representation
-    const fullText = paragraphs.map(p => p.text).join('\n') || `Word Document Content for ${filename}`;
+    const fullText = paragraphs.map(p => p.text).join('\n');
 
-    // Sample parsed tables from Word document
-    const tables = [
-      {
+    // Parse tables from Word document lines
+    const tables = [];
+    const tableLines = rawLines.filter(l => l.includes('|') || l.includes('\t'));
+    if (tableLines.length > 0) {
+      tables.push({
         tableIndex: 1,
-        headers: ['Item Description', 'Quantity', 'Amount'],
-        rows: [
-          ['Medical Supplies', '5', '$1500.00'],
-          ['Consultation Fee', '1', '$250.00']
-        ]
-      }
-    ];
+        headers: tableLines[0].split(/[|\t]/).map(s => s.trim()).filter(Boolean),
+        rows: tableLines.slice(1).map(l => l.split(/[|\t]/).map(s => s.trim()).filter(Boolean))
+      });
+    }
 
     return {
       sourceFormat: 'WORD',
@@ -49,3 +48,4 @@ class WordParser {
 }
 
 module.exports = WordParser;
+

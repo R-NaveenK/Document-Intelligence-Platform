@@ -36,8 +36,21 @@ class IngestionService {
     return step;
   }
 
+  static clearAll() {
+    inMemoryDocuments.clear();
+    inMemoryJobs.clear();
+    inMemorySteps.length = 0;
+    inMemoryIdempotencyCache.clear();
+    inMemoryExtractionComparisons.clear();
+    return true;
+  }
+
   static getJobSteps(jobId) {
     return inMemorySteps.filter(s => s.jobId === jobId);
+  }
+
+  static getInMemoryDocuments() {
+    return inMemoryDocuments;
   }
 
   // Upload & Ingest File(s)
@@ -374,34 +387,50 @@ class IngestionService {
 
       const winningText = comparisonRes.winningExtraction.rawText || '';
 
-      // Match document type generically from configured schema
+      // Match document type from configured company schemas/forms
       let matchedDocType = null;
       let highestMatchScore = 0;
+      const candidateScores = [];
 
       for (const dt of docTypes) {
         let score = 0;
-        const keywords = [dt.name, dt.key, ...(dt.aliases || [])].filter(Boolean).map(k => k.toLowerCase());
+        const keywords = [dt.name, dt.key, ...(dt.aliases || []), ...(dt.fields || []).map(f => f.displayName || f.fieldKey)].filter(Boolean).map(k => k.toLowerCase());
         for (const kw of keywords) {
           if (winningText.toLowerCase().includes(kw)) {
-            score += kw.length;
+            score += Math.max(kw.length, 3);
           }
         }
+        candidateScores.push({
+          documentTypeId: dt.documentTypeId || dt.key,
+          documentType: dt.name,
+          score
+        });
         if (score > highestMatchScore) {
           highestMatchScore = score;
           matchedDocType = dt;
         }
       }
 
-      if (!matchedDocType) {
+      // Check if document matched a predefined form with sufficient confidence
+      const hasPredefinedForms = docTypes.length > 0 && docTypes.some(d => d.key !== 'standard_document' && (d.fields || []).length > 0);
+      const isRecognizedForm = highestMatchScore >= 7;
+      const classificationConfidence = isRecognizedForm ? Math.min(0.98, 0.70 + (highestMatchScore / 50)) : (highestMatchScore > 0 ? 0.35 : 0.10);
+      const isClassificationUncertain = hasPredefinedForms ? !isRecognizedForm : (classificationConfidence < 0.50);
+
+      if (!isRecognizedForm && hasPredefinedForms) {
+        matchedDocType = {
+          documentTypeId: 'UNKNOWN',
+          name: 'UNKNOWN',
+          key: 'UNKNOWN',
+          fields: []
+        };
+      } else if (!matchedDocType) {
         matchedDocType = docTypes[0];
       }
 
-      const classificationConfidence = highestMatchScore > 0 ? 0.92 : 0.60;
-      const isClassificationUncertain = classificationConfidence < 0.70;
-
       this.recordStep(jobId, 'CLASSIFICATION_COMPLETED', 'SUCCESS', Date.now() - startClassify);
       this.transitionJobState(jobId, 'CLASSIFIED', 'CLASSIFICATION');
-      console.log(`[CLASSIFICATION] Matched documentType=${matchedDocType.name} (key=${matchedDocType.key}), confidence=${classificationConfidence}`);
+      console.log(`[CLASSIFICATION] Matched form=${matchedDocType.name} (key=${matchedDocType.key}), confidence=${classificationConfidence}, requiresReview=${isClassificationUncertain}`);
 
       // ==========================================
       // STAGE 3: DYNAMIC FIELD EXTRACTION & CONSENSUS CASCADE
@@ -460,7 +489,7 @@ class IngestionService {
       console.log(`[DATABASE] StructuredRecord created as DRAFT: recordId=${structuredRecord.structuredRecordId}`);
 
       // ==========================================
-      // STAGE 5: VALIDATION ENGINE & ARITHMETIC INTEGRITY
+      // STAGE 5: 4-TIER VALIDATION ENGINE (DATE, FORMAT, DUPLICATE, ARITHMETIC)
       // ==========================================
       this.transitionJobState(jobId, 'VALIDATING', 'VALIDATION');
       this.recordStep(jobId, 'VALIDATION_STARTED', 'IN_PROGRESS');
@@ -470,66 +499,205 @@ class IngestionService {
       let requiresReview = isClassificationUncertain;
       let reviewReason = isClassificationUncertain ? 'CLASSIFICATION_UNCERTAIN' : null;
 
-      // Remote validation engine call on Port 5003
-      const validationUrl = process.env.VALIDATION_SERVICE_URL || 'http://localhost:5003';
-      try {
-        const valPayload = {
-          logicalDocumentId: documentId,
-          documentId,
-          documentTypeId: matchedDocType.key,
-          organizationId,
-          fields: extractedFields.map(f => ({
-            fieldKey: f.fieldKey,
-            effectiveValue: f.effectiveValue,
-            value: f.effectiveValue
-          })),
-          raw_data: {
-            document_id: documentId,
-            ...extractedFields.reduce((acc, f) => { acc[f.fieldKey] = f.effectiveValue; return acc; }, {})
-          }
-        };
+      // Quality Gate: Readability & Content Check
+      const wordCount = (winningText || '').split(/\s+/).filter(w => w.length > 1).length;
+      const isUnreadable = !winningText || winningText.trim().length < 5 || wordCount < 3 || comparisonRes.isUnreadableOrEmpty || (doc.winningScore || 0) < 25;
 
-        const valResponse = await new Promise((resolve) => {
-          const postData = JSON.stringify(valPayload);
-          const req = http.request({
-            hostname: 'localhost',
-            port: 5003,
-            path: '/validate',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Content-Length': Buffer.byteLength(postData)
-            },
-            timeout: 3000
-          }, (res) => {
-            let b = '';
-            res.on('data', chunk => b += chunk);
-            res.on('end', () => {
-              try { resolve(JSON.parse(b)); } catch (e) { resolve(null); }
-            });
-          });
-          req.on('error', () => resolve(null));
-          req.on('timeout', () => { req.destroy(); resolve(null); });
-          req.write(postData);
-          req.end();
+      if (isUnreadable) {
+        requiresReview = true;
+        if (!reviewReason) reviewReason = 'UNREADABLE_OR_NON_DOCUMENT';
+        validationResults.push({
+          ruleName: 'DOCUMENT_READABILITY_CHECK',
+          validationType: 'QUALITY_ASSERTION',
+          passed: false,
+          severity: 'CRITICAL',
+          message: 'No readable text or business document structure detected. The uploaded file appears to be an unreadable image, wallpaper, or non-text file.'
         });
+      } else {
+        validationResults.push({
+          ruleName: 'DOCUMENT_READABILITY_CHECK',
+          validationType: 'QUALITY_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: `Document text successfully recognized (${wordCount} words, extraction quality score: ${doc.winningScore || 80}/100).`
+        });
+      }
 
-        if (valResponse && valResponse.validationResults) {
-          for (const vr of valResponse.validationResults) {
-            validationResults.push({
-              ruleName: vr.type || vr.validator || 'VALIDATION_CHECK',
-              validationType: 'BUSINESS_LOGIC_ASSERTION',
-              passed: vr.passed,
-              severity: vr.severity,
-              message: vr.message
-            });
+      // Classification Gate: Predefined Form Matching Check
+      if (isClassificationUncertain && !isUnreadable) {
+        validationResults.push({
+          ruleName: 'DOCUMENT_CLASSIFICATION_CHECK',
+          validationType: 'FORM_SCHEMA_ASSERTION',
+          passed: false,
+          severity: 'WARNING',
+          message: `Document does not match any predefined company form schema with high confidence (${Math.round(classificationConfidence * 100)}%). Routed to Human Review for manual schema verification.`
+        });
+      } else if (!isUnreadable) {
+        validationResults.push({
+          ruleName: 'DOCUMENT_CLASSIFICATION_CHECK',
+          validationType: 'FORM_SCHEMA_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: `Document matched company form schema: "${matchedDocType.name}" (${Math.round(classificationConfidence * 100)}% confidence).`
+        });
+      }
+
+      // -------------------------------------------------------------
+      // TIER 1: DATE VALIDATION (Format, calendar range, validity)
+      // -------------------------------------------------------------
+      const dateFields = extractedFields.filter(f => f.dataType === 'date' || f.fieldKey.includes('date') || f.fieldKey.includes('dob') || f.fieldKey.includes('expiry') || f.fieldKey.includes('admission'));
+      let dateTierPassed = true;
+      let dateTierMessage = 'All date fields conform to valid calendar formats.';
+
+      if (dateFields.length > 0) {
+        for (const df of dateFields) {
+          if (df.machineValue) {
+            const dateStr = String(df.machineValue).trim();
+            const parsedTs = Date.parse(dateStr);
+            const isoMatch = dateStr.match(/^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$/);
+            const regionalMatch = dateStr.match(/^\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}$/);
+
+            if (isNaN(parsedTs) && !isoMatch && !regionalMatch) {
+              dateTierPassed = false;
+              dateTierMessage = `Date field '${df.displayName}' has invalid calendar format: "${dateStr}".`;
+              break;
+            } else {
+              const year = new Date(parsedTs || Date.now()).getFullYear();
+              if (year < 1920 || year > 2099) {
+                dateTierPassed = false;
+                dateTierMessage = `Date field '${df.displayName}' has out-of-range calendar year: ${year}.`;
+                break;
+              }
+            }
           }
         }
-      } catch (valErr) {
+      }
+
+      if (!dateTierPassed) {
+        requiresReview = true;
+        if (!reviewReason) reviewReason = 'INVALID_DATE_FORMAT';
+        validationResults.push({
+          ruleName: 'DATE_VALIDATION',
+          validationType: 'DATE_ASSERTION',
+          passed: false,
+          severity: 'ERROR',
+          message: dateTierMessage
+        });
+      } else {
+        validationResults.push({
+          ruleName: 'DATE_VALIDATION',
+          validationType: 'DATE_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: dateFields.length > 0 ? `Verified ${dateFields.length} date fields against calendar standards.` : 'No date fields required verification.'
+        });
+      }
+
+      // -------------------------------------------------------------
+      // TIER 2: FORMAT VALIDATION (Regex, data types, string structure)
+      // -------------------------------------------------------------
+      let formatTierPassed = true;
+      let formatTierMessage = 'All fields conform to expected data types and formatting rules.';
+
+      for (const f of extractedFields) {
+        if (f.machineValue) {
+          const valStr = String(f.machineValue).trim();
+          const dType = (f.dataType || '').toLowerCase();
+          if (dType === 'number' || dType === 'decimal' || dType === 'currency' || dType === 'integer') {
+            const cleanStr = valStr.replace(/[^0-9.-]/g, '');
+            const num = parseFloat(cleanStr);
+            const hasLetters = /[a-zA-Z]/.test(valStr.replace(/(USD|EUR|GBP|INR|Rs|\$|CAD|AUD)/g, ''));
+            if (isNaN(num) || cleanStr === '' || hasLetters) {
+              formatTierPassed = false;
+              formatTierMessage = `Field '${f.displayName || f.fieldKey}' expected ${f.dataType} value but found "${valStr}".`;
+              break;
+            }
+          }
+        }
+      }
+
+      if (!formatTierPassed) {
+        requiresReview = true;
+        if (!reviewReason) reviewReason = 'FORMAT_VALIDATION_ERROR';
+        validationResults.push({
+          ruleName: 'FORMAT_VALIDATION',
+          validationType: 'FORMAT_ASSERTION',
+          passed: false,
+          severity: 'ERROR',
+          message: formatTierMessage
+        });
+      } else {
+        validationResults.push({
+          ruleName: 'FORMAT_VALIDATION',
+          validationType: 'FORMAT_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: `Field formatting and typed constraints verified across ${extractedFields.length} fields.`
+        });
+      }
+
+      // -------------------------------------------------------------
+      // TIER 3: DUPLICATE DETECTION (Historical collision check)
+      // -------------------------------------------------------------
+      let isDuplicate = false;
+      let duplicateDocId = null;
+      let duplicateReason = '';
+
+      const idField = extractedFields.find(f => f.machineValue && (
+        f.fieldKey.includes('number') || f.fieldKey.includes('id') || f.fieldKey.includes('no') || f.fieldKey.includes('code')
+      ));
+
+      try {
+        const existingDocs = Array.from(inMemoryDocuments.values()).filter(d => d.organizationId === organizationId && d.documentId !== documentId);
+        // Check 1: Same filename and identical size
+        const sameFile = existingDocs.find(d => d.originalFilename === doc.originalFilename && d.fileSize === doc.fileSize && d.status === 'APPROVED');
+        if (sameFile) {
+          isDuplicate = true;
+          duplicateDocId = sameFile.documentId;
+          duplicateReason = `Exact file match with approved document '${sameFile.originalFilename}' (${sameFile.documentId.slice(0, 8)}).`;
+        }
+
+        // Check 2: Same primary business ID across approved records
+        if (!isDuplicate && idField) {
+          const allRecords = Array.from(StructuredDataService.getInMemoryRecords().values()).filter(r => r.organizationId === organizationId && r.documentId !== documentId && r.status === 'APPROVED');
+          for (const r of allRecords) {
+            const rFields = Array.from(StructuredDataService.getInMemoryFields().values()).filter(f => f.structuredRecordId === r.structuredRecordId);
+            const matchId = rFields.find(f => f.fieldKey === idField.fieldKey && f.effectiveValue === idField.machineValue);
+            if (matchId) {
+              isDuplicate = true;
+              duplicateDocId = r.documentId;
+              duplicateReason = `Duplicate business reference ${idField.displayName}="${idField.machineValue}" matches approved document (${r.documentId.slice(0, 8)}).`;
+              break;
+            }
+          }
+        }
+      } catch (dupErr) {
         // Fallback
       }
 
-      // Multi-Tier Arithmetic Assertions
+      if (isDuplicate) {
+        requiresReview = true;
+        if (!reviewReason) reviewReason = 'DUPLICATE_DOCUMENT';
+        validationResults.push({
+          ruleName: 'DUPLICATE_DETECTION',
+          validationType: 'DUPLICATE_ASSERTION',
+          passed: false,
+          severity: 'WARNING',
+          message: `Potential Duplicate Detected: ${duplicateReason}`
+        });
+      } else {
+        validationResults.push({
+          ruleName: 'DUPLICATE_DETECTION',
+          validationType: 'DUPLICATE_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: 'Duplicate check passed: Document and identifiers are unique within organization.'
+        });
+      }
+
+      // -------------------------------------------------------------
+      // TIER 4: ARITHMETIC INTEGRITY (Subtotal + Tax = Total)
+      // -------------------------------------------------------------
       const subtotalObj = extractedFields.find(f => f.fieldKey.includes('subtotal') || f.fieldKey.includes('taxable') || f.fieldKey.includes('base'));
       const taxObj = extractedFields.find(f => f.fieldKey.includes('tax'));
       const totalObj = extractedFields.find(f => f.fieldKey === 'total_amount' || f.fieldKey === 'total' || f.fieldKey === 'final_value' || f.fieldKey === 'grand_total' || (f.fieldKey.includes('amount') && !f.fieldKey.includes('tax') && !f.fieldKey.includes('subtotal')));
@@ -551,42 +719,61 @@ class IngestionService {
 
         if (diff > 0.50) {
           requiresReview = true;
-          reviewReason = 'ARITHMETIC_MISMATCH';
+          if (!reviewReason) reviewReason = 'ARITHMETIC_MISMATCH';
           validationResults.push({
-            ruleName: 'ARITHMETIC_INTEGRITY_CHECK',
+            ruleName: 'ARITHMETIC_INTEGRITY',
             validationType: 'MATH_ASSERTION',
             passed: false,
+            severity: 'ERROR',
             message: `Arithmetic Anomaly: Subtotal (${subtotalVal}) + Tax (${taxVal}) = ${expectedTotal}, but Total was ${actualTotal} (Mismatch of ${diff.toFixed(2)}).`
           });
         } else {
           validationResults.push({
-            ruleName: 'ARITHMETIC_INTEGRITY_CHECK',
+            ruleName: 'ARITHMETIC_INTEGRITY',
             validationType: 'MATH_ASSERTION',
             passed: true,
+            severity: 'INFO',
             message: `Arithmetic verified: Subtotal (${subtotalVal}) + Tax (${taxVal}) = Total (${actualTotal}).`
           });
         }
+      } else {
+        validationResults.push({
+          ruleName: 'ARITHMETIC_INTEGRITY',
+          validationType: 'MATH_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: 'Arithmetic check: No subtotal/tax formula mismatch detected.'
+        });
       }
 
-      // Check data fields extraction:
-      // Only require review if ALL data fields are missing / empty (i.e. complete extraction failure)
+      // Check schema fields presence:
       const populatedFields = extractedFields.filter(f => f.machineValue !== null && f.machineValue !== undefined && String(f.machineValue).trim() !== '');
 
       if (fieldDefinitions.length > 0 && populatedFields.length === 0) {
         requiresReview = true;
         if (!reviewReason) reviewReason = 'ALL_FIELDS_MISSING';
         validationResults.push({
-          ruleName: 'DATA_FIELDS_CHECK',
+          ruleName: 'SCHEMA_FIELD_COVERAGE',
           validationType: 'SCHEMA_ASSERTION',
           passed: false,
+          severity: 'ERROR',
           message: `All ${fieldDefinitions.length} schema fields are unreadable or missing from document.`
         });
-      } else {
+      } else if (fieldDefinitions.length > 0) {
         validationResults.push({
-          ruleName: 'DATA_FIELDS_CHECK',
+          ruleName: 'SCHEMA_FIELD_COVERAGE',
           validationType: 'SCHEMA_ASSERTION',
           passed: true,
+          severity: 'INFO',
           message: `${populatedFields.length} of ${fieldDefinitions.length} data fields extracted successfully.`
+        });
+      } else if (populatedFields.length > 0) {
+        validationResults.push({
+          ruleName: 'DYNAMIC_SCHEMA_DISCOVERY',
+          validationType: 'SCHEMA_ASSERTION',
+          passed: true,
+          severity: 'INFO',
+          message: `Automatically discovered and structured ${populatedFields.length} document fields.`
         });
       }
 
@@ -610,11 +797,26 @@ class IngestionService {
 
       // If review required, create ReviewItem in review queue
       if (requiresReview) {
+        let revType = 'VALIDATION';
+        let revPriority = 'MEDIUM';
+
+        if (reviewReason === 'CLASSIFICATION_UNCERTAIN' || reviewReason === 'UNKNOWN_DOCUMENT_TYPE') {
+          revType = 'CLASSIFICATION';
+          revPriority = 'MEDIUM';
+        } else if (reviewReason === 'ARITHMETIC_MISMATCH' || reviewReason === 'DUPLICATE_DOCUMENT') {
+          revType = 'VALIDATION';
+          revPriority = 'HIGH';
+        } else if (reviewReason === 'FORMAT_VALIDATION_ERROR' || reviewReason === 'DATE_VALIDATION_ERROR' || reviewReason === 'ALL_FIELDS_MISSING') {
+          revType = 'FIELD';
+          revPriority = reviewReason === 'ALL_FIELDS_MISSING' ? 'HIGH' : 'MEDIUM';
+        }
+
         const reviewItem = await ReviewService.createReviewItem(organizationId, {
           jobId,
           documentId,
-          reviewType: reviewReason === 'CLASSIFICATION_UNCERTAIN' ? 'CLASSIFICATION' : 'VALIDATION',
+          reviewType: revType,
           reviewReason: reviewReason || 'VALIDATION_FAILED',
+          priority: revPriority,
           confidence: classificationConfidence,
           sourceFieldKey: totalObj ? totalObj.fieldKey : (extractedFields[0]?.fieldKey || null),
           originalValue: totalObj ? totalObj.machineValue : null,
@@ -623,7 +825,7 @@ class IngestionService {
             validationResults
           }
         });
-        console.log(`[REVIEW] Created reviewItem: id=${reviewItem.reviewItemId}, reason=${reviewReason}`);
+        console.log(`[REVIEW] Created reviewItem: id=${reviewItem.reviewItemId}, type=${revType}, priority=${revPriority}, reason=${reviewReason}`);
       }
 
       // Final job and document state transition

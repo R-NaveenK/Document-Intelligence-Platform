@@ -6,7 +6,7 @@ const { extractTenantContext } = require('../middleware/tenantContext');
 router.use(extractTenantContext);
 
 // Create Export Job
-router.post('/exports', async (req, res) => {
+router.post(['/exports', '/exports/generate'], async (req, res) => {
   try {
     const job = await ExportService.createExportJob(req.tenant.organizationId, req.body);
     res.json({ success: true, data: job });

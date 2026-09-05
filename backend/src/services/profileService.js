@@ -11,6 +11,118 @@ const inMemoryFields = new Map();
 const inMemorySchemaVersions = new Map();
 const inMemoryAuditEvents = [];
 
+function seedDefaultProfiles() {
+  const defaultOrgId = '00000000-0000-0000-0000-000000000001';
+  const profileId = 'c848e75c-dd9f-49e6-8b21-35c1499dee49';
+  const schemaVersionId = 'sv-mfg-v1';
+
+  if (!inMemoryProfiles.has(profileId)) {
+    inMemoryProfiles.set(profileId, {
+      profileId,
+      organizationId: defaultOrgId,
+      name: 'Manufacturing Operations',
+      description: 'End-to-end IDP processing profile for invoices, material receipts, and dispatch manifests',
+      status: 'PUBLISHED',
+      currentSchemaVersion: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+
+    inMemorySchemaVersions.set(schemaVersionId, {
+      id: schemaVersionId,
+      profileId,
+      versionNumber: 1,
+      status: 'PUBLISHED',
+      createdAt: new Date().toISOString(),
+      publishedAt: new Date().toISOString()
+    });
+
+    // 1. Supplier Invoice
+    const dt1 = 'dt-supplier-invoice';
+    const dt1Fields = [
+      { fieldKey: 'invoice_number', displayName: 'Invoice Number', dataType: 'STRING', required: true },
+      { fieldKey: 'vendor_name', displayName: 'Vendor Name', dataType: 'STRING', required: true },
+      { fieldKey: 'invoice_date', displayName: 'Invoice Date', dataType: 'DATE', required: true },
+      { fieldKey: 'subtotal', displayName: 'Subtotal', dataType: 'DECIMAL', required: false },
+      { fieldKey: 'tax_amount', displayName: 'Tax Amount', dataType: 'DECIMAL', required: false },
+      { fieldKey: 'total_amount', displayName: 'Total Amount', dataType: 'DECIMAL', required: true },
+      { fieldKey: 'purchase_order', displayName: 'Purchase Order', dataType: 'STRING', required: false }
+    ];
+    inMemoryDocumentTypes.set(dt1, {
+      documentTypeId: dt1,
+      profileId,
+      organizationId: defaultOrgId,
+      name: 'Commercial Supplier Invoice',
+      key: 'supplier_invoice',
+      description: 'Commercial invoice for purchased materials and services',
+      aliases: ['supplier invoice', 'tax invoice', 'commercial invoice', 'bill of supply'],
+      keywords: ['invoice', 'vendor', 'supplier', 'tax invoice', 'subtotal', 'total amount'],
+      active: true,
+      fields: dt1Fields
+    });
+    dt1Fields.forEach(f => {
+      const fId = `f-${dt1}-${f.fieldKey}`;
+      inMemoryFields.set(fId, { ...f, fieldId: fId, documentTypeId: dt1, organizationId: defaultOrgId, active: true });
+    });
+
+    // 2. Material Receipt
+    const dt2 = 'dt-material-receipt';
+    const dt2Fields = [
+      { fieldKey: 'receipt_number', displayName: 'Receipt Number', dataType: 'STRING', required: true },
+      { fieldKey: 'supplier_name', displayName: 'Supplier Name', dataType: 'STRING', required: true },
+      { fieldKey: 'receipt_date', displayName: 'Receipt Date', dataType: 'DATE', required: true },
+      { fieldKey: 'total_amount', displayName: 'Total Amount', dataType: 'DECIMAL', required: true },
+      { fieldKey: 'material_description', displayName: 'Material Description', dataType: 'STRING', required: false },
+      { fieldKey: 'inspection_status', displayName: 'Inspection Status', dataType: 'STRING', required: false }
+    ];
+    inMemoryDocumentTypes.set(dt2, {
+      documentTypeId: dt2,
+      profileId,
+      organizationId: defaultOrgId,
+      name: 'Material Receipt & Inspection Slip',
+      key: 'material_receipt',
+      description: 'Goods receipt and quality inspection note',
+      aliases: ['material receipt', 'goods receipt', 'inspection slip', 'grn'],
+      keywords: ['receipt', 'material', 'inspection', 'grn', 'goods received', 'slip'],
+      active: true,
+      fields: dt2Fields
+    });
+    dt2Fields.forEach(f => {
+      const fId = `f-${dt2}-${f.fieldKey}`;
+      inMemoryFields.set(fId, { ...f, fieldId: fId, documentTypeId: dt2, organizationId: defaultOrgId, active: true });
+    });
+
+    // 3. Dispatch Manifest
+    const dt3 = 'dt-dispatch-manifest';
+    const dt3Fields = [
+      { fieldKey: 'manifest_number', displayName: 'Manifest Number', dataType: 'STRING', required: true },
+      { fieldKey: 'tracking_number', displayName: 'Tracking Number', dataType: 'STRING', required: true },
+      { fieldKey: 'dispatch_date', displayName: 'Dispatch Date', dataType: 'DATE', required: true },
+      { fieldKey: 'recipient_name', displayName: 'Recipient Name', dataType: 'STRING', required: true },
+      { fieldKey: 'sender_name', displayName: 'Sender Name', dataType: 'STRING', required: false },
+      { fieldKey: 'total_weight', displayName: 'Total Weight', dataType: 'DECIMAL', required: false }
+    ];
+    inMemoryDocumentTypes.set(dt3, {
+      documentTypeId: dt3,
+      profileId,
+      organizationId: defaultOrgId,
+      name: 'Production Dispatch Manifest',
+      key: 'dispatch_manifest',
+      description: 'Outbound freight and delivery dispatch manifest',
+      aliases: ['dispatch manifest', 'delivery note', 'shipping manifest', 'consignment note'],
+      keywords: ['dispatch', 'manifest', 'tracking', 'recipient', 'consignment', 'delivery'],
+      active: true,
+      fields: dt3Fields
+    });
+    dt3Fields.forEach(f => {
+      const fId = `f-${dt3}-${f.fieldKey}`;
+      inMemoryFields.set(fId, { ...f, fieldId: fId, documentTypeId: dt3, organizationId: defaultOrgId, active: true });
+    });
+  }
+}
+
+seedDefaultProfiles();
+
 class ProfileService {
 
   // Record Audit Event
@@ -33,8 +145,13 @@ class ProfileService {
     return inMemoryAuditEvents.filter(e => e.organizationId === organizationId);
   }
 
+  static getInMemoryAudits() {
+    return inMemoryAuditEvents;
+  }
+
   // List all profiles for an organization
   static async listProfiles(organizationId) {
+    seedDefaultProfiles();
     const profiles = Array.from(inMemoryProfiles.values())
       .filter(p => p.organizationId === organizationId);
     return profiles;

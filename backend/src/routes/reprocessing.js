@@ -19,7 +19,7 @@ router.post('/reprocessing/preview', async (req, res) => {
 });
 
 // Create & Start Reprocessing Job
-router.post('/reprocessing/jobs', async (req, res) => {
+router.post(['/reprocessing/jobs', '/reprocessing/trigger', '/living-schema/reprocess'], async (req, res) => {
   try {
     const job = await ReprocessingService.createReprocessingJob(req.tenant.organizationId, req.body);
     res.json({ success: true, data: job });

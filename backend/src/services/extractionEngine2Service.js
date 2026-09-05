@@ -240,50 +240,46 @@ class ExtractionEngine2Service {
   static async fallbackExtraction(buffer, filename, mimeType, jobId, documentId, startTime, errorMessage = null) {
     let rawText = '';
     const ext = path.extname(filename).toLowerCase();
-    const isImage = ['.png', '.jpg', '.jpeg', '.tiff', '.bmp'].includes(ext) || (mimeType && mimeType.startsWith('image/'));
+    const isImage = ['.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.webp'].includes(ext) || (mimeType && mimeType.startsWith('image/'));
 
     if (isImage && Buffer.isBuffer(buffer)) {
       try {
         const ocrRes = await OcrService.extractImageText(buffer, filename, mimeType);
-        if (ocrRes && ocrRes.success) rawText = ocrRes.text;
+        if (ocrRes && ocrRes.success && ocrRes.text) rawText = ocrRes.text.trim();
       } catch (e) {}
-    } else if (Buffer.isBuffer(buffer)) {
-      const bufferString = buffer.toString('utf-8');
-      const lines = bufferString.split(/\r?\n/)
-        .map(l => l.replace(/%PDF-[0-9.]+/g, '').replace(/[^\x20-\x7E]/g, ' ').trim())
-        .filter(l => l.length > 3);
-      rawText = lines.join('\n');
+    } else if (Buffer.isBuffer(buffer) && (filename.endsWith('.txt') || filename.endsWith('.csv') || filename.endsWith('.json') || mimeType.includes('text'))) {
+      rawText = buffer.toString('utf-8').trim();
     }
 
-    if (!rawText || rawText.length < 15) {
-      rawText = `Document: ${filename}\nStatus: Processed\nDate: ${new Date().toISOString().split('T')[0]}`;
-    }
-
+    const words = rawText.split(/\s+/).filter(Boolean);
+    const isSuccess = words.length > 0;
     const durationMs = Date.now() - startTime;
+
     return {
       engineId: 'ENGINE_2_COR',
       engineName: 'COR Extraction Engine 2',
       version: '2.0.0',
-      status: 'SUCCESS',
+      status: isSuccess ? 'SUCCESS' : 'FAILED',
       jobId,
       fileId: documentId,
       documentId,
       filename,
       rawText,
-      pages: [{
+      pages: isSuccess ? [{
         pageNumber: 1,
         text: rawText,
-        confidence: 0.91,
-        ocrConfidence: 0.91,
-        wordCount: rawText.split(/\s+/).filter(Boolean).length,
+        confidence: 0.90,
+        ocrConfidence: 0.90,
+        wordCount: words.length,
         characterCount: rawText.length
-      }],
-      totalPages: 1,
-      confidence: 0.91,
-      wordCount: rawText.split(/\s+/).filter(Boolean).length,
+      }] : [],
+      totalPages: isSuccess ? 1 : 0,
+      confidence: isSuccess ? 0.90 : 0,
+      wordCount: words.length,
       characterCount: rawText.length,
       processingTimeMs: durationMs,
-      provider: 'COR_ENGINE_2_FALLBACK'
+      provider: isImage ? 'TESSERACT_OCR' : 'COR_ENGINE_2_FALLBACK',
+      error: isSuccess ? null : (errorMessage || 'No readable text extracted')
     };
   }
 }

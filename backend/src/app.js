@@ -17,6 +17,7 @@ const chatRoutes = require('./routes/chat');
 const exportRoutes = require('./routes/exports');
 const reportRoutes = require('./routes/reports');
 const reprocessingRoutes = require('./routes/reprocessing');
+const systemRoutes = require('./routes/system');
 
 const path = require('path');
 
@@ -48,6 +49,7 @@ app.use('/api/v1', chatRoutes);
 app.use('/api/v1', exportRoutes);
 app.use('/api/v1', reportRoutes);
 app.use('/api/v1', reprocessingRoutes);
+app.use('/api/v1', systemRoutes);
 
 // Centralized error handling
 app.use(errorHandler);

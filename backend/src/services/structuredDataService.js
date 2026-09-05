@@ -52,6 +52,13 @@ class StructuredDataService {
     };
   }
 
+  static clearAll() {
+    inMemoryStructuredRecords.clear();
+    inMemoryRecordFields.clear();
+    inMemoryValidationResults.length = 0;
+    return true;
+  }
+
   // Create & Persist Structured Record
   static async createStructuredRecord(organizationId, payload) {
     const {

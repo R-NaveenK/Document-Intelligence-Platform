@@ -110,29 +110,34 @@ class ExtractionEngine3Service {
           }
         }
 
-        const pages = (result.pages && result.pages.length > 0 && result.pages[0].raw_text)
-          ? result.pages.map((p, idx) => ({
-              pageNumber: p.page_number || idx + 1,
-              text: p.raw_text || '',
-              confidence: p.confidence !== undefined ? p.confidence : 0.95,
-              ocrConfidence: p.confidence !== undefined ? p.confidence : 0.95,
-              characterCount: p.character_count || (p.raw_text ? p.raw_text.length : 0),
-              wordCount: p.word_count || (p.raw_text ? p.raw_text.split(/\s+/).filter(Boolean).length : 0)
-            }))
-          : [{
-              pageNumber: 1,
-              text: extractedText || `[Python Engine Extraction: ${filename}]`,
-              confidence: result.extraction_confidence || 0.95,
-              ocrConfidence: result.extraction_confidence || 0.95,
-              characterCount: (extractedText || '').length,
-              wordCount: (extractedText || '').split(/\s+/).filter(Boolean).length
-            }];
+        const isSuccess = extractedText && extractedText.trim().length > 0;
+        const words = isSuccess ? extractedText.split(/\s+/).filter(Boolean) : [];
+
+        const pages = isSuccess
+          ? ((result.pages && result.pages.length > 0 && result.pages[0].raw_text)
+            ? result.pages.map((p, idx) => ({
+                pageNumber: p.page_number || idx + 1,
+                text: p.raw_text || '',
+                confidence: p.confidence !== undefined ? p.confidence : 0.95,
+                ocrConfidence: p.confidence !== undefined ? p.confidence : 0.95,
+                characterCount: p.character_count || (p.raw_text ? p.raw_text.length : 0),
+                wordCount: p.word_count || (p.raw_text ? p.raw_text.split(/\s+/).filter(Boolean).length : 0)
+              }))
+            : [{
+                pageNumber: 1,
+                text: extractedText,
+                confidence: result.extraction_confidence || 0.95,
+                ocrConfidence: result.extraction_confidence || 0.95,
+                characterCount: extractedText.length,
+                wordCount: words.length
+              }])
+          : [];
 
         return {
           engineId: 'ENGINE_3_PYTHON',
           engineName: 'Advanced Python Document Extraction Engine',
           version: result.engine_version || '1.0.0',
-          status: 'SUCCESS',
+          status: isSuccess ? 'SUCCESS' : 'FAILED',
           jobId,
           fileId: documentId,
           documentId,
@@ -140,11 +145,11 @@ class ExtractionEngine3Service {
           rawText: extractedText,
           pages,
           totalPages: pages.length,
-          confidence: result.extraction_confidence !== undefined ? result.extraction_confidence : 0.95,
-          wordCount: extractedText ? extractedText.split(/\s+/).filter(Boolean).length : 0,
+          confidence: isSuccess ? (result.extraction_confidence !== undefined ? result.extraction_confidence : 0.95) : 0,
+          wordCount: words.length,
           characterCount: extractedText ? extractedText.length : 0,
           processingTimeMs: result.processing_time_ms || durationMs,
-          provider: 'PYTHON_ENGINE_3',
+          provider: isImage ? 'TESSERACT_OCR' : 'PYTHON_ENGINE_3',
           metadata: {
             pagesProcessed: result.pages_processed || pages.length,
             rawFilePath: result.raw_file_path,
@@ -160,47 +165,46 @@ class ExtractionEngine3Service {
         try { fs.unlinkSync(tempFilePath); } catch (e) {}
       }
 
-      // High-grade native fallback
+      // Clean native fallback
       const durationMs = Date.now() - startTime;
       let fallbackText = '';
       if (isImage && Buffer.isBuffer(fileInput)) {
         try {
           const ocrRes = await OcrService.extractImageText(fileInput, filename, mimeType);
-          if (ocrRes && ocrRes.success) fallbackText = ocrRes.text;
+          if (ocrRes && ocrRes.success && ocrRes.text) fallbackText = ocrRes.text.trim();
         } catch (e) {}
-      } else if (Buffer.isBuffer(fileInput) && fileInput.length > 0) {
-        const lines = fileInput.toString('utf-8').split(/\r?\n/)
-          .map(l => l.replace(/%PDF-[0-9.]+/g, '').replace(/[^\x20-\x7E]/g, ' ').trim())
-          .filter(l => l.length > 2 && /[a-zA-Z0-9]/.test(l));
-        if (lines.length > 0) fallbackText = lines.join('\n');
+      } else if (Buffer.isBuffer(fileInput) && (filename.endsWith('.txt') || filename.endsWith('.csv') || filename.endsWith('.json') || mimeType.includes('text'))) {
+        fallbackText = fileInput.toString('utf-8').trim();
       }
-      if (!fallbackText || fallbackText.length < 15) {
-        fallbackText = `[Engine 3 Python Native Extraction: ${filename}]\nPATIENT ADMISSION & BILLING RECORD\nPatient Name: Sarah Connor\nItem: Healthcare Services & Processing\nInvoice: IDP-${Date.now().toString().slice(-5)}\nAmount: $8,750.00\nAdmission Date: 2026-09-03\nDate: 2026-09-03\nVerified: Validated Structure`;
-      }
+
+      const words = fallbackText.split(/\s+/).filter(Boolean);
+      const isSuccess = words.length > 0;
+
       return {
         engineId: 'ENGINE_3_PYTHON',
         engineName: 'Advanced Python Document Extraction Engine',
         version: '1.0.0',
-        status: 'SUCCESS',
+        status: isSuccess ? 'SUCCESS' : 'FAILED',
         jobId,
         fileId: documentId,
         documentId,
         filename,
         rawText: fallbackText,
-        pages: [{
+        pages: isSuccess ? [{
           pageNumber: 1,
           text: fallbackText,
-          confidence: 0.95,
-          wordCount: fallbackText.split(/\s+/).filter(Boolean).length,
+          confidence: 0.90,
+          ocrConfidence: 0.90,
+          wordCount: words.length,
           characterCount: fallbackText.length
-        }],
-        totalPages: 1,
-        confidence: 0.95,
-        wordCount: fallbackText.split(/\s+/).filter(Boolean).length,
+        }] : [],
+        totalPages: isSuccess ? 1 : 0,
+        confidence: isSuccess ? 0.90 : 0,
+        wordCount: words.length,
         characterCount: fallbackText.length,
         processingTimeMs: durationMs,
-        provider: 'PYTHON_ENGINE_3_FALLBACK',
-        error: err.message
+        provider: isImage ? 'TESSERACT_OCR' : 'PYTHON_ENGINE_3_FALLBACK',
+        error: isSuccess ? null : (err.message || 'No readable text extracted')
       };
     }
   }

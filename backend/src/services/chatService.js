@@ -51,7 +51,8 @@ class ChatService {
 
   // Process User Natural Language Message
   static async processUserMessage(organizationId, payload) {
-    const { sessionId, message, profileId, documentTypeId } = payload;
+    const message = payload.message || payload.query;
+    const { sessionId, profileId, documentTypeId } = payload;
 
     if (!message || typeof message !== 'string' || !message.trim()) {
       throw { code: 'EMPTY_MESSAGE', message: 'User message cannot be empty' };

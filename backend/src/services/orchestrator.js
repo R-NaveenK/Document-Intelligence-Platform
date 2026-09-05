@@ -115,11 +115,11 @@ async function processPipeline(jobId = 'job_001', fileId = 'file_001') {
     const ProfileService = require('./profileService');
     let allowedTypes = [
       {
-        documentTypeId: "type_001",
-        name: "Invoice",
-        key: "invoice",
-        description: "Commercial invoice document",
-        aliases: ["Vendor Invoice", "Bill"]
+        documentTypeId: "general_doc_type",
+        name: "Standard Document",
+        key: "standard_doc",
+        description: "Universal document format",
+        aliases: ["Document", "Record", "Form", "Statement", "Report", "Agreement"]
       }
     ];
 
@@ -129,7 +129,7 @@ async function processPipeline(jobId = 'job_001', fileId = 'file_001') {
         allowedTypes = profileConfig.documentTypes;
       }
     } catch (e) {
-      // Standalone test fallback
+      // Standalone fallback
     }
 
     const classifierPayload = {
@@ -152,15 +152,28 @@ async function processPipeline(jobId = 'job_001', fileId = 'file_001') {
     currentStatus = PROCESSING_STATUS.STRUCTURING;
     const pageGroup = classifierResult.pageGroups[0] || {};
     const startStructuring = Date.now();
+
+    // Fetch dynamic fields for the document type if available
+    let dynamicFields = [];
+    try {
+      const schemaConfig = await ProfileService.getStructuringSchema(
+        '00000000-0000-0000-0000-000000000001',
+        '00000000-0000-0000-0000-000000000003',
+        pageGroup.documentTypeId || allowedTypes[0].documentTypeId
+      );
+      if (schemaConfig && schemaConfig.fields && schemaConfig.fields.length > 0) {
+        dynamicFields = schemaConfig.fields;
+      }
+    } catch (e) {
+      // Dynamic fallback
+    }
+
     const structuringResult = await makeHttpPost(`${structuringUrl}/api/v1/structure`, {
       logicalDocumentId: pageGroup.logicalDocumentId || 'logical_doc_001',
-      documentTypeId: pageGroup.documentTypeId || 'type_001',
+      documentTypeId: pageGroup.documentTypeId || allowedTypes[0].documentTypeId || 'doc_001',
       schemaVersion: 1,
       pages: pageGroup.pages || [1],
-      requiredFields: [
-        { fieldKey: 'invoice_number', dataType: 'string' },
-        { fieldKey: 'total_amount', dataType: 'number' }
-      ]
+      requiredFields: dynamicFields
     });
     validateStructuringOutput(structuringResult);
     stepsLog.push({
