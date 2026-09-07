@@ -1,66 +1,68 @@
 /* ==========================================================================
    DOCUMENT INTELLIGENCE PLATFORM — ENTERPRISE MASTER STYLESHEET
-   Design System: Anthropic-Inspired Warm Editorial Palette
+   Design System: Slate Blue, Warm Sand & Powder Blue Intelligence Palette
    Palette:
-     Main background:     #F7F6F2 (Warm Cream)
-     Secondary bg:        #EFEEE9 (Soft Beige)
-     Primary text:        #171716 (Deep Charcoal)
-     Secondary text:      #66645F (Warm Gray)
-     Border:              #D9D7D0 (Light Warm Gray)
-     Primary accent:      #D97757 (Terracotta / Coral)
-     Accent hover:        #C45F42 (Deep Terracotta)
-     White cards:         #FCFBF8 (Off White)
-     Dark section:        #1C1C1A (Near Black)
+     Primary Slate Blue:  #81A6C6 (rgb 129, 166, 198)
+     Powder Blue Accent:  #AACDDC (rgb 170, 205, 220)
+     Warm Sand (Main):    #F3E3D0 (rgb 243, 227, 208)
+     Taupe Biscuit:       #D2C4B4 (rgb 210, 196, 180)
+     Primary text:        #1C262E (Deep Slate Charcoal)
+     Secondary text:      #52636F (Muted Steel Slate)
+     Dark section:        #151F27 (Midnight Slate)
    ========================================================================== */
 
 :root {
   /* Surfaces & Ambient Layers */
-  --bg-main: #F7F6F2;
-  --bg-secondary: #EFEEE9;
-  --bg-surface: #EFEEE9;
-  --bg-card: #FCFBF8;
+  --bg-main: #FAF5EE;
+  --bg-secondary: #F3E3D0;
+  --bg-surface: #F3E3D0;
+  --bg-card: #FFFFFF;
   --bg-card-hover: #FFFFFF;
-  --bg-card-active: #F2EFEB;
-  --bg-modal: #FCFBF8;
+  --bg-card-active: #F3E3D0;
+  --bg-modal: #FFFFFF;
   --bg-input: #FFFFFF;
-  --bg-header: rgba(247, 246, 242, 0.94);
-  --bg-subnav: rgba(239, 238, 233, 0.96);
-  --bg-dark-section: #1C1C1A;
+  --bg-header: rgba(250, 245, 238, 0.94);
+  --bg-subnav: rgba(243, 227, 208, 0.94);
+  --bg-dark-section: #151F27;
 
   /* Borders & Dividers */
-  --border: #D9D7D0;
-  --border-subtle: #E5E3DC;
-  --border-strong: #BCB9B1;
-  --card-border: #D9D7D0;
-  --card-border-hover: #D97757;
-  --card-border-active: #C45F42;
+  --border: #D2C4B4;
+  --border-subtle: #E6DCD0;
+  --border-strong: #81A6C6;
+  --card-border: #D2C4B4;
+  --card-border-hover: #81A6C6;
+  --card-border-active: #678EAE;
 
   /* Accents & Tints */
-  --primary-accent: #D97757;
-  --accent-hover: #C45F42;
-  --accent-soft: rgba(217, 119, 87, 0.12);
-  --accent-glow: rgba(217, 119, 87, 0.22);
-  --accent-emerald: #2E7D32;
-  --accent-emerald-soft: rgba(46, 125, 50, 0.12);
-  --accent-amber: #D97706;
-  --accent-amber-soft: rgba(217, 119, 6, 0.12);
-  --accent-rose: #C53030;
-  --accent-rose-soft: rgba(197, 48, 48, 0.12);
-  --accent-blue: #2B6CB0;
+  --primary-accent: #81A6C6;
+  --accent-hover: #678EAE;
+  --accent-secondary: #AACDDC;
+  --accent-light: #AACDDC;
+  --accent-tint: #F3E3D0;
+  --accent-taupe: #D2C4B4;
+  --accent-soft: rgba(129, 166, 198, 0.15);
+  --accent-glow: rgba(129, 166, 198, 0.28);
+  --accent-emerald: #3E8A68;
+  --accent-emerald-soft: rgba(62, 138, 104, 0.14);
+  --accent-amber: #CF8022;
+  --accent-amber-soft: rgba(207, 128, 34, 0.14);
+  --accent-rose: #C64A4A;
+  --accent-rose-soft: rgba(198, 74, 74, 0.14);
+  --accent-blue: #81A6C6;
 
   /* Legacy variable aliases for component compatibility */
-  --bg-dark: #F7F6F2;
-  --accent-cyan: #D97757;
-  --accent-cyan-glow: rgba(217, 119, 87, 0.25);
-  --accent-indigo: #C45F42;
-  --accent-indigo-glow: rgba(196, 95, 66, 0.25);
+  --bg-dark: #FAF5EE;
+  --accent-cyan: #81A6C6;
+  --accent-cyan-glow: rgba(129, 166, 198, 0.25);
+  --accent-indigo: #678EAE;
+  --accent-indigo-glow: rgba(103, 142, 174, 0.25);
 
   /* Typography Colors */
-  --text-primary: #171716;
-  --text-secondary: #66645F;
-  --text-muted: #888580;
-  --text-dim: #A8A59E;
-  --text-inverse: #FCFBF8;
+  --text-primary: #1C262E;
+  --text-secondary: #52636F;
+  --text-muted: #7E909D;
+  --text-dim: #A6B7C3;
+  --text-inverse: #FAF7F2;
 
   /* Fonts */
   --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -68,9 +70,9 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Elevation Shadows */
-  --shadow-sm: 0 1px 3px rgba(23, 23, 22, 0.05), 0 1px 2px rgba(23, 23, 22, 0.03);
-  --shadow-md: 0 4px 12px -2px rgba(23, 23, 22, 0.08), 0 2px 4px -1px rgba(23, 23, 22, 0.03);
-  --shadow-lg: 0 12px 28px -4px rgba(23, 23, 22, 0.12), 0 4px 12px -2px rgba(23, 23, 22, 0.05);
+  --shadow-sm: 0 1px 3px rgba(28, 38, 46, 0.05), 0 1px 2px rgba(28, 38, 46, 0.03);
+  --shadow-md: 0 4px 12px -2px rgba(28, 38, 46, 0.08), 0 2px 4px -1px rgba(28, 38, 46, 0.03);
+  --shadow-lg: 0 12px 28px -4px rgba(28, 38, 46, 0.12), 0 4px 12px -2px rgba(28, 38, 46, 0.05);
 }
 
 /* Base Reset */
@@ -84,8 +86,8 @@ body {
   font-family: var(--font-body);
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(at 10% 10%, rgba(217, 119, 87, 0.04) 0px, transparent 55%),
-    radial-gradient(at 90% 90%, rgba(239, 238, 233, 0.7) 0px, transparent 60%);
+    radial-gradient(at 10% 10%, rgba(129, 166, 198, 0.09) 0px, transparent 55%),
+    radial-gradient(at 90% 90%, rgba(243, 227, 208, 0.75) 0px, transparent 60%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
@@ -166,7 +168,7 @@ code, pre, .json-code {
   padding: 0.35rem 0.8rem;
   border-radius: 8px;
   letter-spacing: 0.05em;
-  box-shadow: 0 2px 8px rgba(217, 119, 87, 0.35);
+  box-shadow: 0 2px 8px rgba(129, 166, 198, 0.35);
 }
 
 .brand-title h1 {
@@ -526,7 +528,7 @@ code, pre, .json-code {
 .flag-multi {
   background: var(--accent-soft);
   color: var(--primary-accent);
-  border: 1px solid rgba(217, 119, 87, 0.25);
+  border: 1px solid rgba(129, 166, 198, 0.25);
 }
 
 .badge-datatype {
@@ -829,13 +831,13 @@ select.form-control {
   background: var(--primary-accent);
   color: #FFFFFF;
   border-color: var(--primary-accent);
-  box-shadow: 0 2px 8px rgba(217, 119, 87, 0.25);
+  box-shadow: 0 2px 8px rgba(129, 166, 198, 0.25);
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
-  box-shadow: 0 4px 12px rgba(217, 119, 87, 0.35);
+  box-shadow: 0 4px 12px rgba(129, 166, 198, 0.35);
 }
 
 .btn-secondary {
@@ -845,7 +847,7 @@ select.form-control {
 }
 
 .btn-secondary:hover {
-  background: #E5E3DC;
+  background: #E8D7C2;
   border-color: var(--border-strong);
 }
 
@@ -952,7 +954,7 @@ select.form-control {
 .badge-draft, .badge-review, .badge-needs_review {
   background: var(--accent-soft);
   color: var(--primary-accent);
-  border-color: rgba(217, 119, 87, 0.3);
+  border-color: rgba(129, 166, 198, 0.3);
 }
 
 .badge-disabled, .badge-failed {
@@ -1114,7 +1116,7 @@ select.form-control {
   font-size: 0.72rem;
   background: var(--accent-soft);
   color: var(--primary-accent);
-  border: 1px solid rgba(217, 119, 87, 0.3);
+  border: 1px solid rgba(129, 166, 198, 0.3);
   padding: 2px 8px;
   border-radius: 4px;
   margin-bottom: 0.45rem;
